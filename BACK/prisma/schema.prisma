@@ -14,17 +14,17 @@ model User {
   idUser    Int     @id @default(autoincrement())
   email String  @unique
   firstName  String
-  lastName String
-  phone Int @unique
+  lastName String 
+  phone String @unique
   password String
   pseudo String
   isActive Boolean @default(false)
   isPrivet Boolean @default(true)
-  vitalCardNumber Int @unique
+  vitalCardNumber String @unique
   ressources Resource[]
   typesRelation TypeRelation[]
   role Role @relation(fields: [roleId], references: [idRole])
-  roleId Int @unique
+  roleId Int
 }
 
 model Resource {
@@ -35,11 +35,11 @@ model Resource {
   isArchived Boolean @default(false)
   isValidated Boolean @default(false)
   author User @relation(fields: [authorId], references: [idUser])
-  authorId Int @unique
+  authorId Int
   categoryResource CategoryResource @relation(fields: [categoryResourceId], references: [idCategoryResource])
-  categoryResourceId Int @unique
+  categoryResourceId Int 
   typeResource TypeResource @relation(fields: [typeResourceId], references: [idTypeResource])
-  typeResourceId Int @unique
+  typeResourceId Int 
   typeRelation TypeRelation[]
   stateTypeRelation StateTypeRelation[]
 }
