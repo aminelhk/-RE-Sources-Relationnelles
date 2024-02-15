@@ -19,7 +19,7 @@ model User {
   password String
   pseudo String
   isActive Boolean @default(false)
-  isPrivet Boolean @default(true)
+  isPrivate Boolean @default(true)
   vitalCardNumber String @unique
   ressources Resource[]
   typesRelation TypeRelation[]
