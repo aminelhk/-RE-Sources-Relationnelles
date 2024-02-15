@@ -1,30 +1,84 @@
-import cors from "cors";
 import express from "express";
-import mongoose from "mongoose";
-// import { productRouter } from "./routes/product.js";
+import cors from "cors";
+import helmet from "helmet";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-// Connect to mongo db database
-mongoose
-  .connect(
-    "mongodb+srv://admin:KusDNQUKuB5WLSkS@resourcesrelationnelles.uzlf8km.mongodb.net/?retryWrites=true&w=majority"
-  )
-  .then(() => console.log("Connected to database"))
-  .catch((err) => console.log("Unable to connect", err));
+import userRoutes from "./routes/userRoutes";
+import palRoutes from "./routes/palRoutes";
 
-// Initialize express
+const corsOptions = {
+  origin: "http://localhost:3000",
+  optionsSuccessStatus: 200,
+};
+
+const helmetOptions = {
+  contentSecurityPolicy: false,
+  crossOriginEmbedderPolicy: false,
+  crossOriginResourcePolicy: false,
+};
+
 const app = express();
-app.use(cors()); // For cors management
-app.use(express.json()); // Parsing the request for `JSON` support
 
-// Welcome
-app.get("/", (req, res) => {
-  res.send("Welcome to the API");
-});
+app.use(express.json()); // Pour parser les corps de requêtes en JSON
 
-// Routes for our api
-// app.use("/api/products", productRouter);
+app.use(cors(corsOptions));
+app.use(helmet(helmetOptions));
 
-// Server init
-app.listen(3001, () => {
-  console.log("Application listen to port 3001");
-});
+app.use("/api/users", userRoutes); // Route pour les utilisateurs
+app.use("/api/pals", palRoutes); // Route pour les utilisateurs
+
+exports.signup = (req, res, next) => {
+  bcrypt
+    .hash(req.body.password, 10)
+    .then((hash) => {
+      const user = prisma.user.findUnique({
+        where: { email: req.body.email, password: hash },
+      });
+      user
+        .save()
+        .then(() => {
+          res.statut = 201;
+          res.json({ message: "Un utilisateur a été crée" });
+        })
+        .catch((error) => {
+          res.status(400).json({ error });
+        });
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+
+  exports.login = (req, res, next) => {
+    User.findOne({ email: req.body.email })
+      .then((user) => {
+        if (!user) {
+          return res
+            .status(401)
+            .json({ message: "L'utilisateur n'existe pas" });
+        }
+        bcrypt
+          .compare(req.body.password, user.password)
+          .then((valid) => {
+            if (!valid) {
+              return res
+                .status(401)
+                .json({ message: "Mot de passe incorrect" });
+            }
+            res.status(200).json({
+              id: id,
+              token: jwt.sign({ id: id }, "RANDOM TOKEN SECRET", {
+                expiresIn: "24h",
+              }),
+            });
+          })
+          .catch((error) => {
+            res.status(500).json({ error });
+          });
+      })
+      .catch((error) => {
+        res.status(500).json({ error });
+      });
+  };
+};
+module.exports = app;
