@@ -33,6 +33,7 @@ app.use("/api/roles", roleRoutes); // Route pour les roles
 app.use("/api/resources", resourceRoutes); // Route pour les resources
 app.use("/api/typesResource", typesResourceRoutes); // Route pour les typesResource
 app.use("/api/categoriesResource", categoriesResourceRoutes); // Route pour les utilisateurs
+app.use("/api/resources/:id", resourceRoutes); // Route pour les resources by id
 
 // exports.signup = (req, res, next) => {
 //   bcrypt

@@ -67,3 +67,21 @@ exports.updateResource = async (req, res) => {
   });
   res.json(resource);
 };
+
+exports.findOneResourceById = async (req, res) => {
+  const { idResource } = req.body;
+  try {
+    const resource = await prisma.resource.findUnique({
+      where: {
+        idResource: idResource,
+      },
+    });
+    res.json(resource);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error:
+        "Une erreur s'est produite lors de la récupération de la ressource.",
+    });
+  }
+};
