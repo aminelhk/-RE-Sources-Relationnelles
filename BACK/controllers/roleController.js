@@ -13,3 +13,20 @@ exports.addRole = async (req, res) => {
   });
   res.json(role);
 };
+
+exports.deleteRole = async (req, res) => {
+  const { idRole } = req.body;
+  const role = await prisma.role.delete({ where: { idRole: idRole } });
+  res.json(role);
+};
+
+exports.updateRole = async (req, res) => {
+  const { idRole, labelRole } = req.body;
+  const role = await prisma.role.update({
+    where: { idRole: idRole },
+    data: {
+      labelRole,
+    },
+  });
+  res.json(role);
+};
