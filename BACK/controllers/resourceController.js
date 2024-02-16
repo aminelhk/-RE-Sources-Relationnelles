@@ -19,16 +19,14 @@ exports.addResource = async (req, res) => {
   } = req.body;
   const resource = await prisma.resource.create({
     data: {
-      email,
-      firstName,
-      lastName,
-      phone,
-      password,
-      pseudo,
-      isActive,
-      isPrivet,
-      vitalCardNumber,
-      roleId,
+      title,
+      content,
+      isFavorite,
+      isArchived,
+      isValidated,
+      authorId,
+      categoryResourceId,
+      typeResourceId,
     },
   });
   res.json(resource);
@@ -45,30 +43,26 @@ exports.deleteResource = async (req, res) => {
 exports.updateResource = async (req, res) => {
   const {
     idResource,
-    email,
-    firstName,
-    lastName,
-    phone,
-    password,
-    pseudo,
-    isActive,
-    isPrivet,
-    vitalCardNumber,
-    roleId,
+    title,
+    content,
+    isFavorite,
+    isArchived,
+    isValidated,
+    authorId,
+    categoryResourceId,
+    typeResourceId,
   } = req.body;
   const resource = await prisma.resource.update({
     where: { idResource: idResource },
     data: {
-      email,
-      firstName,
-      lastName,
-      phone,
-      password,
-      pseudo,
-      isActive,
-      isPrivet,
-      vitalCardNumber,
-      roleId,
+      title,
+      content,
+      isFavorite,
+      isArchived,
+      isValidated,
+      authorId,
+      categoryResourceId,
+      typeResourceId,
     },
   });
   res.json(resource);
