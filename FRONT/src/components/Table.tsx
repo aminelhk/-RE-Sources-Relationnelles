@@ -1,0 +1,49 @@
+import { Table } from "@codegouvfr/react-dsfr/Table";
+
+<Table
+  caption="Résumé du tableau (accessibilité)"
+  data={[
+    [
+      'Donnée',
+      'Donnée',
+      'Donnée',
+      'Donnée',
+      'Donnée'
+    ],
+    [
+      'Donnée',
+      'Donnée',
+      'Donnée',
+      'Donnée',
+      'Donnée'
+    ],
+    [
+      'Donnée',
+      'Donnée',
+      'Donnée',
+      'Donnée',
+      'Donnée'
+    ],
+    [
+      'Donnée',
+      'Donnée',
+      'Donnée',
+      'Donnée',
+      'Donnée'
+    ],
+    [
+      'Donnée',
+      'Donnée',
+      'Donnée',
+      'Donnée',
+      'Donnée'
+    ]
+  ]}
+  headers={[
+    'Titre',
+    'Titre',
+    'Titre',
+    'Titre',
+    'Titre'
+  ]}
+/>
