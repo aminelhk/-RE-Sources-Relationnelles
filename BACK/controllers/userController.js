@@ -35,3 +35,9 @@ exports.addUser = async (req, res) => {
   });
   res.json(user);
 };
+
+exports.deleteUser = async (req, res) => {
+  const { idUser } = req.body;
+  const user = await prisma.user.delete({ where: { idUser: idUser } });
+  res.json(user);
+};
