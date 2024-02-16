@@ -9,7 +9,7 @@ function MyComponent(){
         <Select
             label="Label"
             nativeSelectProps={{
-                onChange: event => setValue(event.target.value),
+                onChange: (event : any) => setValue(event.target.value),
                 value
             }}
         >
