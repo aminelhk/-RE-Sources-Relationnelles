@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 
 import userRoutes from "./routes/userRoutes";
 import roleRoutes from "./routes/roleRoutes";
+import roleRoutes from "./routes/resourceRoutes";
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -26,7 +27,8 @@ app.use(cors(corsOptions));
 app.use(helmet(helmetOptions));
 
 app.use("/api/users", userRoutes); // Route pour les utilisateurs
-app.use("/api/roles", roleRoutes); // Route pour les utilisateurs
+app.use("/api/roles", roleRoutes); // Route pour les roles
+app.use("/api/resources", resourceRoutes); // Route pour les resources
 
 // exports.signup = (req, res, next) => {
 //   bcrypt
