@@ -1,7 +1,7 @@
 import express from "express";
 import {
   getResources,
-  addResource,
+  createResource,
   deleteResource,
   updateResource,
 } from "../controllers/resourceController";
@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 router.get("/", getResources);
-router.post("/addResource", addResource);
+router.post("/createResource", createResource);
 router.delete("/deleteResource", deleteResource);
 router.put("/updateResource", updateResource);
 

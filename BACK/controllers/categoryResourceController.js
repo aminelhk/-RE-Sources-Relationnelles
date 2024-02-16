@@ -1,12 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-exports.getCategoryResources = async (req, res) => {
-  const categoryResources = await prisma.categoryResource.findMany();
-  res.json(categoryResources);
+exports.getCategoriesResource = async (req, res) => {
+  const categoriesResources = await prisma.categoryResource.findMany();
+  res.json(categoriesResources);
 };
 
-exports.addCategoryResource = async (req, res) => {
+exports.createCategoryResource = async (req, res) => {
   const { labelCategoryResource } = req.body;
   const categoryResource = await prisma.categoryResource.create({
     data: { labelCategoryResource },

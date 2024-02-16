@@ -6,7 +6,7 @@ exports.getUsers = async (req, res) => {
   res.json(users);
 };
 
-exports.addUser = async (req, res) => {
+exports.createUser = async (req, res) => {
   const {
     email,
     firstName,

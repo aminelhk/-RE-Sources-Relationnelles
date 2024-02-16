@@ -1,12 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-exports.getTypeResources = async (req, res) => {
-  const typeResources = await prisma.typeResource.findMany();
-  res.json(typeResources);
+exports.getTypesResource = async (req, res) => {
+  const typesResource = await prisma.typeResource.findMany();
+  res.json(typesResource);
 };
 
-exports.addTypeResource = async (req, res) => {
+exports.createTypeResource = async (req, res) => {
   const { labelTypeResource } = req.body;
   const typeResource = await prisma.typeResource.create({
     data: {

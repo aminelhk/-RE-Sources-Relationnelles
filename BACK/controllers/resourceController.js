@@ -6,7 +6,7 @@ exports.getResources = async (req, res) => {
   res.json(resources);
 };
 
-exports.addResource = async (req, res) => {
+exports.createResource = async (req, res) => {
   const {
     title,
     content,

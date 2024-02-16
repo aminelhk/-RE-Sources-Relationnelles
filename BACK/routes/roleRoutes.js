@@ -1,7 +1,7 @@
 import express from "express";
 import {
   getRoles,
-  addRole,
+  createRole,
   deleteRole,
   updateRole,
 } from "../controllers/roleController";
@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 router.get("/", getRoles);
-router.post("/addRole", addRole);
+router.post("/createRole", createRole);
 router.delete("/deleteRole", deleteRole);
 router.put("/updateRole", updateRole);
 

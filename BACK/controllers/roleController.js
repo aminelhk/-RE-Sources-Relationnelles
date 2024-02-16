@@ -6,7 +6,7 @@ exports.getRoles = async (req, res) => {
   res.json(roles);
 };
 
-exports.addRole = async (req, res) => {
+exports.createRole = async (req, res) => {
   const { idRole, labelRole } = req.body;
   const role = await prisma.role.create({
     data: { idRole, labelRole },

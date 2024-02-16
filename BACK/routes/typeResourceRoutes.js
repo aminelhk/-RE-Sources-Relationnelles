@@ -1,15 +1,15 @@
 import express from "express";
 import {
-  getTypeResources,
-  addTypeResource,
+  getTypesResource,
+  createTypeResource,
   deleteTypeResource,
   updateTypeResource,
 } from "../controllers/typeResourceController";
 
 const router = express.Router();
 
-router.get("/", getTypeResources);
-router.post("/addTypeResource", addTypeResource);
+router.get("/", getTypesResource);
+router.post("/createTypeResource", createTypeResource);
 router.delete("/deleteTypeResource", deleteTypeResource);
 router.put("/updateTypeResource", updateTypeResource);
 
