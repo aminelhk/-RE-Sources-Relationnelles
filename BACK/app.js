@@ -9,6 +9,7 @@ import roleRoutes from "./routes/roleRoutes";
 import resourceRoutes from "./routes/resourceRoutes";
 import typesResourceRoutes from "./routes/typeResourceRoutes";
 import categoriesResourceRoutes from "./routes/categoryResourceRoutes";
+import commentsOnResourcesRoutes from "./routes/commentsOnResourcesRoutes";
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -33,6 +34,7 @@ app.use("/api/roles", roleRoutes); // Route pour les roles
 app.use("/api/resources", resourceRoutes); // Route pour les resources
 app.use("/api/typesResource", typesResourceRoutes); // Route pour les typesResource
 app.use("/api/categoriesResource", categoriesResourceRoutes); // Route pour les utilisateurs
+app.use("/api/commentsOnResources", commentsOnResourcesRoutes); // Route pour les commentaires (des ressources)
 
 // exports.signup = (req, res, next) => {
 //   bcrypt

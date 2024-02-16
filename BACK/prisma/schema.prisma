@@ -25,6 +25,8 @@ model User {
   typesRelation TypeRelation[]
   role Role @relation(fields: [roleId], references: [idRole])
   roleId Int
+  resourcesCommented CommentsOnResources[]
+
 }
 
 model Resource {
@@ -42,6 +44,8 @@ model Resource {
   typeResourceId Int 
   typeRelation TypeRelation[]
   stateTypeRelation StateTypeRelation[]
+  usersComments CommentsOnResources[]
+
 }
 
 model Role {
@@ -81,5 +85,17 @@ model TypeResource {
   idTypeResource Int @id @default(autoincrement())
   labelTypeResource String
   resources Resource[]
+}
+
+model CommentsOnResources{
+
+  user User @relation(fields: [userId], references: [idUser])
+  userId Int
+  resource Resource @relation (fields: [resourceId], references: [idResource])
+  resourceId Int
+  contentComment String 
+
+  @@id([userId, resourceId])
+
 }
 
