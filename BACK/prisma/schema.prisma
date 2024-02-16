@@ -73,7 +73,7 @@ model StateTypeRelation {
 
 model CategoryResource{
   idCategoryResource Int @id @default(autoincrement())
-  labelCategorieRessource String
+  labelCategoryResource String
   resources Resource[]
 }
 
