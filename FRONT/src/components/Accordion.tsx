@@ -6,3 +6,5 @@ import { Accordion } from "@codegouvfr/react-dsfr/Accordion";
 >
   Content of the Accordion
 </Accordion>
+
+export{};
