@@ -73,3 +73,15 @@ exports.updateUser = async (req, res) => {
   });
   res.json(user);
 };
+
+exports.activateUser = async (req, res) => {
+  const { idUser, isActive } = req.body;
+  const user = await prisma.user.update({
+    where: { idUser: idUser },
+    data: {
+      idUser,
+      isActive,
+    },
+  });
+  res.json(user);
+};
