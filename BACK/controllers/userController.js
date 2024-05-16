@@ -122,12 +122,9 @@ export const loginUser = async (req, res) => {
     }
 
     if (!user.isActive) {
-      return res
-        .status(403)
-        .json({
-          error:
-            "Votre compte est inactif. Veuillez contacter l'administrateur.",
-        });
+      return res.status(403).json({
+        error: "Votre compte est inactif. Veuillez contacter l'administrateur.",
+      });
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);
@@ -151,5 +148,16 @@ export const loginUser = async (req, res) => {
   } catch (error) {
     console.error("Erreur de connexion de l’utilisateur :", error);
     res.status(500).json({ error: "Impossible de connecter utilisateur" });
+  }
+};
+
+export const logoutUser = async (req, res) => {
+  try {
+    // Supprimer le token en effaçant le cookie
+    res.clearCookie("token");
+    res.json({ message: "Déconnexion réussie" });
+  } catch (error) {
+    console.error("Erreur lors de la déconnexion :", error);
+    res.status(500).json({ error: "Impossible de déconnecter l'utilisateur" });
   }
 };
