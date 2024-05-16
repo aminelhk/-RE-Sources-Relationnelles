@@ -73,3 +73,24 @@ exports.updateUser = async (req, res) => {
   });
   res.json(user);
 };
+
+exports.getUserById = async (req, res) => {
+  const { idUser } = req.body;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        idUser: idUser,
+      },
+      include: { role: true },
+    });
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error:
+        "Une erreur s'est produite lors de la récupération de la ressource.",
+    });
+  }
+};
+
+// fonction qui récupère l'utilisateur en fonction de son email (pour le tabnine AI)
