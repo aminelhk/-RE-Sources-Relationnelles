@@ -16,7 +16,7 @@ exports.createResource = async (req, res) => {
     authorId,
     categoryResourceId,
     typeResourceId,
-    isPrivate, // Nouveau champ pour indiquer si la ressource est privée ou publique
+    isPrivate,
   } = req.body;
   const resource = await prisma.resource.create({
     data: {
@@ -24,11 +24,11 @@ exports.createResource = async (req, res) => {
       content,
       isFavorite,
       isArchived,
-      isValidated,
+      isValidated: false,
       authorId,
       categoryResourceId,
       typeResourceId,
-      isPrivate, // Assignez la valeur du champ isPrivate fournie par l'utilisateur
+      isPrivate,
     },
   });
   res.json(resource);
