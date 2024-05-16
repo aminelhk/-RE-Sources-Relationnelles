@@ -34,6 +34,7 @@ model Resource {
   isFavorite Boolean @default(false)
   isArchived Boolean @default(false)
   isValidated Boolean @default(false)
+  isExploited Boolean @default(false)
   author User @relation(fields: [authorId], references: [idUser])
   authorId Int
   categoryResource CategoryResource @relation(fields: [categoryResourceId], references: [idCategoryResource])
