@@ -21,11 +21,27 @@ model User {
   isActive Boolean @default(false)
   isPrivate Boolean @default(true)
   vitalCardNumber String @unique
-  ressources Resource[]
+  resources Resource[]
   typesRelation TypeRelation[]
   role Role @relation(fields: [roleId], references: [idRole])
   roleId Int
+  comments Comment[]
+
 }
+
+model Comment {
+  id Int @id @default(autoincrement())
+  content String
+  createdAt DateTime @default(now())
+  author User @relation(fields: [authorId], references: [idUser])
+  authorId Int
+  resource Resource @relation(fields: [resourceId], references: [idResource])
+  resourceId Int
+  replies Comment[] @relation("CommentReplies")
+  parentComment Comment? @relation("CommentReplies", fields: [parentId], references: [id])
+  parentId Int?
+}
+
 
 model Resource {
   idResource Int @id @default(autoincrement())
@@ -42,6 +58,7 @@ model Resource {
   typeResourceId Int 
   typeRelation TypeRelation[]
   stateTypeRelation StateTypeRelation[]
+  comments Comment[]
 }
 
 model Role {
