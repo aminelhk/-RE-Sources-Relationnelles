@@ -85,3 +85,36 @@ exports.findOneResourceById = async (req, res) => {
     });
   }
 };
+
+exports.updateArchiveResource = async (req, res) => {
+  const { idResource, isArchived } = req.body;
+  const resource = await prisma.resource.update({
+    where: { idResource: idResource },
+    data: {
+      isArchived,
+    },
+  });
+  res.json(resource);
+};
+
+exports.updateExploitResource = async (req, res) => {
+  const { idResource, isExploited } = req.body;
+  const resource = await prisma.resource.update({
+    where: { idResource: idResource },
+    data: {
+      isExploited,
+    },
+  });
+  res.json(resource);
+};
+
+exports.updateFavoriteResource = async (req, res) => {
+  const { idResource, isFavorite } = req.body;
+  const resource = await prisma.resource.update({
+    where: { idResource: idResource },
+    data: {
+      isFavorite,
+    },
+  });
+  res.json(resource);
+};

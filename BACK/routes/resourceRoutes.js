@@ -7,6 +7,9 @@ import {
   deleteResource,
   updateResource,
   findOneResourceById,
+  updateArchiveResource,
+  updateExploitResource,
+  updateFavoriteResource,
 } from "../controllers/resourceController";
 
 const router = express.Router();
@@ -16,5 +19,8 @@ router.post("/createResource", createResource);
 router.delete("/deleteResource", deleteResource);
 router.put("/updateResource", updateResource);
 router.get("/findOneResourceById", findOneResourceById);
+router.put("/updateArchiveResource", updateArchiveResource);
+router.put("/updateExploitResource", updateExploitResource);
+router.put("/updateFavoriteResource", updateFavoriteResource);
 
 module.exports = router;
