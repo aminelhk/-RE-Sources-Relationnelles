@@ -85,15 +85,3 @@ exports.findOneResourceById = async (req, res) => {
     });
   }
 };
-
-exports.createComment = async (req, res) => {
-  const { content, resourceId, authorId } = req.body;
-  const comment = await prisma.comment.create({
-    data: {
-      content,
-      authorId,
-      resourceId,
-    },
-  });
-  res.json(comment);
-};

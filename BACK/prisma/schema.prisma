@@ -37,7 +37,11 @@ model Comment {
   authorId Int
   resource Resource @relation(fields: [resourceId], references: [idResource])
   resourceId Int
+  replies Comment[] @relation("CommentReplies")
+  parentComment Comment? @relation("CommentReplies", fields: [parentId], references: [id])
+  parentId Int?
 }
+
 
 model Resource {
   idResource Int @id @default(autoincrement())

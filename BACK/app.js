@@ -7,6 +7,7 @@ import roleRoutes from "./routes/roleRoutes";
 import resourceRoutes from "./routes/resourceRoutes";
 import typesResourceRoutes from "./routes/typeResourceRoutes";
 import categoriesResourceRoutes from "./routes/categoryResourceRoutes";
+import commentsRoutes from "./routes/commentRoutes";
 
 const corsOptions = {
   origin: "http://localhost:3000",
@@ -32,5 +33,6 @@ app.use("/api/resources", resourceRoutes); // Route pour les resources
 app.use("/api/typesResource", typesResourceRoutes); // Route pour les typesResource
 app.use("/api/categoriesResource", categoriesResourceRoutes); // Route pour les utilisateurs
 app.use("/api/resources/:id", resourceRoutes); // Route pour les resources by id
+app.use("/api/comments", commentsRoutes); // Route pour les commentaires
 
 module.exports = app;
