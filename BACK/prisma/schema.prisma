@@ -30,7 +30,7 @@ model User {
 }
 
 model Comment {
-  id Int @id @default(autoincrement())
+  idComment Int @id @default(autoincrement())
   content String
   createdAt DateTime @default(now())
   author User @relation(fields: [authorId], references: [idUser])
@@ -38,7 +38,7 @@ model Comment {
   resource Resource @relation(fields: [resourceId], references: [idResource])
   resourceId Int
   replies Comment[] @relation("CommentReplies")
-  parentComment Comment? @relation("CommentReplies", fields: [parentId], references: [id])
+  parentComment Comment? @relation("CommentReplies", fields: [parentId], references: [idComment])
   parentId Int?
 }
 

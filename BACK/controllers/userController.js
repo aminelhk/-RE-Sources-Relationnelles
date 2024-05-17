@@ -103,7 +103,7 @@ export const getUserById = async (req, res) => {
     console.error(error);
     res.status(500).json({
       error:
-        "Une erreur s'est produite lors de la récupération de la ressource.",
+        "Une erreur s'est produite lors de la récupération de l'utilisateur.",
     });
   }
 };
