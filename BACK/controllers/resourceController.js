@@ -2,7 +2,12 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 exports.getResources = async (req, res) => {
-  const resources = await prisma.resource.findMany();
+  const resources = await prisma.resource.findMany({
+    include: {
+      comments: true,
+      shares: true,
+    },
+  });
   res.json(resources);
 };
 
@@ -12,7 +17,6 @@ exports.createResource = async (req, res) => {
     content,
     isFavorite,
     isArchived,
-    isValidated,
     authorId,
     categoryResourceId,
     typeResourceId,
