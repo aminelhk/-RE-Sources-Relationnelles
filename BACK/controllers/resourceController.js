@@ -120,3 +120,21 @@ exports.updateFavoriteResource = async (req, res) => {
   });
   res.json(resource);
 };
+
+exports.shareResource = async (req, res) => {
+  const { userId, resourceId } = req.body;
+  try {
+    const share = await prisma.share.create({
+      data: {
+        userId,
+        resourceId,
+      },
+    });
+    res.json(share);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Une erreur s'est produite lors du partage de la ressource.",
+    });
+  }
+};

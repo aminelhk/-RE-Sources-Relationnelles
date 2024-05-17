@@ -1,5 +1,3 @@
-// resourceRoutes.js
-
 import express from "express";
 import {
   getResources,
@@ -10,6 +8,7 @@ import {
   updateArchiveResource,
   updateExploitResource,
   updateFavoriteResource,
+  shareResource,
 } from "../controllers/resourceController";
 
 const router = express.Router();
@@ -22,5 +21,6 @@ router.get("/findOneResourceById", findOneResourceById);
 router.put("/updateArchiveResource", updateArchiveResource);
 router.put("/updateExploitResource", updateExploitResource);
 router.put("/updateFavoriteResource", updateFavoriteResource);
+router.post("/shareResource", shareResource);
 
 module.exports = router;
