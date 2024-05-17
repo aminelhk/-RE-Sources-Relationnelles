@@ -733,7 +733,7 @@
   resolved "https://registry.npmjs.org/@babel/regjsgen/-/regjsgen-0.8.0.tgz"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.18.6", "@babel/runtime@^7.20.0":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.18.6", "@babel/runtime@^7.20.0", "@babel/runtime@^7.23.9":
   version "7.24.5"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.24.5.tgz"
   integrity sha512-Nms86NXrsaeU9vbBJKni6gXiEXZ4CVpYVzEjDH9Sb8vmZ3UljyA1GSOJl/6LGPO8EHLuSF9H+IxNXHPX8QHJ4g==
@@ -1915,7 +1915,7 @@ at-least-node@^1.0.0:
 
 atob@^2.1.2:
   version "2.1.2"
-  resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
+  resolved "https://registry.npmjs.org/atob/-/atob-2.1.2.tgz"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
 available-typed-arrays@^1.0.7:
@@ -1956,14 +1956,14 @@ babel-plugin-polyfill-regenerator@^0.6.1:
 
 babel-plugin-react-native-classname-to-dynamic-style@^0.22.0:
   version "0.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-react-native-classname-to-dynamic-style/-/babel-plugin-react-native-classname-to-dynamic-style-0.22.0.tgz#ebdae002a7dea6a3ab93aa4686954fc02e82bcbd"
+  resolved "https://registry.npmjs.org/babel-plugin-react-native-classname-to-dynamic-style/-/babel-plugin-react-native-classname-to-dynamic-style-0.22.0.tgz"
   integrity sha512-hipnDfjzq+bjLfCHum0kZYlfSZ9asnnCW17e2hTUnZRkIpjHG/q9l8i1CF1FJhts4qJ6NfRmcT0jSn3JKgo/Qg==
   dependencies:
     react-native-dynamic-style-processor "^0.21.0"
 
 babel-plugin-react-native-platform-specific-extensions@^1.1.1:
   version "1.1.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-react-native-platform-specific-extensions/-/babel-plugin-react-native-platform-specific-extensions-1.1.1.tgz#78f8581af7424cf7d9eea33f3276d9ee21f4c8a4"
+  resolved "https://registry.npmjs.org/babel-plugin-react-native-platform-specific-extensions/-/babel-plugin-react-native-platform-specific-extensions-1.1.1.tgz"
   integrity sha512-ZNN2ImlUlcaPMfzaCw9fWmTc/Ht5ARI0n9RUqiyCdK7LalPJ7yKc+F60BcSHvMHcmA2BgVO8TpSot+dpeZPAMQ==
   dependencies:
     "@babel/template" "^7.0.0-beta.49"
@@ -2186,7 +2186,7 @@ camelcase@^6.2.0:
 
 camelize@^1.0.0:
   version "1.0.1"
-  resolved "https://registry.yarnpkg.com/camelize/-/camelize-1.0.1.tgz#89b7e16884056331a35d6b5ad064332c91daa6c3"
+  resolved "https://registry.npmjs.org/camelize/-/camelize-1.0.1.tgz"
   integrity sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==
 
 caniuse-lite@^1.0.30001587:
@@ -2488,7 +2488,7 @@ crypto-random-string@^2.0.0:
 
 css-color-keywords@^1.0.0:
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/css-color-keywords/-/css-color-keywords-1.0.0.tgz#fea2616dc676b2962686b3af8dbdbe180b244e05"
+  resolved "https://registry.npmjs.org/css-color-keywords/-/css-color-keywords-1.0.0.tgz"
   integrity sha512-FyyrDHZKEjXDpNJYvVsV960FiqQyXc/LlYmsxl2BcdMb2WPx0OGRVgTg55rPSyLSNMqP52R9r8geSp7apN3Ofg==
 
 css-in-js-utils@^3.1.0:
@@ -2500,12 +2500,12 @@ css-in-js-utils@^3.1.0:
 
 css-mediaquery@^0.1.2:
   version "0.1.2"
-  resolved "https://registry.yarnpkg.com/css-mediaquery/-/css-mediaquery-0.1.2.tgz#6a2c37344928618631c54bd33cedd301da18bea0"
+  resolved "https://registry.npmjs.org/css-mediaquery/-/css-mediaquery-0.1.2.tgz"
   integrity sha512-COtn4EROW5dBGlE/4PiKnh6rZpAPxDeFLaEEwt4i10jpDMFt2EhQGS79QmmrO+iKCHv0PU/HrOWEhijFd1x99Q==
 
 css-to-react-native-transform@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.yarnpkg.com/css-to-react-native-transform/-/css-to-react-native-transform-2.0.0.tgz#0ea9ed11caae2b9ec6b4e545fd2789700e552fbd"
+  resolved "https://registry.npmjs.org/css-to-react-native-transform/-/css-to-react-native-transform-2.0.0.tgz"
   integrity sha512-lsKKZxzuY1d/t2twJ9K2tUIb2ThMstFC/8QsQNR1KjZKnpBqswEW9/kVEWAWdfx+a6jcURKxssiQp94cFakPag==
   dependencies:
     css "^3.0.0"
@@ -2514,7 +2514,7 @@ css-to-react-native-transform@^2.0.0:
 
 css-to-react-native@^3.0.0:
   version "3.2.0"
-  resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-3.2.0.tgz#cdd8099f71024e149e4f6fe17a7d46ecd55f1e32"
+  resolved "https://registry.npmjs.org/css-to-react-native/-/css-to-react-native-3.2.0.tgz"
   integrity sha512-e8RKaLXMOFii+02mOlqwjbD00KSEKqblnpO9e++1aXS1fPQOpS1YoqdVHBqPjHNoxeF2mimzVqawm2KCbEdtHQ==
   dependencies:
     camelize "^1.0.0"
@@ -2523,12 +2523,12 @@ css-to-react-native@^3.0.0:
 
 css-viewport-units-transform@^0.10.2:
   version "0.10.3"
-  resolved "https://registry.yarnpkg.com/css-viewport-units-transform/-/css-viewport-units-transform-0.10.3.tgz#e98b8adf7a9de7a2b394b3f4adb0004865d04a9a"
+  resolved "https://registry.npmjs.org/css-viewport-units-transform/-/css-viewport-units-transform-0.10.3.tgz"
   integrity sha512-MRt9V0RnHvSzKAb0Ry/Xp7da2gREI2w2fI/DDNlncQYYGN1JPQn+snZXCYHsFYVoCGT2lX6hswfJJZ4BxEYp6Q==
 
 css@^3.0.0:
   version "3.0.0"
-  resolved "https://registry.yarnpkg.com/css/-/css-3.0.0.tgz#4447a4d58fdd03367c516ca9f64ae365cee4aa5d"
+  resolved "https://registry.npmjs.org/css/-/css-3.0.0.tgz"
   integrity sha512-DG9pFfwOrzc+hawpmqX/dHYHJG+Bsdb0klhyi1sDneOgGOXy9wQIC8hzyVp1e4NRYDBdxcylvywPkkXCHAzTyQ==
   dependencies:
     inherits "^2.0.4"
@@ -2605,7 +2605,7 @@ decamelize@^1.2.0:
 
 decode-uri-component@^0.2.0:
   version "0.2.2"
-  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
+  resolved "https://registry.npmjs.org/decode-uri-component/-/decode-uri-component-0.2.2.tgz"
   integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
 
 deep-extend@^0.6.0:
@@ -2615,7 +2615,7 @@ deep-extend@^0.6.0:
 
 deepmerge@^3.2.0:
   version "3.3.0"
-  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-3.3.0.tgz#d3c47fd6f3a93d517b14426b0628a17b0125f5f7"
+  resolved "https://registry.npmjs.org/deepmerge/-/deepmerge-3.3.0.tgz"
   integrity sha512-GRQOafGHwMHpjPx9iCvTgpu9NojZ49q794EEL94JVEw6VaeA8XTUyBKvAkOOjBX9oJNiV6G3P+T+tihFjo2TqA==
 
 deepmerge@^4.3.0:
@@ -3483,6 +3483,13 @@ hosted-git-info@^3.0.2:
   dependencies:
     lru-cache "^6.0.0"
 
+html-parse-stringify@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/html-parse-stringify/-/html-parse-stringify-3.0.1.tgz#dfc1017347ce9f77c8141a507f233040c59c55d2"
+  integrity sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==
+  dependencies:
+    void-elements "3.1.0"
+
 http-errors@2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/http-errors/-/http-errors-2.0.0.tgz"
@@ -4140,7 +4147,7 @@ lightningcss@~1.19.0:
 
 lilconfig@^3.1.1:
   version "3.1.1"
-  resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-3.1.1.tgz#9d8a246fa753106cfc205fd2d77042faca56e5e3"
+  resolved "https://registry.npmjs.org/lilconfig/-/lilconfig-3.1.1.tgz"
   integrity sha512-O18pf7nyvHTckunPWCV1XUNXU1piu01y2b7ATJ0ppkUkk8ocqVWBrYjJBCwHDjD/ZWcfyrA0P4gKhzWGi5EINQ==
 
 lines-and-columns@^1.1.6:
@@ -4491,12 +4498,12 @@ metro@0.80.9, metro@^0.80.3:
 
 micro-memoize@^2.0.3:
   version "2.1.2"
-  resolved "https://registry.yarnpkg.com/micro-memoize/-/micro-memoize-2.1.2.tgz#0787eeb1a12b4033a0fe162dfc9df4280291cee4"
+  resolved "https://registry.npmjs.org/micro-memoize/-/micro-memoize-2.1.2.tgz"
   integrity sha512-COjNutiFgnDHXZEIM/jYuZPwq2h8zMUeScf6Sh6so98a+REqdlpaNS7Cb2ffGfK5I+xfgoA3Rx49NGuNJTJq3w==
 
 micro-memoize@^3.0.1:
   version "3.0.2"
-  resolved "https://registry.yarnpkg.com/micro-memoize/-/micro-memoize-3.0.2.tgz#91f4412e5515be5bab50acc1e0c1d6834e57c5e2"
+  resolved "https://registry.npmjs.org/micro-memoize/-/micro-memoize-3.0.2.tgz"
   integrity sha512-XxZP0J6Koggwf1jfnYXuIAZVM7JouePEdgdL46MCo+9J/83KT1pSCsl2h65hHGViiP1N0qbVhtqmHM6El1RdEw==
 
 micromatch@^4.0.2, micromatch@^4.0.4:
@@ -5052,7 +5059,7 @@ possible-typed-array-names@^1.0.0:
 
 postcss-load-config@^5.1.0:
   version "5.1.0"
-  resolved "https://registry.yarnpkg.com/postcss-load-config/-/postcss-load-config-5.1.0.tgz#4ded23410da973e05edae9d41fa99bb5c1d5477f"
+  resolved "https://registry.npmjs.org/postcss-load-config/-/postcss-load-config-5.1.0.tgz"
   integrity sha512-G5AJ+IX0aD0dygOE0yFZQ/huFFMSNneyfp0e3/bT05a8OfPC5FUoZRPfGijUdGOJNMewJiwzcHJXFafFzeKFVA==
   dependencies:
     lilconfig "^3.1.1"
@@ -5063,16 +5070,7 @@ postcss-value-parser@^4.0.2, postcss-value-parser@^4.2.0:
   resolved "https://registry.npmjs.org/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz"
   integrity sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==
 
-postcss@^8.4.38:
-  version "8.4.38"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.38.tgz#b387d533baf2054288e337066d81c6bee9db9e0e"
-  integrity sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==
-  dependencies:
-    nanoid "^3.3.7"
-    picocolors "^1.0.0"
-    source-map-js "^1.2.0"
-
-postcss@~8.4.32:
+postcss@^8.4.38, postcss@~8.4.32:
   version "8.4.38"
   resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.38.tgz"
   integrity sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==
@@ -5217,6 +5215,14 @@ react-dom@18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-i18next@^14.1.1:
+  version "14.1.1"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-14.1.1.tgz#3d942a99866555ae3552c40f9fddfa061e29d7f3"
+  integrity sha512-QSiKw+ihzJ/CIeIYWrarCmXJUySHDwQr5y8uaNIkbxoGRm/5DukkxZs+RPla79IKyyDPzC/DRlgQCABHtrQuQQ==
+  dependencies:
+    "@babel/runtime" "^7.23.9"
+    html-parse-stringify "^3.0.1"
+
 "react-is@^16.12.0 || ^17.0.0 || ^18.0.0", react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -5234,7 +5240,7 @@ react-is@^18.0.0:
 
 react-native-css-media-query-processor@^0.21.1:
   version "0.21.3"
-  resolved "https://registry.yarnpkg.com/react-native-css-media-query-processor/-/react-native-css-media-query-processor-0.21.3.tgz#1186c949b1b32a5e1d817fedb8bf629464dee3e3"
+  resolved "https://registry.npmjs.org/react-native-css-media-query-processor/-/react-native-css-media-query-processor-0.21.3.tgz"
   integrity sha512-F8VzDMWHuTVpRjQu3EuAnWrvI0/jyo/cZoOVaed/GoKMfWOxN8+f1x3UPSy4OobltuyU9c2cwIfg0AyUlcDteQ==
   dependencies:
     deepmerge "^3.2.0"
@@ -5242,7 +5248,7 @@ react-native-css-media-query-processor@^0.21.1:
 
 react-native-dynamic-style-processor@^0.21.0:
   version "0.21.0"
-  resolved "https://registry.yarnpkg.com/react-native-dynamic-style-processor/-/react-native-dynamic-style-processor-0.21.0.tgz#32b9fe30a4d07c9e3ee6b32662eb5812518bd18e"
+  resolved "https://registry.npmjs.org/react-native-dynamic-style-processor/-/react-native-dynamic-style-processor-0.21.0.tgz"
   integrity sha512-dpLA6YoiS2HEzjwRYVPJqA33EpwPHTbfN6SmYn3AFoiUwyxLFrqrtBh93OiMQu/DNILMbvTZHn9feE5odMwZKQ==
   dependencies:
     css-viewport-units-transform "^0.10.2"
@@ -5251,7 +5257,7 @@ react-native-dynamic-style-processor@^0.21.0:
 
 react-native-postcss-transformer@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-postcss-transformer/-/react-native-postcss-transformer-2.0.0.tgz#7517f6c5357ba82ad49b34b8a34901e7c6f268a1"
+  resolved "https://registry.npmjs.org/react-native-postcss-transformer/-/react-native-postcss-transformer-2.0.0.tgz"
   integrity sha512-ffx4jwUxdGEx97a5eghn1mQVXoiEKK4qy1Y1ywseE3pyOxFtawQzzw3K9Fjb32QgwtIzlRNVRotA+o2t/+wmiA==
   dependencies:
     css-to-react-native-transform "^2.0.0"
@@ -5779,7 +5785,7 @@ source-map-js@^1.2.0:
 
 source-map-resolve@^0.6.0:
   version "0.6.0"
-  resolved "https://registry.yarnpkg.com/source-map-resolve/-/source-map-resolve-0.6.0.tgz#3d9df87e236b53f16d01e58150fc7711138e5ed2"
+  resolved "https://registry.npmjs.org/source-map-resolve/-/source-map-resolve-0.6.0.tgz"
   integrity sha512-KXBr9d/fO/bWo97NXsPIAW1bFSBOuCnjbNTBMO7N59hsv5i9yzRDfcYwwt0l04+VqnKC+EwzvJZIP/qkuMgR/w==
   dependencies:
     atob "^2.1.2"
@@ -6399,6 +6405,11 @@ vlq@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/vlq/-/vlq-1.0.1.tgz"
   integrity sha512-gQpnTgkubC6hQgdIcRdYGDSDc+SaujOdyesZQMv6JlfQee/9Mp0Qhnys6WxDWvQnL5WZdT7o2Ul187aSt0Rq+w==
+
+void-elements@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
+  integrity sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==
 
 walker@^1.0.7:
   version "1.0.8"
