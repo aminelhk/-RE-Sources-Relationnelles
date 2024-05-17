@@ -1,12 +1,12 @@
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import HomePage from "./pages/HomePage";
+import SignUpPage from "./pages/SignUpPage";
 
 const App: React.FC = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <HomePage />
+        <SignUpPage />
       </ScrollView>
     </SafeAreaView>
   );
