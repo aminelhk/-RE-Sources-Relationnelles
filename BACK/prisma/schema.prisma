@@ -26,7 +26,7 @@ model User {
   role Role @relation(fields: [roleId], references: [idRole])
   roleId Int
   comments Comment[]
-
+  shares Share[] 
 }
 
 model Comment {
@@ -61,6 +61,16 @@ model Resource {
   typeRelation TypeRelation[]
   stateTypeRelation StateTypeRelation[]
   comments Comment[]
+  shares Share[]
+}
+
+model Share {
+  idShare Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [idUser])
+  userId Int
+  resource Resource @relation(fields: [resourceId], references: [idResource])
+  resourceId Int
+  createdAt DateTime @default(now())
 }
 
 model Role {

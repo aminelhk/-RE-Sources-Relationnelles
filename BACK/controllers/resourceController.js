@@ -2,7 +2,12 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 exports.getResources = async (req, res) => {
-  const resources = await prisma.resource.findMany();
+  const resources = await prisma.resource.findMany({
+    include: {
+      comments: true,
+      shares: true,
+    },
+  });
   res.json(resources);
 };
 
@@ -12,7 +17,6 @@ exports.createResource = async (req, res) => {
     content,
     isFavorite,
     isArchived,
-    isValidated,
     authorId,
     categoryResourceId,
     typeResourceId,
@@ -119,4 +123,22 @@ exports.updateFavoriteResource = async (req, res) => {
     },
   });
   res.json(resource);
+};
+
+exports.shareResource = async (req, res) => {
+  const { userId, resourceId } = req.body;
+  try {
+    const share = await prisma.share.create({
+      data: {
+        userId,
+        resourceId,
+      },
+    });
+    res.json(share);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Une erreur s'est produite lors du partage de la ressource.",
+    });
+  }
 };
