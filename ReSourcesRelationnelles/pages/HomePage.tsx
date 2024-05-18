@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import Header from "../components/Header";
+import Card from "components/CardList";
 
 const HomePage: React.FC = () => {
   return (
@@ -40,6 +41,7 @@ const HomePage: React.FC = () => {
         serviceTitle="Nom du site / service"
       />
       {/* Autres composants ou contenu de la page */}
+      <Card />
     </View>
   );
 };
