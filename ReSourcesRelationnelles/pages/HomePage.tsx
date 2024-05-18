@@ -1,9 +1,11 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Text } from "react-native";
 import Header from "../components/Header";
 import Card from "components/CardList";
+import Accordion from "components/Accordion";
 
 const HomePage: React.FC = () => {
+  const [isExpended, setIsExpended] = useState(false);
   return (
     <View style={styles.container}>
       <Header
@@ -41,6 +43,17 @@ const HomePage: React.FC = () => {
         serviceTitle="Nom du site / service"
       />
       {/* Autres composants ou contenu de la page */}
+      <Accordion
+        title={"Name of the Accordion"}
+        onPress={() => {
+          setIsExpended(!isExpended);
+        }}
+        isExpended={isExpended}
+      >
+        <View>
+          <Text>Je suis la</Text>
+        </View>
+      </Accordion>
       <Card />
     </View>
   );
