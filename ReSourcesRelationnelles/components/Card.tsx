@@ -12,7 +12,7 @@ type ItemType = {
   location: string;
   date: Date;
 };
-const Card = (item: ItemType) => {
+const Card = ({ item }: { item: ItemType }) => {
   return (
     <TouchableOpacity
       style={styles.cardContainer}
@@ -34,7 +34,7 @@ const Card = (item: ItemType) => {
           <View style={styles.cardHeader}>
             <Text style={styles.cardTitle}>{item.name}</Text>
             <Text style={styles.cardPrice}>
-              ${item.price && item.price.toLocaleString("en-US")}
+              ${item.price.toLocaleString("en-US")}
             </Text>
           </View>
 
@@ -78,7 +78,7 @@ const Card = (item: ItemType) => {
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
-    padding: 8,
+    padding: 16,
   },
   card: {
     flex: 1,

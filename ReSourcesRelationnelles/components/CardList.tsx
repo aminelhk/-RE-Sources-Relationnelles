@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, SafeAreaView, FlatList } from "react-native";
+import { StyleSheet, SafeAreaView, FlatList, Platform } from "react-native";
 import Card from "./Card";
 
 const items = [
@@ -102,7 +102,7 @@ const CardList = () => {
         data={items}
         renderItem={({ item }) => <Card item={item} />}
         keyExtractor={(item, index) => index.toString()}
-        numColumns={4} // Number of columns
+        numColumns={Platform.OS === "web" ? 4 : 1} // Number of columns
         contentContainerStyle={styles.flatListContent}
       />
     </SafeAreaView>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f2f2f2",
   },
   flatListContent: {
-    paddingHorizontal: 16,
+    flex: 1,
     paddingTop: 16,
   },
 });
