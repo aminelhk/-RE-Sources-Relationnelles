@@ -1,14 +1,15 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Linking, StyleSheet, Image } from 'react-native';
 
-const Footer = () => {
+
+const Footer : React.FC = () => {
   return (
     <View style={styles.footer}>
       <View style={styles.container}>
         <View style={styles.body}>
           <TouchableOpacity onPress={() => Linking.openURL('/')}>
-            <Image
-              source={require("../assets/Logo_de_la_République_française.svg")}
+          <Image
+              source={require("../assets/Logo_de_la_République_française.png")}
               style={styles.logo}
             />
           </TouchableOpacity>
@@ -92,8 +93,8 @@ const styles = StyleSheet.create({
     flexBasis: '100%',
   },
   contentDesc: {
-    width: '100%',
-    maxWidth: 500,
+    width: 500,
+    maxWidth: '100%',
     fontSize: 14,
     lineHeight: 24,
     textAlign: 'justify',
@@ -146,8 +147,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   logo: {
-    width: 161,
-    height: 95
+    width: 220,
+    height: 130,
+
+    marginTop: 20,
+    backgroundColor: 'RGB(0,0,0)',
   },
 });
 
