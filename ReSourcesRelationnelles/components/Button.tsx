@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, Pressable } from 'react-native';
+import { Text, StyleSheet, Pressable, Platform } from 'react-native';
 
 export default function ButtonFr(props: { onPress: () => void; title?: string }) {
   const { onPress, title = "undefined" } = props;
@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 32,
     elevation: 4,
+    shadowColor: Platform.OS === 'ios'? undefined : 'black',
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
     backgroundColor: '#000091',
     maxWidth: 250,
   },
