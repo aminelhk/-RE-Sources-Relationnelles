@@ -6,19 +6,15 @@ import Card from "components/CardList";
 import Accordion from "components/Accordion";
 import ButtonFr from "components/Button";
 import TextFr from "components/TextFr";
+import CardList from "components/CardList";
 
 
 const HomePage: React.FC = () => {
   return (
     <View style={styles.container}>
+      <Header brandTop={undefined} homeLinkProps={{title : "i", href:"#"}} id={""} quickAccessItems={[]} serviceTagline={""} serviceTitle={""}/>
+      <CardList/>
       <Footer/>
-      <ButtonFr onPress={function (): void {
-        alert("Hello World");
-      } }/> 
-      <TextFr text="test1" number={1}/>
-      <TextFr text="test2" number={2}/>
-      <TextFr text="test3" number={3}/>
-      <TextFr text="test4"/>
     </View>
   );
 };
