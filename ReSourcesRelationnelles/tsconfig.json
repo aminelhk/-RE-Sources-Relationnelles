@@ -1,36 +1,42 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "es2015",
+    "target": "esnext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
-    "jsx": "react",
-    "sourceMap": true,
-    "importHelpers": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noImplicitReturns": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "preserveConstEnums": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
     "noEmit": true,
-    "noEmitHelpers": true,
-    "baseUrl": ".",
-    "rootDir": "./" // Modification ici
+    "incremental": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-native",
+    "types": [
+      "react",
+      "react-native",
+      "expo"
+    ]
   },
-  "exclude": [
-    "App.js",
-    "App.test.js",
-    "build",
-    "node_modules"
+  "include": [
+    "components",
+    "pages",
+    "types",
+    "App.tsx"
   ],
-  "compileOnSave": false,
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ],
   "extends": "expo/tsconfig.base"
 }
