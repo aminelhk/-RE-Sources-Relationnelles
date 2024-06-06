@@ -1,6 +1,6 @@
-import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import HomePage from "./pages/HomePage";
+import React from 'react'
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
+import HomePage from './pages/HomePage'
 
 const App: React.FC = () => {
   return (
@@ -9,8 +9,8 @@ const App: React.FC = () => {
         <HomePage />
       </ScrollView>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 1,
   },
-});
+})
 
-export default App;
+export default App
