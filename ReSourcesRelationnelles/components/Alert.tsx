@@ -2,19 +2,34 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 interface AlertProps {
-  type: "success" | "error";
+  context: "success" | "error" | "warning" | "info";
   title: string;
   message: string;
   onClose: () => void;
 }
 
-const Alert: React.FC<AlertProps> = ({ type, title, message, onClose }) => {
+const Alert: React.FC<AlertProps> = ({ context, title, message, onClose }) => {
+  const getContextStyles = () => {
+    switch (context) {
+      case "success":
+        return { container: styles.success, icon: "✔", iconColor: "#155724" };
+      case "error":
+        return { container: styles.error, icon: "✖", iconColor: "#721c24" };
+      case "warning":
+        return { container: styles.warning, icon: "⚠", iconColor: "#856404" };
+      case "info":
+        return { container: styles.info, icon: "ℹ", iconColor: "#0c5460" };
+      default:
+        return { container: {}, icon: "", iconColor: "" };
+    }
+  };
+
+  const { container, icon, iconColor } = getContextStyles();
+
   return (
-    <View
-      style={[styles.alert, type === "success" ? styles.success : styles.error]}
-    >
+    <View style={[styles.alert, container]}>
       <View style={styles.iconContainer}>
-        <Text style={styles.icon}>✔</Text>
+        <Text style={[styles.icon, { color: iconColor }]}>{icon}</Text>
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
@@ -45,12 +60,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8d7da",
     borderColor: "#f5c6cb",
   },
+  warning: {
+    backgroundColor: "#fff3cd",
+    borderColor: "#ffeeba",
+  },
+  info: {
+    backgroundColor: "#d1ecf1",
+    borderColor: "#bee5eb",
+  },
   iconContainer: {
     marginRight: 12,
   },
   icon: {
     fontSize: 24,
-    color: "#155724",
   },
   textContainer: {
     flex: 1,

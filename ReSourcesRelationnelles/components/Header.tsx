@@ -1,42 +1,23 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { useWindowDimensions } from "react-native";
 
 const Header: React.FC = () => {
   const [menuVisible, setMenuVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(
-    Dimensions.get("window").width < 768
-  );
-
-  useEffect(() => {
-    const updateState = () => {
-      setIsMobile(Dimensions.get("window").width < 768);
-    };
-
-    const subscription = Dimensions.addEventListener("change", updateState);
-
-    return () => {
-      subscription.remove();
-    };
-  }, []);
+  const { width } = useWindowDimensions();
+  const isMobile = width < 768;
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
 
   return (
-    <>
-      <View style={styles.header} role="banner">
+    <View style={styles.container}>
+      <View style={styles.header}>
         <View style={styles.headerBodyRow}>
           <View style={styles.headerBrand}>
             <Image
-              source={require("../assets/logo_france.svg.png")}
+              source={require("../assets/logo_france.png")}
               style={styles.frLogoImage}
             />
             <View style={styles.textContainer}>
@@ -56,17 +37,9 @@ const Header: React.FC = () => {
               <Text style={styles.burgerMenuIcon}>☰</Text>
             </TouchableOpacity>
           ) : (
-            <View
-              style={styles.headerMenu}
-              id="modal-491"
-              aria-labelledby="button-492"
-            >
-              <View style={styles.container}>
-                <View
-                  style={styles.navigation}
-                  role="navigation"
-                  aria-label="Menu principal"
-                >
+            <View style={styles.headerMenu}>
+              <View style={styles.menuContainer}>
+                <View style={styles.navigation}>
                   <View style={styles.navList}>
                     <TouchableOpacity style={styles.navItem}>
                       <Text style={styles.navLink}>Accès direct 1</Text>
@@ -86,28 +59,31 @@ const Header: React.FC = () => {
             </View>
           )}
         </View>
-        {isMobile && menuVisible && (
-          <View style={styles.mobileMenu}>
-            <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
-              <Text style={styles.navLink}>Accès direct 1</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
-              <Text style={styles.navLink}>Accès direct 2</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
-              <Text style={styles.navLink}>Accès direct 3</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
-              <Text style={styles.navLink}>Accès direct 4</Text>
-            </TouchableOpacity>
-          </View>
-        )}
       </View>
-    </>
+      {isMobile && menuVisible && (
+        <View style={styles.mobileMenu}>
+          <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
+            <Text style={styles.navLink}>Accès direct 1</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
+            <Text style={styles.navLink}>Accès direct 2</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
+            <Text style={styles.navLink}>Accès direct 3</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
+            <Text style={styles.navLink}>Accès direct 4</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+  },
   header: {
     width: "100%",
     height: "100%",
@@ -132,27 +108,9 @@ const styles = StyleSheet.create({
   },
   frLogoImage: {
     width: 126,
-    height: 90,
-  },
-  frLogo: {
-    fontWeight: "700",
-    lineHeight: 17.5,
-    letterSpacing: -0.01,
-    textTransform: "uppercase",
-    verticalAlign: "middle",
-    fontSize: 16.8,
-    color: "#000",
-    marginTop: 5,
-  },
-  frHeaderService: {
-    paddingTop: 12,
-    paddingBottom: 12,
-    marginLeft: 12,
-    marginRight: 12,
-    width: "100%",
-    color: "#161616",
-    borderBottomColor: "#ddd",
-    borderBottomWidth: 1,
+    height: "auto",
+    aspectRatio: 4 / 2, // Ratio ajusté pour l'image
+    resizeMode: "contain",
   },
   frHeaderServiceTitle: {
     fontWeight: "700",
@@ -171,7 +129,7 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     elevation: 1,
   },
-  container: {
+  menuContainer: {
     padding: 16,
   },
   navigation: {
