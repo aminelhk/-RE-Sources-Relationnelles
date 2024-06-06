@@ -42,7 +42,7 @@ const Card: React.FC<CardProps> = ({ item, onPress }) => {
           </View>
 
           <View style={styles.cardFooter}>
-            <Text style={styles.cardFooterText}>{item.author}</Text>
+            <Text style={styles.cardFooterText}>{item.author.pseudo}</Text>
             <Text style={styles.cardFooterText}>
               {/* {item.date.toLocaleDateString("en-US", {
                 day: "numeric",

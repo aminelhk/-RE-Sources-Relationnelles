@@ -6,6 +6,9 @@ exports.getResources = async (req, res) => {
     include: {
       comments: true,
       shares: true,
+      author: true,
+      categoryResource: true,
+      typeResource: true,
     },
   });
   res.json(resources);
@@ -34,6 +37,13 @@ exports.createResource = async (req, res) => {
       typeResourceId,
       isPrivate,
     },
+    include: {
+      comments: true,
+      shares: true,
+      author: true,
+      categoryResource: true,
+      typeResource: true,
+    },
   });
   res.json(resource);
 };
@@ -42,6 +52,13 @@ exports.deleteResource = async (req, res) => {
   const { idResource } = req.body;
   const resource = await prisma.resource.delete({
     where: { idResource: idResource },
+    include: {
+      comments: true,
+      shares: true,
+      author: true,
+      categoryResource: true,
+      typeResource: true,
+    },
   });
   res.json(resource);
 };
@@ -70,6 +87,13 @@ exports.updateResource = async (req, res) => {
       categoryResourceId,
       typeResourceId,
     },
+    include: {
+      comments: true,
+      shares: true,
+      author: true,
+      categoryResource: true,
+      typeResource: true,
+    },
   });
   res.json(resource);
 };
@@ -80,6 +104,13 @@ exports.findOneResourceById = async (req, res) => {
     const resource = await prisma.resource.findUnique({
       where: {
         idResource: idResource,
+      },
+      include: {
+        comments: true,
+        shares: true,
+        author: true,
+        categoryResource: true,
+        typeResource: true,
       },
     });
     res.json(resource);
