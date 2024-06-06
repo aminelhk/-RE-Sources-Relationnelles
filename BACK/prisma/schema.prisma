@@ -1,0 +1,114 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  idUser    Int     @id @default(autoincrement())
+  email String  @unique
+  firstName  String
+  lastName String 
+  phone String @unique
+  password String
+  pseudo String
+  isActive Boolean @default(false)
+  isPrivate Boolean @default(true)
+  vitalCardNumber String @unique
+  resources Resource[]
+  typesRelation TypeRelation[]
+  role Role @relation(fields: [roleId], references: [idRole])
+  roleId Int
+  comments Comment[]
+  shares Share[] 
+}
+
+model Comment {
+  idComment Int @id @default(autoincrement())
+  content String
+  createdAt DateTime @default(now())
+  author User @relation(fields: [authorId], references: [idUser])
+  authorId Int
+  resource Resource @relation(fields: [resourceId], references: [idResource])
+  resourceId Int
+  replies Comment[] @relation("CommentReplies")
+  parentComment Comment? @relation("CommentReplies", fields: [parentId], references: [idComment])
+  parentId Int?
+}
+
+
+model Resource {
+  idResource Int @id @default(autoincrement())
+  title String
+  content String
+  isFavorite Boolean @default(false)
+  isArchived Boolean @default(false)
+  isValidated Boolean @default(false)
+  isExploited Boolean @default(false)
+  isPrivate Boolean @default(false)
+  author User @relation(fields: [authorId], references: [idUser])
+  authorId Int
+  categoryResource CategoryResource @relation(fields: [categoryResourceId], references: [idCategoryResource])
+  categoryResourceId Int 
+  typeResource TypeResource @relation(fields: [typeResourceId], references: [idTypeResource])
+  typeResourceId Int 
+  typeRelation TypeRelation[]
+  stateTypeRelation StateTypeRelation[]
+  comments Comment[]
+  shares Share[]
+}
+
+model Share {
+  idShare Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [idUser])
+  userId Int
+  resource Resource @relation(fields: [resourceId], references: [idResource])
+  resourceId Int
+  createdAt DateTime @default(now())
+}
+
+model Role {
+  idRole Int @id @default(autoincrement())
+  labelRole String
+  users User[]
+}
+
+model TypeRelation {
+  idTypeRelation Int @id @default(autoincrement())
+  labelTypeRelation String
+  users User[]
+  resources Resource[]
+  stateTypeRelation StateTypeRelation[]
+}
+
+model StateTypeRelation {
+  idStateTypeRelation Int @id @default(autoincrement())
+  labelStateTypeRelation String
+  typesRelation TypeRelation[]
+  resources Resource[]
+}
+
+// model Group {
+//   idGroup Int @id @default (autoincrement())
+//   labelGroup String
+//   descriptionGroup String
+// }
+
+model CategoryResource{
+  idCategoryResource Int @id @default(autoincrement())
+  labelCategoryResource String
+  resources Resource[]
+}
+
+model TypeResource {
+  idTypeResource Int @id @default(autoincrement())
+  labelTypeResource String
+  resources Resource[]
+}
+

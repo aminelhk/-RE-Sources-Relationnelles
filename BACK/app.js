@@ -1,30 +1,38 @@
-import cors from "cors";
 import express from "express";
-import mongoose from "mongoose";
-// import { productRouter } from "./routes/product.js";
+import cors from "cors";
+import helmet from "helmet";
 
-// Connect to mongo db database
-mongoose
-  .connect(
-    "mongodb+srv://admin:KusDNQUKuB5WLSkS@resourcesrelationnelles.uzlf8km.mongodb.net/?retryWrites=true&w=majority"
-  )
-  .then(() => console.log("Connected to database"))
-  .catch((err) => console.log("Unable to connect", err));
+import userRoutes from "./routes/userRoutes";
+import roleRoutes from "./routes/roleRoutes";
+import resourceRoutes from "./routes/resourceRoutes";
+import typesResourceRoutes from "./routes/typeResourceRoutes";
+import categoriesResourceRoutes from "./routes/categoryResourceRoutes";
+import commentsRoutes from "./routes/commentRoutes";
 
-// Initialize express
+const corsOptions = {
+  origin: "http://localhost:3000",
+  optionsSuccessStatus: 200,
+};
+
+const helmetOptions = {
+  contentSecurityPolicy: false,
+  crossOriginEmbedderPolicy: false,
+  crossOriginResourcePolicy: false,
+};
+
 const app = express();
-app.use(cors()); // For cors management
-app.use(express.json()); // Parsing the request for `JSON` support
 
-// Welcome
-app.get("/", (req, res) => {
-  res.send("Welcome to the API");
-});
+app.use(express.json()); // Pour parser les corps de requêtes en JSON
 
-// Routes for our api
-// app.use("/api/products", productRouter);
+app.use(cors(corsOptions));
+app.use(helmet(helmetOptions));
 
-// Server init
-app.listen(3001, () => {
-  console.log("Application listen to port 3001");
-});
+app.use("/api/users", userRoutes); // Route pour les utilisateurs
+app.use("/api/roles", roleRoutes); // Route pour les roles
+app.use("/api/resources", resourceRoutes); // Route pour les resources
+app.use("/api/typesResource", typesResourceRoutes); // Route pour les typesResource
+app.use("/api/categoriesResource", categoriesResourceRoutes); // Route pour les utilisateurs
+app.use("/api/resources/:id", resourceRoutes); // Route pour les resources by id
+app.use("/api/comments", commentsRoutes); // Route pour les commentaires
+
+module.exports = app;
