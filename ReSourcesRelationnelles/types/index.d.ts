@@ -1,8 +1,19 @@
-export type { User } from './User'
-export type { Resource } from './Resource'
-export type { Role } from './Role'
-export type { TypeRelation } from './TypeRelation'
-export type { StateTypeRelation } from './StateTypeRelation'
-export type { CategoryResource } from './CategoryResource'
-export type { TypeResource } from './TypeResource'
-export type { Share } from './Share'
+import User from './User'
+import Resource from './Resource'
+import Role from './Role'
+import TypeRelation from './TypeRelation'
+import StateTypeRelation from './StateTypeRelation'
+import CategoryResource from './CategoryResource'
+import TypeResource from './TypeResource'
+import Share from './Share'
+
+export {
+  User,
+  Resource,
+  Role,
+  TypeRelation,
+  StateTypeRelation,
+  CategoryResource,
+  TypeResource,
+  Share,
+}
