@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import CardList from '../components/CardList'
 import Resource from '../types/Resource'
 import SearchBar from '../components/SearchBar'
+import LoginScreen from '../components/Form'
 
 const HomePage: React.FC = () => {
   // Nouvel état pour stocker la recherche de l'utilisateur
@@ -73,6 +74,7 @@ const HomePage: React.FC = () => {
         serviceTitle='Nom du site / service'
       />
       {/* Autres composants ou contenu de la page */}
+      <LoginScreen />
       <SearchBar recherche={search} setRecherche={setSearch} onPress={handleSearch} />
       <CardList resources={searchedResources} />
     </View>

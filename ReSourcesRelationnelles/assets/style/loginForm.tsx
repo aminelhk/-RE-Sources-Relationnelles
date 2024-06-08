@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '40%',
-    height: '50%', // Increased height
     padding: 20,
     borderRadius: 10,
     backgroundColor: 'white',
