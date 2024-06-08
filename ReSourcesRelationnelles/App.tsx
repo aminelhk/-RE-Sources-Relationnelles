@@ -1,24 +1,20 @@
 import React from 'react'
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
-import HomePage from './pages/HomePage'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import LoginScreen from './pages/LoginPage'
+import RegisterScreen from './pages/RegisterPage'
+
+const Stack = createStackNavigator()
 
 const App: React.FC = () => {
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <HomePage />
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Login'>
+        <Stack.Screen name='Login' component={LoginScreen} />
+        <Stack.Screen name='Register' component={RegisterScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
-  scrollView: {
-    flexGrow: 1,
-  },
-})
 
 export default App
