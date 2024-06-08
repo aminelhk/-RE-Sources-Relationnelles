@@ -1,19 +1,70 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native'
 import FeatherIcon from 'react-native-vector-icons/Feather'
 
 import Resource from '../types/Resource'
 
 interface CardProps {
+  resources : Resource[] 
   item: Resource
+  setResources: Dispatch<SetStateAction<Resource[]>>
   onPress: () => void
 }
 
-const Card: React.FC<CardProps> = ({ item, onPress }) => {
+const Card: React.FC<CardProps> = ({ resources,item, setResources ,onPress }) => {
+
+  // Function to handle update
+  const onUpdate = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/resources/updateResource', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(item),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update resource');
+      }
+
+      // Handle success (e.g., update state)
+      const updatedItem = await response.json();
+      console.log('Resource updated:', updatedItem);
+
+    } catch (error) {
+      console.error('Error updating resource:', error);
+    }
+  };
+
+  // Function to handle delete
+  const onDelete = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/resources/deleteResource', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ idResource: item.idResource }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete resource');
+      }
+      const res = resources.filter(resource => resource.idResource != item.idResource);
+      setResources(res);
+      // Handle success (e.g., remove item from state)
+      console.log('Resource deleted');
+
+    } catch (error) {
+      console.error('Error deleting resource:', error);
+    }
+  };
+
   return (
-    <TouchableOpacity style={styles.cardContainer} onPress={onRead}>
+    <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
       <View style={styles.card}>
-        <TouchableOpacity style={{ ...styles.button, ...styles.buttonOpen }} onPress={onRead}>
+        <TouchableOpacity style={{ ...styles.button, ...styles.buttonOpen }} onPress={onPress}>
           <FeatherIcon color='white' name='book-open' size={20} />
         </TouchableOpacity>
 
@@ -21,7 +72,7 @@ const Card: React.FC<CardProps> = ({ item, onPress }) => {
           <FeatherIcon color='white' name='edit' size={20} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={{ ...styles.button, ...styles.buttonDelete }} onPress={onPress}>
+        <TouchableOpacity style={{ ...styles.button, ...styles.buttonDelete }} onPress={onDelete}>
           <FeatherIcon color='white' name='trash' size={20} />
         </TouchableOpacity>
         <View style={styles.cardTop}>
@@ -59,9 +110,6 @@ const Card: React.FC<CardProps> = ({ item, onPress }) => {
   )
 }
 
-function onUpdate(): void {}
-function onDelete(): void {}
-function onRead(): void {}
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
@@ -182,6 +230,6 @@ const styles = StyleSheet.create({
     color: '#48496c',
     marginLeft: 4,
   },
-})
+});
 
-export default Card
+export default Card;
