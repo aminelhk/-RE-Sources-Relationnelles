@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import path from "path";
 
 import userRoutes from "./routes/userRoutes";
 import roleRoutes from "./routes/roleRoutes";
@@ -34,5 +35,6 @@ app.use("/api/typesResource", typesResourceRoutes); // Route pour les typesResou
 app.use("/api/categoriesResource", categoriesResourceRoutes); // Route pour les utilisateurs
 app.use("/api/resources/:id", resourceRoutes); // Route pour les resources by id
 app.use("/api/comments", commentsRoutes); // Route pour les commentaires
+app.use("/images", express.static(path.join(__dirname, "images"))); // Route pour les images
 
 module.exports = app;
