@@ -9,6 +9,7 @@ interface LoginScreenProps {
 }
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
+  const [createAccount, setCreateAccount] = useState(false)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [emailError, setEmailError] = useState<string | null>(null)
@@ -79,7 +80,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.label}>Adresse mail</Text>
+        {!createAccount ? (<View><Text style={styles.label}>Adresse mail</Text>
         <TextInput
           style={styles.input}
           value={email}
@@ -98,7 +99,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
           secureTextEntry
           placeholder='Entrez votre mot de passe'
         />
-        {passwordError && <Text style={styles.errorText}>{passwordError}</Text>}
+        {passwordError && <Text style={styles.errorText}>{passwordError}</Text>} </View>):()
 
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Confirmer</Text>
