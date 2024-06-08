@@ -17,7 +17,7 @@ const Header: React.FC = () => {
         <View style={styles.headerBodyRow}>
           <View style={styles.headerBrand}>
             <Image
-              source={require("../assets/logo_france.png")}
+              source={require("../assets/Logo_de_la_République_française.png")}
               style={styles.frLogoImage}
             />
             <View style={styles.textContainer}>
