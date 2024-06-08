@@ -1,65 +1,91 @@
-import React from 'react';
-import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native';
-import FeatherIcon from 'react-native-vector-icons/Feather';
-import Resource from '../types/Resource';
+import React from 'react'
+import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native'
+import FeatherIcon from 'react-native-vector-icons/Feather'
+
+import Resource from '../types/Resource'
 
 interface CardProps {
-  item: Resource;
+  item: Resource
+  onPress: () => void
 }
 
-const Card: React.FC<CardProps> = ({ item }) => {
+const Card: React.FC<CardProps> = ({ item, onPress }) => {
   return (
     <TouchableOpacity style={styles.cardContainer} onPress={onRead}>
       <View style={styles.card}>
-        <View style={styles.cardActions}>
+        <TouchableOpacity style={{ ...styles.button, ...styles.buttonOpen }} onPress={onRead}>
+          <FeatherIcon color='white' name='book-open' size={20} />
+        </TouchableOpacity>
 
-          <TouchableOpacity style={styles.cardButton} onPress={onRead}>
-            <FeatherIcon color='#48496c' name='book-open' size={20} />
-          </TouchableOpacity>
+        <TouchableOpacity style={{ ...styles.button, ...styles.buttonEdit }} onPress={onUpdate}>
+          <FeatherIcon color='white' name='edit' size={20} />
+        </TouchableOpacity>
 
-          <TouchableOpacity style={styles.cardButton} onPress={onUpdate}>
-            <FeatherIcon color='#48496c' name='edit' size={20} />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.cardButton} onPress={onDelete}>
-            <FeatherIcon color='#48496c' name='trash' size={20} />
-          </TouchableOpacity>
-
-        </View>
+        <TouchableOpacity style={{ ...styles.button, ...styles.buttonDelete }} onPress={onPress}>
+          <FeatherIcon color='white' name='trash' size={20} />
+        </TouchableOpacity>
         <View style={styles.cardTop}>
           <Image alt='' resizeMode='cover' style={styles.cardImg} source={{ uri: item.content }} />
         </View>
 
         <View style={styles.cardBody}>
-
           <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>{item.content}</Text>
+            <Text style={styles.cardTitle}>{item.author.pseudo}</Text>
             <Text style={styles.cardPrice}>{item.title}</Text>
           </View>
+          <View style={styles.cardStats}>
+            <View style={styles.cardStatsItem}>
+              <FeatherIcon color='#48496c' name='message-circle' size={14} />
+              <Text style={styles.cardStatsItemText}>{item.comments.length}</Text>
+            </View>
 
+            <View style={styles.cardStatsItem}>
+              <FeatherIcon color='#48496c' name='share-2' size={14} />
+              <Text style={styles.cardStatsItemText}>{item.shares.length}</Text>
+            </View>
+
+            <View style={styles.cardStatsItem}>
+              <FeatherIcon color='#48496c' name='clock' size={14} />
+              <Text style={styles.cardStatsItemText}></Text>
+            </View>
+          </View>
           <View style={styles.cardFooter}>
             <Text style={styles.cardFooterText}>{item.author.pseudo}</Text>
-            <Text style={styles.cardFooterText}>
-              {/* {item.date.toLocaleDateString("en-US", {
-                day: "numeric",
-                year: "numeric",
-                month: "short",
-              })} */}
-              date
-            </Text>
+            <Text style={styles.cardFooterText}>{item.createdAt.date}</Text>
           </View>
-
         </View>
-
       </View>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
-function onUpdate(): void { };
-function onDelete(): void { };
-function onRead(): void { };
+function onUpdate(): void {}
+function onDelete(): void {}
+function onRead(): void {}
 const styles = StyleSheet.create({
+  button: {
+    position: 'absolute',
+    zIndex: 1,
+    width: 40,
+    height: 40,
+    right: 10,
+    borderRadius: 8,
+    color: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonEdit: {
+    top: 55,
+    backgroundColor: 'blue',
+  },
+  buttonOpen: {
+    top: 100,
+    backgroundColor: 'green',
+  },
+  buttonDelete: {
+    top: 10,
+    backgroundColor: 'red',
+  },
   cardContainer: {
     flex: 1,
     padding: 16,
@@ -143,7 +169,7 @@ const styles = StyleSheet.create({
   cardActions: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap:5,
+    gap: 5,
     marginBottom: 12,
   },
   cardButton: {
@@ -158,4 +184,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Card;
+export default Card
