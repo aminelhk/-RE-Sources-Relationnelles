@@ -10,13 +10,14 @@ import {
   updateFavoriteResource,
   shareResource,
 } from "../controllers/resourceController";
+import multer from "multer";
 
 const router = express.Router();
 
 router.get("/", getResources);
-router.post("/createResource", createResource);
+router.post("/createResource", multer, createResource);
 router.delete("/deleteResource", deleteResource);
-router.put("/updateResource", updateResource);
+router.put("/updateResource", multer, updateResource);
 router.get("/findOneResourceById", findOneResourceById);
 router.put("/updateArchiveResource", updateArchiveResource);
 router.put("/updateExploitResource", updateExploitResource);

@@ -1,6 +1,28 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+/**
+ * Formats a date string into a custom format.
+ *
+ * @param {string} dateString - The date string to be formatted.
+ * @returns {Object} An object containing the formatted date and time.
+ * @property {string} jour - The formatted date in the format "dd/mm/yyyy".
+ * @property {string} heure - The formatted time in the format "hh:mm:ss".
+ */
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear().toString();
+  const hour = date.getHours().toString().padStart(2, "0");
+  const minute = date.getMinutes().toString().padStart(2, "0");
+  const second = date.getSeconds().toString().padStart(2, "0");
+
+  const formattedDate = `${day}/${month}/${year}`;
+  const formattedTime = `${hour}:${minute}:${second}`;
+  return { date: formattedDate, heure: formattedTime };
+};
+
 exports.getResources = async (req, res) => {
   const resources = await prisma.resource.findMany({
     include: {
@@ -11,10 +33,20 @@ exports.getResources = async (req, res) => {
       typeResource: true,
     },
   });
+  // Format the date of each resource
+  resources.forEach((resource) => {
+    resource.createdAt = formatDate(resource.createdAt);
+  });
   res.json(resources);
 };
 
 exports.createResource = async (req, res) => {
+  const resourceObject = JSON.parse(req.body.resource);
+  const newResource = new Resource({
+    ...resourceObject,
+    content: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+  });
+
   const {
     title,
     content,
@@ -24,7 +56,7 @@ exports.createResource = async (req, res) => {
     categoryResourceId,
     typeResourceId,
     isPrivate,
-  } = req.body;
+  } = newResource;
   const resource = await prisma.resource.create({
     data: {
       title,
@@ -64,6 +96,15 @@ exports.deleteResource = async (req, res) => {
 };
 
 exports.updateResource = async (req, res) => {
+  const resourceObject = req.file
+    ? {
+        ...JSON.parse(req.body.resource),
+        content: `${req.protocol}}://${req.get("host")}/images/${
+          req.file.filename
+        }`,
+      }
+    : { ...req.body };
+
   const {
     idResource,
     title,
@@ -74,7 +115,7 @@ exports.updateResource = async (req, res) => {
     authorId,
     categoryResourceId,
     typeResourceId,
-  } = req.body;
+  } = resourceObject;
   const resource = await prisma.resource.update({
     where: { idResource: idResource },
     data: {

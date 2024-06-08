@@ -23,7 +23,7 @@ model User {
   vitalCardNumber String @unique
   resources Resource[]
   typesRelation TypeRelation[]
-  role Role @relation(fields: [roleId], references: [idRole])
+  role Role @relation(fields: [roleId], references: [idRole], onDelete: Cascade)
   roleId Int
   comments Comment[]
   shares Share[] 
@@ -35,10 +35,10 @@ model Comment {
   createdAt DateTime @default(now())
   author User @relation(fields: [authorId], references: [idUser])
   authorId Int
-  resource Resource @relation(fields: [resourceId], references: [idResource])
+  resource Resource @relation(fields: [resourceId], references: [idResource], onDelete: Cascade)
   resourceId Int
   replies Comment[] @relation("CommentReplies")
-  parentComment Comment? @relation("CommentReplies", fields: [parentId], references: [idComment])
+  parentComment Comment? @relation("CommentReplies", fields: [parentId], references: [idComment], onDelete: Cascade)
   parentId Int?
 }
 
@@ -47,6 +47,7 @@ model Resource {
   idResource Int @id @default(autoincrement())
   title String
   content String
+  createdAt DateTime @default(now())
   isFavorite Boolean @default(false)
   isArchived Boolean @default(false)
   isValidated Boolean @default(false)
@@ -54,9 +55,9 @@ model Resource {
   isPrivate Boolean @default(false)
   author User @relation(fields: [authorId], references: [idUser])
   authorId Int
-  categoryResource CategoryResource @relation(fields: [categoryResourceId], references: [idCategoryResource])
+  categoryResource CategoryResource @relation(fields: [categoryResourceId], references: [idCategoryResource], onDelete: Cascade)
   categoryResourceId Int 
-  typeResource TypeResource @relation(fields: [typeResourceId], references: [idTypeResource])
+  typeResource TypeResource @relation(fields: [typeResourceId], references: [idTypeResource], onDelete: Cascade)
   typeResourceId Int 
   typeRelation TypeRelation[]
   stateTypeRelation StateTypeRelation[]
@@ -66,9 +67,9 @@ model Resource {
 
 model Share {
   idShare Int @id @default(autoincrement())
-  user User @relation(fields: [userId], references: [idUser])
+  user User @relation(fields: [userId], references: [idUser], onDelete: Cascade)
   userId Int
-  resource Resource @relation(fields: [resourceId], references: [idResource])
+  resource Resource @relation(fields: [resourceId], references: [idResource], onDelete: Cascade)
   resourceId Int
   createdAt DateTime @default(now())
 }
