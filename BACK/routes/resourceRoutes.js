@@ -10,7 +10,7 @@ import {
   updateFavoriteResource,
   shareResource,
 } from "../controllers/resourceController";
-import multer from "multer";
+import multer from "../middleware/multerConfig";
 
 const router = express.Router();
 
