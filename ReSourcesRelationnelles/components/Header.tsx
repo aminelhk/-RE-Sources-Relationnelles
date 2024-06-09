@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import { useWindowDimensions } from "react-native";
+import React, { useState } from 'react'
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import { useWindowDimensions } from 'react-native'
 
 const Header: React.FC = () => {
-  const [menuVisible, setMenuVisible] = useState(false);
-  const { width } = useWindowDimensions();
-  const isMobile = width < 768;
+  const [menuVisible, setMenuVisible] = useState(false)
+  const { width } = useWindowDimensions()
+  const isMobile = width < 768
 
   const toggleMenu = () => {
-    setMenuVisible(!menuVisible);
-  };
+    setMenuVisible(!menuVisible)
+  }
 
   return (
     <View style={styles.container}>
@@ -17,23 +17,16 @@ const Header: React.FC = () => {
         <View style={styles.headerBodyRow}>
           <View style={styles.headerBrand}>
             <Image
-              source={require("../assets/Logo_de_la_République_française.png")}
+              source={require('../assets/Logo_de_la_République_française.png')}
               style={styles.frLogoImage}
             />
             <View style={styles.textContainer}>
-              <Text style={styles.frHeaderServiceTitle}>
-                (Re)Sources Relationnelles
-              </Text>
-              <Text style={styles.frHeaderServiceTagline}>
-                Nom du site / service
-              </Text>
+              <Text style={styles.frHeaderServiceTitle}>(Re)Sources Relationnelles</Text>
+              <Text style={styles.frHeaderServiceTagline}>Nom du site / service</Text>
             </View>
           </View>
           {isMobile ? (
-            <TouchableOpacity
-              onPress={toggleMenu}
-              style={styles.burgerMenuButton}
-            >
+            <TouchableOpacity onPress={toggleMenu} style={styles.burgerMenuButton}>
               <Text style={styles.burgerMenuIcon}>☰</Text>
             </TouchableOpacity>
           ) : (
@@ -42,17 +35,17 @@ const Header: React.FC = () => {
                 <View style={styles.navigation}>
                   <View style={styles.navList}>
                     <TouchableOpacity style={styles.navItem}>
-                      <Text style={styles.navLink}>Accès direct 1</Text>
+                      <Text style={styles.navLink}>Liste des ressources</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.navItem}>
-                      <Text style={styles.navLink}>Accès direct 2</Text>
+                      <Text style={styles.navLink}>Statistiques</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.navItem}>
-                      <Text style={styles.navLink}>Accès direct 3</Text>
+                      <Text style={styles.navLink}>Déconnexion</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.navItem}>
+                    {/* <TouchableOpacity style={styles.navItem}>
                       <Text style={styles.navLink}>Accès direct 4</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                   </View>
                 </View>
               </View>
@@ -77,43 +70,43 @@ const Header: React.FC = () => {
         </View>
       )}
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    width: '100%',
   },
   header: {
-    width: "100%",
-    height: "100%",
-    position: "relative",
+    width: '100%',
+    height: '100%',
+    position: 'relative',
   },
   headerBodyRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingVertical: 24,
     paddingHorizontal: 16,
-    backgroundColor: "#f1f1f1",
-    shadowColor: "#000",
+    backgroundColor: '#f1f1f1',
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 1,
     elevation: 1,
   },
   headerBrand: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   frLogoImage: {
     width: 126,
-    height: "auto",
+    height: 'auto',
     aspectRatio: 4 / 2, // Ratio ajusté pour l'image
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   frHeaderServiceTitle: {
-    fontWeight: "700",
+    fontWeight: '700',
     fontSize: 18,
     lineHeight: 24,
   },
@@ -122,11 +115,11 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   textContainer: {
-    flexDirection: "column",
+    flexDirection: 'column',
     marginLeft: 12,
   },
   headerMenu: {
-    marginLeft: "auto",
+    marginLeft: 'auto',
     elevation: 1,
   },
   menuContainer: {
@@ -136,43 +129,43 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   navList: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   navItem: {
     marginLeft: 16,
   },
   navLink: {
     fontSize: 16,
-    color: "#fff",
+    color: '#fff',
     paddingVertical: 8,
     paddingHorizontal: 12,
-    backgroundColor: "#007BFF",
+    backgroundColor: '#000091',
     borderRadius: 4,
-    textAlign: "center",
+    textAlign: 'center',
   },
   burgerMenuButton: {
     padding: 8,
-    backgroundColor: "#007BFF",
+    backgroundColor: '#007BFF',
     borderRadius: 4,
   },
   burgerMenuIcon: {
     fontSize: 24,
-    color: "#fff",
+    color: '#fff',
   },
   mobileMenu: {
-    position: "absolute",
+    position: 'absolute',
     top: 70,
     right: 16,
-    backgroundColor: "#f1f1f1",
+    backgroundColor: '#f1f1f1',
     borderRadius: 4,
     padding: 16,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 1,
     elevation: 5,
   },
-});
+})
 
-export default Header;
+export default Header
