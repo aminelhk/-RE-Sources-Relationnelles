@@ -1,5 +1,6 @@
 import React from 'react'
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
+
 import HomePage from './pages/HomePage'
 
 const App: React.FC = () => {

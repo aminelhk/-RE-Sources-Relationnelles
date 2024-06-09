@@ -5,11 +5,13 @@ import {
   TypeRelation,
   TypeResource,
   User,
+  Comment,
 } from './index'
 
 interface Resource {
   idResource: number
   title: string
+  createdAt: { date: string; jour: string }
   content: string
   isFavorite: boolean
   isArchived: boolean
@@ -25,7 +27,7 @@ interface Resource {
   typeRelation: TypeRelation[]
   stateTypeRelation: StateTypeRelation[]
   shares: Share[]
-  comments: any[] //TODO: create Comment type
+  comments: Comment[] //TODO: create Comment type
 }
 
 export default Resource

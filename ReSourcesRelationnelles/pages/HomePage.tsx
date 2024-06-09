@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, Platform } from 'react-native'
+
 import Header from '../components/Header'
 import CardList from '../components/CardList'
 import Resource from '../types/Resource'
@@ -48,6 +49,7 @@ const HomePage: React.FC = () => {
       <SearchBar recherche={search} setRecherche={setSearch} onPress={handleSearch} />
       <CardList
         resources={searchedResources}
+        setResources={setSearchedResources}
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
       />
