@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity, View, Image, Text, StyleSheet, Platform, Linking } from 'react-native'
 import FeatherIcon from 'react-native-vector-icons/Feather'
 
 import Resource from '../types/Resource'
 import ModalComponent from './ModalComponent'
+import ModalFormCard from './ModalFormCard'
 
 interface CardProps {
   resources: Resource[]
@@ -20,12 +21,17 @@ const Card: React.FC<CardProps> = ({
   isModalVisible,
   setIsModalVisible,
 }) => {
+  // Function to handle press
   const onPress = () => {
     if (Platform.OS !== 'web') {
       Linking.openURL(item.content).catch(err => console.error("Impossible d'ouvrir l'URL", err))
     } else {
       window.open(item.content)
     }
+  }
+
+  const onPressUpdate = () => {
+    setIsModalVisible(true)
   }
 
   // Function to handle update
@@ -76,14 +82,16 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <View style={{ flex: 1 }}>
-      <ModalComponent isVisible={isModalVisible} setIsVisible={setIsModalVisible} />
+      <ModalFormCard isVisible={isModalVisible} setIsVisible={setIsModalVisible} />
       <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
         <View style={styles.card}>
           <TouchableOpacity style={{ ...styles.button, ...styles.buttonOpen }} onPress={onPress}>
             <FeatherIcon color='white' name='book-open' size={20} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ ...styles.button, ...styles.buttonEdit }} onPress={onUpdate}>
+          <TouchableOpacity
+            style={{ ...styles.button, ...styles.buttonEdit }}
+            onPress={onPressUpdate}>
             <FeatherIcon color='white' name='edit' size={20} />
           </TouchableOpacity>
 
