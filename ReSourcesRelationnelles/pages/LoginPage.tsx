@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, Alert, TouchableOpacity } from 'react-na
 import axios from 'axios'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import styles from '../assets/style/loginForm' // Importing the styles from the external file
-import RegisterPage from './RegisterPage'
+// import RegisterPage from './RegisterPage'
 
 interface LoginScreenProps {
   navigation: NavigationProp<ParamListBase>
