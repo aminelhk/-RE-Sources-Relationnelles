@@ -28,7 +28,7 @@ const CardList: React.FC<CardListType> = ({ resources, isModalVisible, setIsModa
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: '#f2f2f2',
   },
   flatListContent: {
     flex: 1,
