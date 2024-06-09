@@ -10,8 +10,6 @@ const App: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Login'>
-        {/* <Stack.Screen name='Login' component={LoginScreen} />
-         */}
         <Stack.Screen name='Home' component={HomeScreen} />
         <Stack.Screen name='Login' component={LoginScreen} />
       </Stack.Navigator>

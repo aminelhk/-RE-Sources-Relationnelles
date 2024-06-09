@@ -2,28 +2,44 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import { useWindowDimensions } from 'react-native'
 import Cookies from 'js-cookie'
+import axios from 'axios'
+import { useNavigation } from '@react-navigation/native'
 
 const Header: React.FC = () => {
   const [menuVisible, setMenuVisible] = useState(false)
   const { width } = useWindowDimensions()
   const isMobile = width < 768
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const navigation = useNavigation()
 
   useEffect(() => {
-    // Vérifier la présence du token JWT dans les cookies
-    const token = Cookies.get('token') // 'token' doit être remplacé par le nom de votre cookie
-
-    if (token) {
-      setIsAuthenticated(true)
-      console.log('Utilisateur authentifié')
-    } else {
-      setIsAuthenticated(false)
-      console.log('Utilisateur authentifié')
+    const fetchToken = async () => {
+      const token = Cookies.get('token')
+      if (token) {
+        setIsAuthenticated(true)
+        console.log('Utilisateur authentifié')
+      } else {
+        setIsAuthenticated(false)
+        console.log('Utilisateur non authentifié')
+      }
     }
+
+    fetchToken()
   }, [])
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible)
+  }
+
+  const handleLogout = async () => {
+    try {
+      await axios.post('/logout')
+      Cookies.remove('token')
+      setIsAuthenticated(false)
+      navigation.navigate('Login')
+    } catch (error) {
+      console.error('Failed to logout:', error)
+    }
   }
 
   return (
@@ -37,7 +53,9 @@ const Header: React.FC = () => {
             />
             <View style={styles.textContainer}>
               <Text style={styles.frHeaderServiceTitle}>(Re)Sources Relationnelles</Text>
-              <Text style={styles.frHeaderServiceTagline}>Nom du site / service</Text>
+              <Text style={styles.frHeaderServiceTagline}>
+                Ministère de la santé et de la prévention
+              </Text>
             </View>
           </View>
           {isMobile ? (
@@ -50,18 +68,20 @@ const Header: React.FC = () => {
                 <View style={styles.navigation}>
                   <View style={styles.navList}>
                     <TouchableOpacity style={styles.navItem}>
-                      <Text style={styles.navLink}>Liste des ressources</Text>
+                      <Text style={styles.navLink}>Accès direct 1</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.navItem}>
-                      <Text style={styles.navLink}>Statistiques</Text>
+                      <Text style={styles.navLink}>Accès direct 2</Text>
                     </TouchableOpacity>
                     {isAuthenticated ? (
-                      <TouchableOpacity style={styles.navItem}>
-                        <Text style={styles.navLink}>Connexion</Text>
+                      <TouchableOpacity style={styles.navItem} onPress={handleLogout}>
+                        <Text style={styles.navLink}>Déconnexion</Text>
                       </TouchableOpacity>
                     ) : (
-                      <TouchableOpacity style={styles.navItem}>
-                        <Text style={styles.navLink}>Déconnexion</Text>
+                      <TouchableOpacity
+                        style={styles.navItem}
+                        onPress={() => navigation.navigate('Login')}>
+                        <Text style={styles.navLink}>Connexion</Text>
                       </TouchableOpacity>
                     )}
                   </View>
@@ -74,17 +94,17 @@ const Header: React.FC = () => {
       {isMobile && menuVisible && (
         <View style={styles.mobileMenu}>
           <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
-            <Text style={styles.navLink}>Liste des ressources</Text>
+            <Text style={styles.navLink}>Accès direct 1</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
-            <Text style={styles.navLink}>Statistiques</Text>
+            <Text style={styles.navLink}>Accès direct 2</Text>
           </TouchableOpacity>
           {isAuthenticated ? (
-            <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
+            <TouchableOpacity style={styles.navItem} onPress={handleLogout}>
               <Text style={styles.navLink}>Déconnexion</Text>
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
+            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Login')}>
               <Text style={styles.navLink}>Connexion</Text>
             </TouchableOpacity>
           )}
