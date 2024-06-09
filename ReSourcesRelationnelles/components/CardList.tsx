@@ -1,21 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { StyleSheet, SafeAreaView, FlatList, Platform } from 'react-native'
+
 import Card from './Card'
 import Resource from '../types/Resource'
 
 type CardListType = {
   resources: Resource[]
+  setResources: (resources: Resource[]) => void
 }
 
-
-
-const CardList: React.FC<CardListType> = ({ resources }) => {
-  const [resources2, setResources] = useState<Resource[]>(resources)
+const CardList: React.FC<CardListType> = ({ resources, setResources }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <FlatList
         data={resources}
-        renderItem={({ item }) => <Card resources={resources2} setResources={setResources} item={item} onPress={() => {}} />}
+        renderItem={({ item }) => (
+          <Card resources={resources} setResources={setResources} item={item} onPress={() => {}} />
+        )}
         keyExtractor={(item, index) => index.toString()}
         numColumns={Platform.OS === 'web' ? 4 : 1} // Number of columns
         contentContainerStyle={styles.flatListContent}

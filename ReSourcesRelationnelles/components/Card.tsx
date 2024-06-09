@@ -1,18 +1,17 @@
-import React, { Dispatch, SetStateAction } from 'react'
+import React from 'react'
 import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native'
 import FeatherIcon from 'react-native-vector-icons/Feather'
 
 import Resource from '../types/Resource'
 
 interface CardProps {
-  resources : Resource[] 
+  resources: Resource[]
   item: Resource
-  setResources: Dispatch<SetStateAction<Resource[]>>
+  setResources: (resources: Resource[]) => void
   onPress: () => void
 }
 
-const Card: React.FC<CardProps> = ({ resources,item, setResources ,onPress }) => {
-
+const Card: React.FC<CardProps> = ({ resources, item, setResources, onPress }) => {
   // Function to handle update
   const onUpdate = async () => {
     try {
@@ -22,44 +21,42 @@ const Card: React.FC<CardProps> = ({ resources,item, setResources ,onPress }) =>
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(item),
-      });
+      })
 
       if (!response.ok) {
-        throw new Error('Failed to update resource');
+        throw new Error('Failed to update resource')
       }
 
       // Handle success (e.g., update state)
-      const updatedItem = await response.json();
-      console.log('Resource updated:', updatedItem);
-
+      const updatedItem = await response.json()
+      console.log('Resource updated:', updatedItem)
     } catch (error) {
-      console.error('Error updating resource:', error);
+      console.error('Error updating resource:', error)
     }
-  };
+  }
 
   // Function to handle delete
   const onDelete = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/resources/deleteResource', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ idResource: item.idResource }),
-      });
+      // const response = await fetch('http://localhost:3000/api/resources/deleteResource', {
+      //   method: 'DELETE',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ idResource: item.idResource }),
+      // })
 
-      if (!response.ok) {
-        throw new Error('Failed to delete resource');
-      }
-      const res = resources.filter(resource => resource.idResource != item.idResource);
-      setResources(res);
+      // if (!response.ok) {
+      //   throw new Error('Failed to delete resource')
+      // }
+      const res = resources.filter(resource => resource.idResource != item.idResource)
+      setResources(res)
       // Handle success (e.g., remove item from state)
-      console.log('Resource deleted');
-
+      console.log('Resource deleted')
     } catch (error) {
-      console.error('Error deleting resource:', error);
+      console.error('Error deleting resource:', error)
     }
-  };
+  }
 
   return (
     <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
@@ -230,6 +227,6 @@ const styles = StyleSheet.create({
     color: '#48496c',
     marginLeft: 4,
   },
-});
+})
 
-export default Card;
+export default Card

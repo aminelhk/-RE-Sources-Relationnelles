@@ -41,7 +41,7 @@ const HomePage: React.FC = () => {
   return (
     <View style={styles.container}>
       <Header
-        brandTop={<>(Re)Sources relationnelles</>}
+        brandTop={<View>(Re)Sources relationnelles</View>}
         homeLinkProps={{
           href: '/',
           title: 'Accueil - (Re)Sources Relationnelles ministère de la santé et de la prévention',
@@ -75,7 +75,7 @@ const HomePage: React.FC = () => {
       />
       {/* Autres composants ou contenu de la page */}
       <SearchBar recherche={search} setRecherche={setSearch} onPress={handleSearch} />
-      <CardList resources={searchedResources} />
+      <CardList resources={searchedResources} setResources={setSearchedResources} />
     </View>
   )
 }
