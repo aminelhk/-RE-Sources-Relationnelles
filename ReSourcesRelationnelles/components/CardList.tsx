@@ -5,14 +5,18 @@ import Resource from '../types/Resource'
 
 type CardListType = {
   resources: Resource[]
+  isModalVisible: boolean
+  setIsModalVisible: (isModalVisible: boolean) => void
 }
 
-const CardList: React.FC<CardListType> = ({ resources }) => {
+const CardList: React.FC<CardListType> = ({ resources, isModalVisible, setIsModalVisible }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <FlatList
         data={resources}
-        renderItem={({ item }) => <Card item={item} onPress={() => {}} />}
+        renderItem={({ item }) => (
+          <Card item={item} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} />
+        )}
         keyExtractor={(item, index) => index.toString()}
         numColumns={Platform.OS === 'web' ? 4 : 1} // Number of columns
         contentContainerStyle={styles.flatListContent}
@@ -24,7 +28,7 @@ const CardList: React.FC<CardListType> = ({ resources }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: 'red',
   },
   flatListContent: {
     flex: 1,

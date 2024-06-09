@@ -1,60 +1,88 @@
 import React from 'react'
-import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native'
+import { TouchableOpacity, View, Image, Text, StyleSheet, Platform } from 'react-native'
 import FeatherIcon from 'react-native-vector-icons/Feather'
 
 import Resource from '../types/Resource'
+import ModalComponent from './ModalComponent'
+import Pdf from 'react-native-pdf'
+import PdfViewer from './PdfViewer'
 
 interface CardProps {
   item: Resource
-  onPress: () => void
+  isModalVisible: boolean
+  setIsModalVisible: (modalVisible: boolean) => void
 }
 
-const Card: React.FC<CardProps> = ({ item, onPress }) => {
-  let img: any = 'oui'
+const Card: React.FC<CardProps> = ({ item, isModalVisible, setIsModalVisible }) => {
+  const onPress = () => {
+    console.log('item.content ', item.content)
+    Platform.OS !== 'web' ? (
+      <PdfViewer
+        pdfUri={
+          "http://192.168.1.29:3000/images/1717936829629Capture_d'Ã©cran_2023-05-10_201513.png.png"
+        }
+      />
+    ) : (
+      window.open(item.content)
+    )
+  }
   return (
-    <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
-      <View style={styles.card}>
-        <View style={styles.cardTop}>
-          <Image alt='' resizeMode='cover' style={styles.cardImg} source={{ uri: item.content }} />
-        </View>
-
-        <View style={styles.cardBody}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.cardTitle}>{item.content}</Text>
-            <Text style={styles.cardPrice}>{item.title}</Text>
+    <View style={{ flex: 1 }}>
+      <ModalComponent isVisible={isModalVisible} setIsVisible={setIsModalVisible} />
+      <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
+        <View style={styles.card}>
+          <View style={styles.cardTop}>
+            <Image
+              alt=''
+              resizeMode='cover'
+              style={styles.cardImg}
+              source={{
+                uri: item.content.includes('.pdf')
+                  ? 'http://192.168.1.29:3000/images/tutoriel-pdf-ok.png'
+                  : item.content,
+              }}
+            />
+            {/* )} */}
           </View>
 
-          <View style={styles.cardStats}>
-            <View style={styles.cardStatsItem}>
-              <FeatherIcon color='#48496c' name='zap' size={14} />
-              <Text style={styles.cardStatsItemText}>hp</Text>
+          <View style={styles.cardBody}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>{item.author.pseudo}</Text>
+              <Text style={styles.cardPrice}>{item.title}</Text>
             </View>
 
-            <View style={styles.cardStatsItem}>
-              <FeatherIcon color='#48496c' name='navigation' size={14} />
-              <Text style={styles.cardStatsItemText}>miles</Text>
+            <View style={styles.cardStats}>
+              <View style={styles.cardStatsItem}>
+                <FeatherIcon color='#48496c' name='zap' size={14} />
+                <Text style={styles.cardStatsItemText}>hp</Text>
+              </View>
+
+              <View style={styles.cardStatsItem}>
+                <FeatherIcon color='#48496c' name='navigation' size={14} />
+                <Text style={styles.cardStatsItemText}>miles</Text>
+              </View>
+
+              <View style={styles.cardStatsItem}>
+                <FeatherIcon color='#48496c' name='clock' size={14} />
+                <Text style={styles.cardStatsItemText}>sec</Text>
+              </View>
             </View>
 
-            <View style={styles.cardStatsItem}>
-              <FeatherIcon color='#48496c' name='clock' size={14} />
-              <Text style={styles.cardStatsItemText}>sec</Text>
-            </View>
-          </View>
-
-          <View style={styles.cardFooter}>
-            <Text style={styles.cardFooterText}>{item.author.pseudo}</Text>
-            <Text style={styles.cardFooterText}>
-              {/* {item.date.toLocaleDateString("en-US", {
+            <View style={styles.cardFooter}>
+              <Text style={styles.cardFooterText}>{item.author.pseudo}</Text>
+              <Text style={styles.cardFooterText}>
+                {/* {item.date.toLocaleDateString("en-US", {
                 day: "numeric",
                 year: "numeric",
                 month: "short",
               })} */}
-              date
-            </Text>
+                date
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   )
 }
 

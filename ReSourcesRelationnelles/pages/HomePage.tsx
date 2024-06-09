@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Platform } from 'react-native'
 import Header from '../components/Header'
 import CardList from '../components/CardList'
 import Resource from '../types/Resource'
@@ -12,11 +12,13 @@ const HomePage: React.FC = () => {
   const [searchedResources, setSearchedResources] = useState<Resource[]>([])
   // Nouvel état pour stocker la liste originale des ressources
   const [originalResources, setOriginalResources] = useState<Resource[]>([])
+  // Nouvel état pour stocker la visibilité de la modal
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   // Utiliser un effet pour charger les ressources
   useEffect(() => {
     // Effectuer des appels API ou des actions asynchrones
-    fetch('http://localhost:3000/api/resources')
+    fetch('http://192.168.1.29:3000/api/resources')
       // Récupérer les données
       .then(response => response.json())
       .then((data: Resource[]) => {
@@ -39,42 +41,48 @@ const HomePage: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Header
-        brandTop={<>(Re)Sources relationnelles</>}
-        homeLinkProps={{
-          href: '/',
-          title: 'Accueil - (Re)Sources Relationnelles ministère de la santé et de la prévention',
-        }}
-        id='fr-header-header-with-quick-access-items'
-        quickAccessItems={[
-          {
-            iconId: 'add-circle-outline',
-            linkProps: {
-              href: '#',
+      <View style={{ flex: Platform.OS !== 'web' && 1 }}>
+        <Header
+          brandTop={<>(Re)Sources relationnelles</>}
+          homeLinkProps={{
+            href: '/',
+            title: 'Accueil - (Re)Sources Relationnelles ministère de la santé et de la prévention',
+          }}
+          id='fr-header-header-with-quick-access-items'
+          quickAccessItems={[
+            {
+              iconId: 'add-circle-outline',
+              linkProps: {
+                href: '#',
+              },
+              text: 'Gestion des ressources',
             },
-            text: 'Gestion des ressources',
-          },
-          {
-            iconId: 'mail-outline',
-            linkProps: {
-              href: 'mailto:contact@code.gouv.fr',
+            {
+              iconId: 'mail-outline',
+              linkProps: {
+                href: 'mailto:contact@code.gouv.fr',
+              },
+              text: 'Contact',
             },
-            text: 'Contact',
-          },
-          {
-            buttonProps: {
-              onClick: () => {},
+            {
+              buttonProps: {
+                onClick: () => {},
+              },
+              iconId: 'account-box-outline',
+              text: 'Se connecter',
             },
-            iconId: 'account-box-outline',
-            text: 'Se connecter',
-          },
-        ]}
-        serviceTagline="baseline - précisions sur l'organisation"
-        serviceTitle='Nom du site / service'
-      />
+          ]}
+          serviceTagline="baseline - précisions sur l'organisation"
+          serviceTitle='Nom du site / service'
+        />
+      </View>
       {/* Autres composants ou contenu de la page */}
       <SearchBar recherche={search} setRecherche={setSearch} onPress={handleSearch} />
-      <CardList resources={searchedResources} />
+      <CardList
+        resources={searchedResources}
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
+      />
     </View>
   )
 }
@@ -82,6 +90,7 @@ const HomePage: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#fff',
   },
 })
