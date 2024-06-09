@@ -41,11 +41,8 @@ const Header: React.FC = () => {
                       <Text style={styles.navLink}>Statistiques</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.navItem}>
-                      <Text style={styles.navLink}>Déconnexion</Text>
+                      <Text style={styles.navLink}>Connexion/Déconnexion</Text>
                     </TouchableOpacity>
-                    {/* <TouchableOpacity style={styles.navItem}>
-                      <Text style={styles.navLink}>Accès direct 4</Text>
-                    </TouchableOpacity> */}
                   </View>
                 </View>
               </View>
