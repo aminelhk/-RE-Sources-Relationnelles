@@ -1,20 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, Button, Alert, TouchableOpacity } from 'react-native'
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 import styles from '../assets/style/loginForm' // Importing the styles from the external file
 // import RegisterPage from './RegisterPage'
 
 interface LoginScreenProps {
   navigation: NavigationProp<ParamListBase>
+  isAuth: boolean
+  setIsAuth: (value: boolean) => void
 }
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth }) => {
   const [createAccount, setCreateAccount] = useState(false)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [emailError, setEmailError] = useState<string | null>(null)
   const [passwordError, setPasswordError] = useState<string | null>(null)
+  const [vitalCardNumberError, setVitalCardNumberError] = useState<string | null>(null)
+  const [phoneError, setPhoneError] = useState<string | null>(null)
   const [loginError, setLoginError] = useState<string | null>(null)
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
@@ -42,7 +47,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 
       if (response.status === 200) {
         Alert.alert('Success', 'Vous êtes maintenant connecté')
-        navigation.navigate('Home')
+        setIsAuth(true)
+        navigation.navigate('Home', { isAuth: isAuth })
       }
     } catch (error) {
       console.log('Error:', error)
@@ -119,6 +125,38 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     return true
   }
 
+  const validatePhone = (phone: string): boolean => {
+    const phoneRegex = /^\d{10}$/ // Expression régulière pour vérifier si le numéro de téléphone contient 10 chiffres exactement
+    if (!phone) {
+      // Vérifie si le champ est vide
+      setPhoneError('Veuillez entrer un numéro de téléphone.')
+      return false
+    }
+    if (!phone.match(phoneRegex)) {
+      // Vérifie si le numéro de téléphone correspond à l'expression régulière
+      setPhoneError('Veuillez entrer un numéro de téléphone valide (10 chiffres).')
+      return false
+    }
+    setPhoneError(null)
+    return true
+  }
+
+  const validateVitalCardNumber = (vitalCardNumber: string): boolean => {
+    const vitalCardRegex = /^\d{1,2} \d{2} \d{2} \d{2} \d{3} \d{3}(\d{2})?$/ // Expression régulière pour vérifier le format du numéro de carte vitale
+    if (!vitalCardNumber) {
+      // Vérifie si le champ est vide
+      setVitalCardNumberError('Veuillez entrer un numéro de carte vitale.')
+      return false
+    }
+    if (!vitalCardNumber.match(vitalCardRegex)) {
+      // Vérifie si le numéro de carte vitale correspond à l'expression régulière
+      setVitalCardNumberError('Veuillez entrer un numéro de carte vitale valide.')
+      return false
+    }
+    setVitalCardNumberError(null)
+    return true
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -162,7 +200,6 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
               onChangeText={setLastName}
               placeholder='Entrez votre nom'
             />
-
             <Text style={styles.label}>Téléphone</Text>
             <TextInput
               style={styles.input}
@@ -171,6 +208,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
               keyboardType='phone-pad'
               placeholder='Entrez votre numéro de téléphone'
             />
+            {phoneError && <Text style={styles.errorText}>{phoneError}</Text>}
 
             <Text style={styles.label}>Pseudo</Text>
             <TextInput
@@ -187,6 +225,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
               onChangeText={setVitalCardNumber}
               placeholder='Entrez votre numéro de carte vitale'
             />
+            {vitalCardNumberError && <Text style={styles.errorText}>{vitalCardNumberError}</Text>}
 
             <Text style={styles.label}>Adresse mail</Text>
             <TextInput

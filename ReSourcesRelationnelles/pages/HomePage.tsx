@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, ScrollView, StyleSheet } from 'react-native'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import CardList from '../components/CardList'
 import Resource from '../types/Resource'
 import SearchBar from '../components/SearchBar'
-import LoginScreen from '../components/Form'
 
 const HomePage: React.FC = () => {
   // Nouvel état pour stocker la recherche de l'utilisateur
@@ -39,12 +39,12 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Header />
-      {/* Autres composants ou contenu de la page */}
       <SearchBar recherche={search} setRecherche={setSearch} onPress={handleSearch} />
       <CardList resources={searchedResources} />
-    </View>
+      <Footer />
+    </ScrollView>
   )
 }
 

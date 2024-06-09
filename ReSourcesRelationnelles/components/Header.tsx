@@ -3,29 +3,26 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import { useWindowDimensions } from 'react-native'
 import Cookies from 'js-cookie'
 import axios from 'axios'
-import { useNavigation } from '@react-navigation/native'
+// import { useNavigation } from '@react-navigation/native'
 
-const Header: React.FC = () => {
+type HeaderType = {
+  route: {
+    params: {
+      isAuth: boolean
+      setIsAuth: boolean
+    }
+  }
+  navigation: {
+    navigate: (screen: string) => void
+  }
+}
+
+const Header: React.FC<HeaderType> = ({ route, navigation }) => {
   const [menuVisible, setMenuVisible] = useState(false)
   const { width } = useWindowDimensions()
   const isMobile = width < 768
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const navigation = useNavigation()
-
-  useEffect(() => {
-    const fetchToken = async () => {
-      const token = Cookies.get('token')
-      if (token) {
-        setIsAuthenticated(true)
-        console.log('Utilisateur authentifié')
-      } else {
-        setIsAuthenticated(false)
-        console.log('Utilisateur non authentifié')
-      }
-    }
-
-    fetchToken()
-  }, [])
+  const [isAuth, setIsAuth] = useState<boolean>(false)
+  // const isAuth = route.params.isAuth
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible)
@@ -33,10 +30,10 @@ const Header: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('/logout')
+      await axios.post('/logout') // Assurez-vous que l'URL est correcte pour votre backend
       Cookies.remove('token')
-      setIsAuthenticated(false)
-      navigation.navigate('Login')
+      setIsAuth(false)
+      navigation.navigate('Login') // Redirige vers l'écran de login
     } catch (error) {
       console.error('Failed to logout:', error)
     }
@@ -53,9 +50,7 @@ const Header: React.FC = () => {
             />
             <View style={styles.textContainer}>
               <Text style={styles.frHeaderServiceTitle}>(Re)Sources Relationnelles</Text>
-              <Text style={styles.frHeaderServiceTagline}>
-                Ministère de la santé et de la prévention
-              </Text>
+              <Text style={styles.frHeaderServiceTagline}>Nom du site / service</Text>
             </View>
           </View>
           {isMobile ? (
@@ -73,7 +68,7 @@ const Header: React.FC = () => {
                     <TouchableOpacity style={styles.navItem}>
                       <Text style={styles.navLink}>Accès direct 2</Text>
                     </TouchableOpacity>
-                    {isAuthenticated ? (
+                    {isAuth ? (
                       <TouchableOpacity style={styles.navItem} onPress={handleLogout}>
                         <Text style={styles.navLink}>Déconnexion</Text>
                       </TouchableOpacity>
@@ -99,7 +94,7 @@ const Header: React.FC = () => {
           <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
             <Text style={styles.navLink}>Accès direct 2</Text>
           </TouchableOpacity>
-          {isAuthenticated ? (
+          {isAuth ? (
             <TouchableOpacity style={styles.navItem} onPress={handleLogout}>
               <Text style={styles.navLink}>Déconnexion</Text>
             </TouchableOpacity>
@@ -181,13 +176,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     paddingVertical: 8,
     paddingHorizontal: 12,
-    backgroundColor: '#007BFF',
+    backgroundColor: '#000091',
     borderRadius: 4,
     textAlign: 'center',
   },
   burgerMenuButton: {
     padding: 8,
-    backgroundColor: '#007BFF',
+    backgroundColor: '#000091',
     borderRadius: 4,
   },
   burgerMenuIcon: {
