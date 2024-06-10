@@ -3,7 +3,6 @@ import { TouchableOpacity, View, Image, Text, StyleSheet, Platform, Linking } fr
 import FeatherIcon from 'react-native-vector-icons/Feather'
 
 import Resource from '../types/Resource'
-import ModalComponent from './ModalComponent'
 import ModalFormCard from './ModalFormCard'
 
 interface CardProps {
@@ -82,7 +81,7 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <View style={{ flex: 1 }}>
-      <ModalFormCard isVisible={isModalVisible} setIsVisible={setIsModalVisible} />
+      <ModalFormCard isVisible={isModalVisible} setIsVisible={setIsModalVisible} item={item} />
       <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
         <View style={styles.card}>
           <TouchableOpacity style={{ ...styles.button, ...styles.buttonOpen }} onPress={onPress}>
@@ -105,7 +104,7 @@ const Card: React.FC<CardProps> = ({
               style={styles.cardImg}
               source={{
                 uri: item.content.includes('.pdf')
-                  ? 'http://192.168.1.29:3000/images/tutoriel-pdf-ok.png'
+                  ? 'http://10.114.128.158:3000/images/tutoriel-pdf-ok.png'
                   : item.content,
               }}
             />

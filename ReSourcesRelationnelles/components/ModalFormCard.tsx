@@ -1,28 +1,62 @@
 // CustomModal.tsx
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Switch } from 'react-native'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  Image,
+  Pressable,
+  Alert,
+} from 'react-native'
 import Modal from 'react-native-modal'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import * as ImagePicker from 'expo-image-picker'
+
+import { Resource } from '../types'
 
 interface CustomModalProps {
   isVisible: boolean
   setIsVisible: (isVisible: boolean) => void
+  item: Resource
 }
 
-const ModalFormCard: React.FC<CustomModalProps> = ({ isVisible, setIsVisible }) => {
-  const [resource, setResource] = React.useState({
-    title: '',
-    content: 'image',
-    isFavorite: false,
-    isArchived: false,
-    isPrivate: false,
-    authorId: undefined,
-    categoryResourceId: undefined,
-    typeResourceId: undefined,
-  })
+const ModalFormCard: React.FC<CustomModalProps> = ({ isVisible, setIsVisible, item }) => {
+  const [resource, setResource] = React.useState(item)
   const onClose = () => {
     setIsVisible(false)
   }
+
+  const pickImageAsync = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    })
+
+    if (!result.canceled) {
+      setResource({ ...resource, image: result.image })
+    } else {
+      alert('You did not select any image.')
+    }
+  }
+
+  const modif = async () => {
+    try {
+      const response = await axios.put('http://10.114.128.158:3000/api/resources/updateResource', {
+        resource: resource,
+        image: resource.image,
+      })
+      if (response.status === 200) {
+        console.log('Resource updated successfully')
+        setIsVisible(false)
+        Alert.alert('Success', 'Ressource modifiée avec succès')
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose}>
       <View style={styles.modalContent}>
@@ -38,13 +72,23 @@ const ModalFormCard: React.FC<CustomModalProps> = ({ isVisible, setIsVisible }) 
             onChangeText={value => setResource({ ...resource, title: value })}
             placeholder='Donner un titre à la ressource'
           />
-
-          <Text style={styles.label}>Mettre en favori</Text>
-          <Switch
-            style={styles.input}
-            value={resource.isFavorite}
-            onChange={() => setResource({ ...resource, isFavorite: !resource.isFavorite })}
-          />
+          <View style={styles.imageContainer}>
+            <Image
+              alt=''
+              resizeMode='cover'
+              source={{
+                uri: resource.content.includes('.pdf')
+                  ? 'http://10.114.128.158:3000/images/tutoriel-pdf-ok.png'
+                  : resource.content,
+              }}
+              style={styles.image}
+            />
+          </View>
+          <View style={styles.buttonContainerC}>
+            <Pressable style={styles.buttonC} onPress={pickImageAsync}>
+              <Text style={styles.buttonLabel}>Choisir</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </Modal>
@@ -134,6 +178,38 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     marginBottom: 8,
+  },
+  imageContainer: {
+    flex: 1,
+    paddingTop: 58,
+  },
+  image: {
+    width: 240,
+    height: 120,
+    borderRadius: 18,
+  },
+  buttonContainerC: {
+    width: 320,
+    height: 68,
+    marginHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 3,
+  },
+  buttonC: {
+    borderRadius: 10,
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  buttonIcon: {
+    paddingRight: 8,
+  },
+  buttonLabel: {
+    color: 'black',
+    fontSize: 16,
   },
 })
 
