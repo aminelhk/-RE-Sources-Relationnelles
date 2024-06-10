@@ -69,7 +69,7 @@
     ],
     "import/prefer-default-export": "off",
     "react/prop-types": "off",
-    "import/namespace": ["error", { "allowComputed": true, "exceptions": ["react-native"] }]
+    "import/namespace": "off"
   },
   "settings": {
     "react": {

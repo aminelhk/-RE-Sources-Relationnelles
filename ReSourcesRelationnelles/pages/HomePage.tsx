@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, StyleSheet } from 'react-native'
+import { View, StyleSheet, Platform } from 'react-native'
+
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import CardList from '../components/CardList'
@@ -13,11 +14,13 @@ const HomePage: React.FC = () => {
   const [searchedResources, setSearchedResources] = useState<Resource[]>([])
   // Nouvel état pour stocker la liste originale des ressources
   const [originalResources, setOriginalResources] = useState<Resource[]>([])
+  // Nouvel état pour stocker la visibilité de la modal
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   // Utiliser un effet pour charger les ressources
   useEffect(() => {
     // Effectuer des appels API ou des actions asynchrones
-    fetch('http://localhost:3000/api/resources')
+    fetch('http://192.168.1.29:3000/api/resources')
       // Récupérer les données
       .then(response => response.json())
       .then((data: Resource[]) => {
@@ -39,18 +42,26 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <Header />
+    <View style={styles.container}>
+      <View style={{ flex: Platform.OS !== 'web' && 1 }}>
+        <Header />
+      </View>
+      {/* Autres composants ou contenu de la page */}
       <SearchBar recherche={search} setRecherche={setSearch} onPress={handleSearch} />
-      <CardList resources={searchedResources} />
-      <Footer />
-    </ScrollView>
+      <CardList
+        resources={searchedResources}
+        setResources={setSearchedResources}
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
+      />
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#fff',
   },
 })

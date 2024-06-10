@@ -6,6 +6,7 @@ import StateTypeRelation from './StateTypeRelation'
 import CategoryResource from './CategoryResource'
 import TypeResource from './TypeResource'
 import Share from './Share'
+import Comment from './Comment'
 
 export {
   User,
@@ -16,4 +17,5 @@ export {
   CategoryResource,
   TypeResource,
   Share,
+  Comment,
 }
