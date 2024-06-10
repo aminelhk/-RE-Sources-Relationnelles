@@ -37,7 +37,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/api/users/login', {
+      const response = await axios.post('http://10.114.128.158:3000/api/users/login', {
         email,
         password,
       })
@@ -79,7 +79,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
       validateVitalCardNumber(vitalCardNumber)
     ) {
       try {
-        const response = await axios.post('http://localhost:3000/api/users/createUser', {
+        const response = await axios.post('http://10.114.128.158:3000/api/users/createUser', {
           email,
           firstName,
           lastName,

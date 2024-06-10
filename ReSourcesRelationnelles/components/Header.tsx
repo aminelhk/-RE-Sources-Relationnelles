@@ -50,7 +50,9 @@ const Header: React.FC<HeaderType> = ({ route, navigation }) => {
             />
             <View style={styles.textContainer}>
               <Text style={styles.frHeaderServiceTitle}>(Re)Sources Relationnelles</Text>
-              <Text style={styles.frHeaderServiceTagline}>Nom du site / service</Text>
+              <Text style={styles.frHeaderServiceTagline}>
+                Ministère du travail de la santé et des solidarités
+              </Text>
             </View>
           </View>
           {isMobile ? (
@@ -132,6 +134,7 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   headerBrand: {
+    flex: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -151,6 +154,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   textContainer: {
+    flex: 1,
     flexDirection: 'column',
     marginLeft: 12,
   },
@@ -181,6 +185,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   burgerMenuButton: {
+    flex: 1,
     padding: 8,
     backgroundColor: '#000091',
     borderRadius: 4,

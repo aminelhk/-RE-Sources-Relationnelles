@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, Platform } from 'react-native'
+import { View, StyleSheet, Platform, ScrollView } from 'react-native'
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import CardList from '../components/CardList'
 import Resource from '../types/Resource'
 import SearchBar from '../components/SearchBar'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const HomePage: React.FC = () => {
   // Nouvel état pour stocker la recherche de l'utilisateur
@@ -20,7 +21,7 @@ const HomePage: React.FC = () => {
   // Utiliser un effet pour charger les ressources
   useEffect(() => {
     // Effectuer des appels API ou des actions asynchrones
-    fetch('http://192.168.1.29:3000/api/resources')
+    fetch('http://10.114.128.158:3000/api/resources')
       // Récupérer les données
       .then(response => response.json())
       .then((data: Resource[]) => {
@@ -42,19 +43,21 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={{ flex: Platform.OS !== 'web' && 1 }}>
-        <Header />
-      </View>
-      {/* Autres composants ou contenu de la page */}
-      <SearchBar recherche={search} setRecherche={setSearch} onPress={handleSearch} />
-      <CardList
-        resources={searchedResources}
-        setResources={setSearchedResources}
-        isModalVisible={isModalVisible}
-        setIsModalVisible={setIsModalVisible}
-      />
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView style={styles.container}>
+        <View style={{ flex: Platform.OS !== 'web' && 1 }}>
+          <Header />
+        </View>
+        {/* Autres composants ou contenu de la page */}
+        <SearchBar recherche={search} setRecherche={setSearch} onPress={handleSearch} />
+        <CardList
+          resources={searchedResources}
+          setResources={setSearchedResources}
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+        />
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
