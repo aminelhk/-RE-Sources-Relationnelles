@@ -1,7 +1,10 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, Linking, StyleSheet, Image } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 const Footer: React.FC = () => {
+  const navigation = useNavigation()
+
   return (
     <View style={styles.footer}>
       <View style={styles.container}>
@@ -49,32 +52,21 @@ const Footer: React.FC = () => {
           <View style={styles.bottomList}>
             <TouchableOpacity
               style={styles.contentLinkItem}
-              onPress={() => {
-                /* Handle Plan du site */
-              }}>
-              <Text style={styles.bottomLink}>Plan du site</Text>
+              onPress={() =>
+                Linking.openURL(
+                  'https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/',
+                )
+              }>
+              <Text style={styles.bottomLink}>Accessibilité : totalement conforme</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.contentLinkItem}
-              onPress={() => {
-                /* Handle Accessibilité */
-              }}>
-              <Text style={styles.bottomLink}>
-                Accessibilité : non/partiellement/totalement conforme
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.contentLinkItem}
-              onPress={() => {
-                /* Handle Mentions légales */
-              }}>
+              onPress={() => navigation.navigate('Mentions Légales')}>
               <Text style={styles.bottomLink}>Mentions légales</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.contentLinkItem}
-              onPress={() => {
-                /* Handle Données personnelles */
-              }}>
+              onPress={() => navigation.navigate('Données Personnelles')}>
               <Text style={styles.bottomLink}>Données personnelles</Text>
             </TouchableOpacity>
           </View>

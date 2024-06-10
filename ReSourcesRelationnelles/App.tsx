@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import LoginScreen from './pages/LoginPage'
 import HomeScreen from './pages/HomePage'
+import DonneesPerso from './pages/DonneesPerso'
+import MentionsLegales from './pages/MentionsLegales'
 
 const Stack = createStackNavigator()
 
@@ -16,6 +18,8 @@ const App: React.FC = () => {
         <Stack.Screen name='Login'>
           {props => <LoginScreen {...props} isAuth={isAuth} setIsAuth={setIsAuth} />}
         </Stack.Screen>
+        <Stack.Screen name='Mentions Légales' component={MentionsLegales} />
+        <Stack.Screen name='Données Personnelles' component={DonneesPerso} />
       </Stack.Navigator>
     </NavigationContainer>
   )
