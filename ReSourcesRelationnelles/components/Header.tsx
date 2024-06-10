@@ -47,6 +47,7 @@ const Header: React.FC<HeaderType> = ({ route, navigation }) => {
             <Image
               source={require('../assets/Logo_de_la_République_française.png')}
               style={styles.frLogoImage}
+              alt='Logo de la République française'
             />
             <View style={styles.textContainer}>
               <Text style={styles.frHeaderServiceTitle}>(Re)Sources Relationnelles</Text>
