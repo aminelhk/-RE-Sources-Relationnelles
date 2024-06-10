@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, TextInput, Button, Alert, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, TextInput, Alert, TouchableOpacity, SafeAreaView } from 'react-native'
 import axios from 'axios'
-import Cookies from 'js-cookie'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
-import styles from '../assets/style/loginForm' // Importing the styles from the external file
-// import RegisterPage from './RegisterPage'
+import styles from '../assets/style/loginForm'
+import { ScrollView } from 'react-native-gesture-handler'
 
 interface LoginScreenProps {
   navigation: NavigationProp<ParamListBase>
@@ -67,35 +66,42 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
   const handleRegister = async () => {
     console.log('Register button pressed')
     console.log('Email:', email)
-    console.log('Password:', password)
+    console.log('FirstName:', firstName)
+    console.log('LastName:', lastName)
+    console.log('Phone:', phone)
+    console.log('Pseudo:', pseudo)
+    console.log('VitalCardNumber:', vitalCardNumber)
 
-    if (!validateEmail(email) || !validatePassword(password)) {
-      return
-    }
+    if (
+      validateEmail(email) &&
+      validatePassword(password) &&
+      validatePhone(phone) &&
+      validateVitalCardNumber(vitalCardNumber)
+    ) {
+      try {
+        const response = await axios.post('http://localhost:3000/api/users/createUser', {
+          email,
+          firstName,
+          lastName,
+          phone,
+          password,
+          pseudo,
+          isActive: false,
+          isPrivate: false,
+          vitalCardNumber,
+          roleId: 5, // Default roleId to 5
+        })
 
-    try {
-      const response = await axios.post('http://localhost:3000/api/users/createUser', {
-        email,
-        firstName,
-        lastName,
-        phone,
-        password,
-        pseudo,
-        isActive: false,
-        isPrivate: false,
-        vitalCardNumber,
-        roleId: 5, // Default roleId to 5
-      })
+        console.log('Response:', typeof response.status)
 
-      console.log('Response:', response)
-
-      if (response.status === 201) {
-        Alert.alert('Success', 'Compte créé avec succès')
-        navigation.navigate('Login')
+        if (response.status === 200) {
+          Alert.alert('Success', 'Compte créé avec succès')
+          setCreateAccount(false)
+        }
+      } catch (error) {
+        console.log('Error:', error)
+        setRegisterError('Une erreur est survenue lors de la création du compte.')
       }
-    } catch (error) {
-      console.log('Error:', error)
-      setRegisterError('Une erreur est survenue lors de la création du compte.')
     }
   }
 
@@ -117,7 +123,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
       setPasswordError('Veuillez entrer un mot de passe.')
       return false
     }
-    if (password.length < 6) {
+    if (password.length < 8) {
       setPasswordError('Adresse mail ou mot de passe non valide.')
       return false
     }
@@ -128,12 +134,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
   const validatePhone = (phone: string): boolean => {
     const phoneRegex = /^\d{10}$/ // Expression régulière pour vérifier si le numéro de téléphone contient 10 chiffres exactement
     if (!phone) {
-      // Vérifie si le champ est vide
       setPhoneError('Veuillez entrer un numéro de téléphone.')
       return false
     }
     if (!phone.match(phoneRegex)) {
-      // Vérifie si le numéro de téléphone correspond à l'expression régulière
       setPhoneError('Veuillez entrer un numéro de téléphone valide (10 chiffres).')
       return false
     }
@@ -142,14 +146,12 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
   }
 
   const validateVitalCardNumber = (vitalCardNumber: string): boolean => {
-    const vitalCardRegex = /^\d{1,2} \d{2} \d{2} \d{2} \d{3} \d{3}(\d{2})?$/ // Expression régulière pour vérifier le format du numéro de carte vitale
+    const vitalCardRegex = /^\d{1} \d{2} \d{2} \d{2} \d{3} \d{3} \d{2}$/ // Expression régulière pour vérifier le format du numéro de carte vitale
     if (!vitalCardNumber) {
-      // Vérifie si le champ est vide
       setVitalCardNumberError('Veuillez entrer un numéro de carte vitale.')
       return false
     }
     if (!vitalCardNumber.match(vitalCardRegex)) {
-      // Vérifie si le numéro de carte vitale correspond à l'expression régulière
       setVitalCardNumberError('Veuillez entrer un numéro de carte vitale valide.')
       return false
     }
@@ -158,112 +160,116 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.card}>
-        {!createAccount ? (
-          <View>
-            <Text style={styles.label}>Adresse mail</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              keyboardType='email-address'
-              autoCapitalize='none'
-              placeholder='Entrez votre adresse mail'
-            />
-            {emailError && <Text style={styles.errorText}>{emailError}</Text>}
+    <ScrollView contentContainerStyle={{ flexGrow: 1, minHeight: '100%', overflow: 'visible' }}>
+      <View style={styles.container}>
+        <View style={styles.card}>
+          {!createAccount ? (
+            <View>
+              <Text style={styles.label}>Adresse mail</Text>
+              <TextInput
+                style={styles.input}
+                value={email}
+                onChangeText={setEmail}
+                keyboardType='email-address'
+                autoCapitalize='none'
+                placeholder='Entrez votre adresse mail'
+              />
+              {emailError && <Text style={styles.errorText}>{emailError}</Text>}
 
-            <Text style={styles.label}>Mot de passe</Text>
-            <TextInput
-              style={styles.input}
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-              placeholder='Entrez votre mot de passe'
-            />
-            {passwordError && <Text style={styles.errorText}>{passwordError}</Text>}
-          </View>
-        ) : (
-          <View>
-            <Text style={styles.label}>Prénom</Text>
-            <TextInput
-              style={styles.input}
-              value={firstName}
-              onChangeText={setFirstName}
-              placeholder='Entrez votre prénom'
-            />
+              <Text style={styles.label}>Mot de passe</Text>
+              <TextInput
+                style={styles.input}
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+                placeholder='Entrez votre mot de passe'
+              />
+              {passwordError && <Text style={styles.errorText}>{passwordError}</Text>}
+            </View>
+          ) : (
+            <View>
+              <Text style={styles.label}>Prénom</Text>
+              <TextInput
+                style={styles.input}
+                value={firstName}
+                onChangeText={setFirstName}
+                placeholder='Entrez votre prénom'
+              />
 
-            <Text style={styles.label}>Nom</Text>
-            <TextInput
-              style={styles.input}
-              value={lastName}
-              onChangeText={setLastName}
-              placeholder='Entrez votre nom'
-            />
-            <Text style={styles.label}>Téléphone</Text>
-            <TextInput
-              style={styles.input}
-              value={phone}
-              onChangeText={setPhone}
-              keyboardType='phone-pad'
-              placeholder='Entrez votre numéro de téléphone'
-            />
-            {phoneError && <Text style={styles.errorText}>{phoneError}</Text>}
+              <Text style={styles.label}>Nom</Text>
+              <TextInput
+                style={styles.input}
+                value={lastName}
+                onChangeText={setLastName}
+                placeholder='Entrez votre nom'
+              />
+              <Text style={styles.label}>Téléphone</Text>
+              <TextInput
+                style={styles.input}
+                value={phone}
+                onChangeText={setPhone}
+                keyboardType='phone-pad'
+                placeholder='Entrez votre numéro de téléphone'
+              />
+              {phoneError && <Text style={styles.errorText}>{phoneError}</Text>}
 
-            <Text style={styles.label}>Pseudo</Text>
-            <TextInput
-              style={styles.input}
-              value={pseudo}
-              onChangeText={setPseudo}
-              placeholder='Entrez votre pseudo'
-            />
+              <Text style={styles.label}>Pseudo</Text>
+              <TextInput
+                style={styles.input}
+                value={pseudo}
+                onChangeText={setPseudo}
+                placeholder='Entrez votre pseudo'
+              />
 
-            <Text style={styles.label}>Numéro de carte vitale</Text>
-            <TextInput
-              style={styles.input}
-              value={vitalCardNumber}
-              onChangeText={setVitalCardNumber}
-              placeholder='Entrez votre numéro de carte vitale'
-            />
-            {vitalCardNumberError && <Text style={styles.errorText}>{vitalCardNumberError}</Text>}
+              <Text style={styles.label}>Numéro de carte vitale</Text>
+              <TextInput
+                style={styles.input}
+                value={vitalCardNumber}
+                onChangeText={setVitalCardNumber}
+                placeholder='Entrez votre numéro de carte vitale'
+              />
+              {vitalCardNumberError && <Text style={styles.errorText}>{vitalCardNumberError}</Text>}
 
-            <Text style={styles.label}>Adresse mail</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              keyboardType='email-address'
-              autoCapitalize='none'
-              placeholder='Entrez votre adresse mail'
-            />
+              <Text style={styles.label}>Adresse mail</Text>
+              <TextInput
+                style={styles.input}
+                value={email}
+                onChangeText={setEmail}
+                keyboardType='email-address'
+                autoCapitalize='none'
+                placeholder='Entrez votre adresse mail'
+              />
+              {emailError && <Text style={styles.errorText}>{emailError}</Text>}
 
-            <Text style={styles.label}>Mot de passe</Text>
-            <TextInput
-              style={styles.input}
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-              placeholder='Entrez votre mot de passe'
-            />
-          </View>
-        )}
+              <Text style={styles.label}>Mot de passe</Text>
+              <TextInput
+                style={styles.input}
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+                placeholder='Entrez votre mot de passe'
+              />
+              {passwordError && <Text style={styles.errorText}>{passwordError}</Text>}
+            </View>
+          )}
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={!createAccount ? handleLogin : handleRegister}>
-          <Text style={styles.buttonText}>Confirmer</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={!createAccount ? handleLogin : handleRegister}>
+            <Text style={styles.buttonText}>Confirmer</Text>
+          </TouchableOpacity>
 
-        {loginError && <Text style={styles.errorText}>{loginError}</Text>}
-        {registerError && <Text style={styles.errorText}>{registerError}</Text>}
+          {loginError && <Text style={styles.errorText}>{loginError}</Text>}
+          {registerError && <Text style={styles.errorText}>{registerError}</Text>}
 
-        <TouchableOpacity style={styles.button} onPress={() => setCreateAccount(!createAccount)}>
-          <Text style={styles.buttonText}>
-            {!createAccount ? "S'inscrire" : 'Créer votre compte'}
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => setCreateAccount(!createAccount)}>
+            <Text style={styles.buttonText}>
+              {!createAccount ? "S'inscrire" : 'Créer votre compte'}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
