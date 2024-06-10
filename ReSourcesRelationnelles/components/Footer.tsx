@@ -13,6 +13,7 @@ const Footer: React.FC = () => {
             <Image
               source={require('../assets/Logo_de_la_République_française.png')}
               style={styles.logo}
+              alt='Logo de la République française'
             />
           </TouchableOpacity>
           <View>
