@@ -99,10 +99,11 @@ exports.deleteResource = async (req, res) => {
 };
 
 exports.updateResource = async (req, res) => {
+  console.log(req);
   const resourceObject = req.file
     ? {
         ...JSON.parse(req.body.resource),
-        content: `${req.protocol}}://${req.get("host")}/images/${
+        content: `${req.protocol}://${req.get("host")}/images/${
           req.file.filename
         }`,
       }

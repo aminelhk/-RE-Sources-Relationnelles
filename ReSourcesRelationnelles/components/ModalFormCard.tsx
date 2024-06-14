@@ -1,5 +1,5 @@
 // CustomModal.tsx
-import React from 'react'
+import React, { useState } from 'react'
 import {
   View,
   Text,
@@ -23,7 +23,9 @@ interface CustomModalProps {
 }
 
 const ModalFormCard: React.FC<CustomModalProps> = ({ isVisible, setIsVisible, item }) => {
-  const [resource, setResource] = React.useState(item)
+  const [resource, setResource] = useState(item)
+  const [importedImage, setImportedImage] = useState('' as string | undefined)
+  const [selectedImage, setSelectedImage] = useState(resource.content)
   const onClose = () => {
     setIsVisible(false)
   }
@@ -35,17 +37,21 @@ const ModalFormCard: React.FC<CustomModalProps> = ({ isVisible, setIsVisible, it
     })
 
     if (!result.canceled) {
-      setResource({ ...resource, image: result.image })
+      setSelectedImage(result.assets[0].uri)
+      console.log(JSON.stringify(result))
     } else {
-      alert('You did not select any image.')
+      Alert.alert('You did not select any image.')
     }
   }
 
-  const modif = async () => {
+  const handleModif = async () => {
     try {
-      const response = await axios.put('http://10.114.128.158:3000/api/resources/updateResource', {
-        resource: resource,
-        image: resource.image,
+      const response = await fetch('http://localhost:3000/api/resources/updateResource', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(resource),
       })
       if (response.status === 200) {
         console.log('Resource updated successfully')
@@ -64,7 +70,7 @@ const ModalFormCard: React.FC<CustomModalProps> = ({ isVisible, setIsVisible, it
           <Text style={styles.closeButtonText}>Fermer</Text>
           <Icon name='close' size={16} color='blue' />
         </TouchableOpacity>
-        <View>
+        <View style={styles.container}>
           <Text style={styles.label}>Titre</Text>
           <TextInput
             style={styles.input}
@@ -72,21 +78,26 @@ const ModalFormCard: React.FC<CustomModalProps> = ({ isVisible, setIsVisible, it
             onChangeText={value => setResource({ ...resource, title: value })}
             placeholder='Donner un titre à la ressource'
           />
-          <View style={styles.imageContainer}>
+          <View style={{ ...styles.container, flex: 4 }}>
             <Image
               alt=''
               resizeMode='cover'
               source={{
-                uri: resource.content.includes('.pdf')
-                  ? 'http://10.114.128.158:3000/images/tutoriel-pdf-ok.png'
-                  : resource.content,
+                uri: selectedImage.includes('.pdf')
+                  ? 'http://localhost:3000/images/tutoriel-pdf-ok.png'
+                  : selectedImage,
               }}
               style={styles.image}
             />
           </View>
-          <View style={styles.buttonContainerC}>
-            <Pressable style={styles.buttonC} onPress={pickImageAsync}>
+          <View style={styles.container}>
+            <Pressable style={styles.buttonChoisir} onPress={pickImageAsync}>
               <Text style={styles.buttonLabel}>Choisir</Text>
+            </Pressable>
+          </View>
+          <View style={styles.container}>
+            <Pressable style={styles.buttonConfirmer} onPress={handleModif}>
+              <Text style={styles.buttonLabel}>Modifier</Text>
             </Pressable>
           </View>
         </View>
@@ -158,7 +169,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 4,
-    marginBottom: 16,
+    marginBottom: 8,
     paddingHorizontal: 8,
     backgroundColor: 'white',
   },
@@ -179,36 +190,35 @@ const styles = StyleSheet.create({
     color: 'red',
     marginBottom: 8,
   },
-  imageContainer: {
+  container: {
     flex: 1,
-    paddingTop: 58,
+    paddingTop: 8,
   },
   image: {
-    width: 240,
-    height: 120,
-    borderRadius: 18,
+    width: '20%',
+    height: '100%',
+    borderRadius: 8,
   },
-  buttonContainerC: {
-    width: 320,
-    height: 68,
-    marginHorizontal: 20,
+  buttonChoisir: {
+    borderRadius: 10,
+    backgroundColor: 'blue',
+    width: '20%',
+    height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 3,
+    flexDirection: 'row',
   },
-  buttonC: {
+  buttonConfirmer: {
     borderRadius: 10,
+    backgroundColor: 'green',
     width: '100%',
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
   },
-  buttonIcon: {
-    paddingRight: 8,
-  },
   buttonLabel: {
-    color: 'black',
+    color: 'white',
     fontSize: 16,
   },
 })

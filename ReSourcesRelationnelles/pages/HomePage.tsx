@@ -19,7 +19,7 @@ const HomePage: React.FC = () => {
   // Utiliser un effet pour charger les ressources
   useEffect(() => {
     // Effectuer des appels API ou des actions asynchrones
-    fetch('http://10.114.128.158:3000/api/resources')
+    fetch('http://localhost:3000/api/resources')
       // Récupérer les données
       .then(response => response.json())
       .then((data: Resource[]) => {
