@@ -19,7 +19,7 @@ export const createUser = async (req, res) => {
     password,
     pseudo,
     isActive,
-    isPrivet,
+    isPrivate,
     vitalCardNumber,
     roleId,
   } = req.body;
@@ -36,7 +36,7 @@ export const createUser = async (req, res) => {
       password: hashedPassword, // Save the hashed password
       pseudo,
       isActive,
-      isPrivet,
+      isPrivate,
       vitalCardNumber,
       roleId,
     },

@@ -1,24 +1,27 @@
 // CustomModal.tsx
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Modal from 'react-native-modal';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React from 'react'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import Modal from 'react-native-modal'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 interface CustomModalProps {
-  isVisible: boolean;
-  onClose: () => void;
+  isVisible: boolean
+  setIsVisible: (isVisible: boolean) => void
 }
 
-const ModalComponent: React.FC<CustomModalProps> = ({ isVisible, onClose }) => {
+const ModalComponent: React.FC<CustomModalProps> = ({ isVisible, setIsVisible }) => {
+  const onClose = () => {
+    setIsVisible(false)
+  }
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose}>
       <View style={styles.modalContent}>
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
           <Text style={styles.closeButtonText}>Fermer</Text>
-          <Icon name="close" size={16} color="#000" />
+          <Icon name='close' size={16} color='blue' />
         </TouchableOpacity>
         <View style={styles.modalHeader}>
-          <Icon name="check-circle" size={24} color="black" />
+          <Icon name='check-circle' size={24} color='black' />
           <Text style={styles.modalTitle}>Acceptez-vous les conditions de service ?</Text>
         </View>
         <Text style={styles.modalText}>
@@ -27,17 +30,17 @@ const ModalComponent: React.FC<CustomModalProps> = ({ isVisible, onClose }) => {
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.learnMoreButton}>
             <Text style={styles.learnMoreText}>Learn more</Text>
-            <Icon name="open-in-new" size={16} color="#000" />
+            <Icon name='open-in-new' size={16} color='#000' />
           </TouchableOpacity>
           <TouchableOpacity style={styles.okButton} onPress={onClose}>
             <Text style={styles.okButtonText}>Ok</Text>
-            <Icon name="check" size={16} color="#fff" />
+            <Icon name='check' size={16} color='#fff' />
           </TouchableOpacity>
         </View>
       </View>
     </Modal>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   modalContent: {
@@ -91,6 +94,6 @@ const styles = StyleSheet.create({
     color: 'white',
     marginRight: 5,
   },
-});
+})
 
-export default ModalComponent;
+export default ModalComponent

@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f0f0', // Light gray background color
   },
   card: {
-    width: '40%',
+    width: Platform.OS === 'web' ? '40%' : '60%',
     padding: 20,
     borderRadius: 10,
     backgroundColor: 'white',

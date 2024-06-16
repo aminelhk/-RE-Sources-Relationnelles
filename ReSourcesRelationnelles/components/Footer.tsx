@@ -1,31 +1,45 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Linking, StyleSheet, Image } from 'react-native';
+import React from 'react'
+import { View, Text, TouchableOpacity, Linking, StyleSheet, Image } from 'react-native'
 
-
-const Footer : React.FC = () => {
+const Footer: React.FC = () => {
   return (
     <View style={styles.footer}>
       <View style={styles.container}>
         <View style={styles.body}>
           <TouchableOpacity onPress={() => Linking.openURL('/')}>
-          <Image
-              source={require("../assets/Logo_de_la_République_française.png")}
+            <Image
+              source={require('../assets/Logo_de_la_République_française.png')}
               style={styles.logo}
             />
           </TouchableOpacity>
           <View>
-            <Text style={styles.contentDesc}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus fuga dolorum inventore ut nihil corporis maiores accusantium maxime omnis fugiat aliquam doloremque, minima sint in debitis eius praesentium vitae eveniet voluptas, quis iure animi laboriosam dicta repellat. Libero ipsa vitae fugiat. Quia dicta laudantium sapiente facere dolor recusandae temporibus odit porro, repellendus deleniti magnam amet..</Text>
+            <Text style={styles.contentDesc}>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus fuga dolorum
+              inventore ut nihil corporis maiores accusantium maxime omnis fugiat aliquam
+              doloremque, minima sint in debitis eius praesentium vitae eveniet voluptas, quis iure
+              animi laboriosam dicta repellat. Libero ipsa vitae fugiat. Quia dicta laudantium
+              sapiente facere dolor recusandae temporibus odit porro, repellendus deleniti magnam
+              amet..
+            </Text>
             <View style={styles.contentList}>
-              <TouchableOpacity style={styles.contentLinkItem} onPress={() => Linking.openURL('https://legifrance.gouv.fr')}>
+              <TouchableOpacity
+                style={styles.contentLinkItem}
+                onPress={() => Linking.openURL('https://legifrance.gouv.fr')}>
                 <Text style={styles.contentLink}>legifrance.gouv.fr</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.contentLinkItem} onPress={() => Linking.openURL('https://gouvernement.fr')}>
+              <TouchableOpacity
+                style={styles.contentLinkItem}
+                onPress={() => Linking.openURL('https://gouvernement.fr')}>
                 <Text style={styles.contentLink}>gouvernement.fr</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.contentLinkItem} onPress={() => Linking.openURL('https://service-public.fr')}>
+              <TouchableOpacity
+                style={styles.contentLinkItem}
+                onPress={() => Linking.openURL('https://service-public.fr')}>
                 <Text style={styles.contentLink}>service-public.fr</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.contentLinkItem} onPress={() => Linking.openURL('https://data.gouv.fr')}>
+              <TouchableOpacity
+                style={styles.contentLinkItem}
+                onPress={() => Linking.openURL('https://data.gouv.fr')}>
                 <Text style={styles.contentLink}>data.gouv.fr</Text>
               </TouchableOpacity>
             </View>
@@ -33,33 +47,52 @@ const Footer : React.FC = () => {
         </View>
         <View style={styles.bottomCopy}>
           <View style={styles.bottomList}>
-            <TouchableOpacity style={styles.contentLinkItem} onPress={() => {/* Handle Plan du site */ }}>
+            <TouchableOpacity
+              style={styles.contentLinkItem}
+              onPress={() => {
+                /* Handle Plan du site */
+              }}>
               <Text style={styles.bottomLink}>Plan du site</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.contentLinkItem} onPress={() => {/* Handle Accessibilité */ }}>
-              <Text style={styles.bottomLink}>Accessibilité : non/partiellement/totalement conforme</Text>
+            <TouchableOpacity
+              style={styles.contentLinkItem}
+              onPress={() => {
+                /* Handle Accessibilité */
+              }}>
+              <Text style={styles.bottomLink}>
+                Accessibilité : non/partiellement/totalement conforme
+              </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.contentLinkItem} onPress={() => {/* Handle Mentions légales */ }}>
+            <TouchableOpacity
+              style={styles.contentLinkItem}
+              onPress={() => {
+                /* Handle Mentions légales */
+              }}>
               <Text style={styles.bottomLink}>Mentions légales</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.contentLinkItem} onPress={() => {/* Handle Données personnelles */ }}>
+            <TouchableOpacity
+              style={styles.contentLinkItem}
+              onPress={() => {
+                /* Handle Données personnelles */
+              }}>
               <Text style={styles.bottomLink}>Données personnelles</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.contentLinkItem} onPress={() => {/* Handle Gestion des cookies */ }}>
-              <Text style={styles.bottomLink}>Gestion des cookies</Text>
             </TouchableOpacity>
           </View>
           <Text>
-            Sauf mention explicite de propriété intellectuelle détenue par des tiers, les contenus de ce site sont proposés sous{' '}
-            <TouchableOpacity onPress={() => Linking.openURL('https://github.com/etalab/licence-ouverte/blob/master/LO.md')}>
+            Sauf mention explicite de propriété intellectuelle détenue par des tiers, les contenus
+            de ce site sont proposés sous{' '}
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL('https://github.com/etalab/licence-ouverte/blob/master/LO.md')
+              }>
               <Text style={styles.bottomLink}>licence etalab-2.0</Text>
             </TouchableOpacity>
           </Text>
         </View>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   footer: {
@@ -153,6 +186,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: 'RGB(0,0,0)',
   },
-});
+})
 
-export default Footer;
+export default Footer

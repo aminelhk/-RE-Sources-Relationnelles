@@ -41,11 +41,14 @@ exports.getResources = async (req, res) => {
 };
 
 exports.createResource = async (req, res) => {
-  const resourceObject = JSON.parse(req.body.resource);
-  const newResource = new Resource({
-    ...resourceObject,
-    content: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-  });
+  const resourceObject = req.file
+    ? {
+        ...JSON.parse(req.body.resource),
+        content: `${req.protocol}://${req.get("host")}/images/${
+          req.file.filename
+        }`,
+      }
+    : { ...req.body };
 
   const {
     title,
@@ -56,7 +59,7 @@ exports.createResource = async (req, res) => {
     categoryResourceId,
     typeResourceId,
     isPrivate,
-  } = newResource;
+  } = resourceObject;
   const resource = await prisma.resource.create({
     data: {
       title,

@@ -1,41 +1,39 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import { useWindowDimensions } from 'react-native'
+import Cookies from 'js-cookie'
 import axios from 'axios'
-import { useNavigation } from '@react-navigation/native'
+// import { useNavigation } from '@react-navigation/native'
 
-const Header: React.FC = () => {
+type HeaderType = {
+  route: {
+    params: {
+      isAuth: boolean
+      setIsAuth: boolean
+    }
+  }
+  navigation: {
+    navigate: (screen: string) => void
+  }
+}
+
+const Header: React.FC<HeaderType> = ({ route, navigation }) => {
   const [menuVisible, setMenuVisible] = useState(false)
   const { width } = useWindowDimensions()
   const isMobile = width < 768
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const navigation = useNavigation()
+  const [isAuth, setIsAuth] = useState<boolean>(false)
+  // const isAuth = route.params.isAuth
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible)
   }
 
-  useEffect(() => {
-    const fetchToken = async () => {
-      const token = Cookies.get('token')
-      if (token) {
-        setIsAuthenticated(true)
-        console.log('Utilisateur authentifié')
-      } else {
-        setIsAuthenticated(false)
-        console.log('Utilisateur non authentifié')
-      }
-    }
-
-    fetchToken()
-  }, [])
-
   const handleLogout = async () => {
     try {
-      await axios.post('/logout')
+      await axios.post('/logout') // Assurez-vous que l'URL est correcte pour votre backend
       Cookies.remove('token')
-      setIsAuthenticated(false)
-      navigation.navigate('Login')
+      setIsAuth(false)
+      navigation.navigate('Login') // Redirige vers l'écran de login
     } catch (error) {
       console.error('Failed to logout:', error)
     }
@@ -53,7 +51,7 @@ const Header: React.FC = () => {
             <View style={styles.textContainer}>
               <Text style={styles.frHeaderServiceTitle}>(Re)Sources Relationnelles</Text>
               <Text style={styles.frHeaderServiceTagline}>
-                Ministère de la santé et de la prévention
+                Ministère du travail de la santé et des solidarités
               </Text>
             </View>
           </View>
@@ -69,7 +67,7 @@ const Header: React.FC = () => {
                     <TouchableOpacity style={styles.navItem}>
                       <Text style={styles.navLink}>Statistiques</Text>
                     </TouchableOpacity>
-                    {isAuthenticated ? (
+                    {isAuth ? (
                       <TouchableOpacity style={styles.navItem} onPress={handleLogout}>
                         <Text style={styles.navLink}>Déconnexion</Text>
                       </TouchableOpacity>
@@ -92,7 +90,10 @@ const Header: React.FC = () => {
           <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
             <Text style={styles.navLink}>Statistiques</Text>
           </TouchableOpacity>
-          {isAuthenticated ? (
+          <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
+            <Text style={styles.navLink}>Accès direct 2</Text>
+          </TouchableOpacity>
+          {isAuth ? (
             <TouchableOpacity style={styles.navItem} onPress={handleLogout}>
               <Text style={styles.navLink}>Déconnexion</Text>
             </TouchableOpacity>
@@ -130,6 +131,7 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
   headerBrand: {
+    flex: 8,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -149,6 +151,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   textContainer: {
+    flex: 1,
     flexDirection: 'column',
     marginLeft: 12,
   },
@@ -179,8 +182,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   burgerMenuButton: {
+    flex: 1,
     padding: 8,
-    backgroundColor: '#007BFF',
+    backgroundColor: '#000091',
     borderRadius: 4,
   },
   burgerMenuIcon: {
