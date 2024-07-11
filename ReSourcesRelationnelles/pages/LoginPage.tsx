@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, Alert, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, Text, TextInput, Alert, TouchableOpacity, ScrollView } from 'react-native'
 import axios from 'axios'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
+
 import styles from '../assets/style/loginForm'
-import { ScrollView } from 'react-native-gesture-handler'
 
 interface LoginScreenProps {
   navigation: NavigationProp<ParamListBase>
@@ -22,9 +22,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
   const [loginError, setLoginError] = useState<string | null>(null)
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
-  const [phone, setPhone] = useState<string>('')
+  const [phoneNumber, setPhoneNumber] = useState<string>('')
   const [pseudo, setPseudo] = useState<string>('')
-  const [vitalCardNumber, setVitalCardNumber] = useState<string>('')
+  const [vitalCardNum, setVitalCardNum] = useState<string>('')
   const [registerError, setRegisterError] = useState<string | null>(null)
 
   const handleLogin = async () => {
@@ -37,7 +37,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
     }
 
     try {
-      const response = await axios.post('http://10.114.128.158:3000/api/users/login', {
+      const response = await axios.post('http://10.114.128.208:3000/api/users/login', {
         email,
         password,
       })
@@ -68,27 +68,27 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
     console.log('Email:', email)
     console.log('FirstName:', firstName)
     console.log('LastName:', lastName)
-    console.log('Phone:', phone)
+    console.log('Phone:', phoneNumber)
     console.log('Pseudo:', pseudo)
-    console.log('VitalCardNumber:', vitalCardNumber)
+    console.log('VitalCardNumber:', vitalCardNum)
 
     if (
       validateEmail(email) &&
       validatePassword(password) &&
-      validatePhone(phone) &&
-      validateVitalCardNumber(vitalCardNumber)
+      validatePhone(phoneNumber) &&
+      validateVitalCardNumber(vitalCardNum)
     ) {
       try {
         const response = await axios.post('http://10.114.128.158:3000/api/users/createUser', {
           email,
           firstName,
           lastName,
-          phone,
+          phone: phoneNumber,
           password,
           pseudo,
           isActive: false,
           isPrivate: false,
-          vitalCardNumber,
+          vitalCardNumber: vitalCardNum,
           roleId: 5, // Default roleId to 5
         })
 
@@ -105,12 +105,12 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
     }
   }
 
-  const validateEmail = (email: string): boolean => {
-    if (!email) {
+  const validateEmail = (inputEmail: string): boolean => {
+    if (!inputEmail) {
       setEmailError('Veuillez entrer une adresse mail.')
       return false
     }
-    if (!email.includes('@')) {
+    if (!inputEmail.includes('@')) {
       setEmailError('L\'adresse mail doit contenir un "@"')
       return false
     }
@@ -118,12 +118,12 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
     return true
   }
 
-  const validatePassword = (password: string): boolean => {
-    if (!password) {
+  const validatePassword = (inputPassword: string): boolean => {
+    if (!inputPassword) {
       setPasswordError('Veuillez entrer un mot de passe.')
       return false
     }
-    if (password.length < 8) {
+    if (inputPassword.length < 8) {
       setPasswordError('Adresse mail ou mot de passe non valide.')
       return false
     }
@@ -206,8 +206,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
               <Text style={styles.label}>Téléphone</Text>
               <TextInput
                 style={styles.input}
-                value={phone}
-                onChangeText={setPhone}
+                value={phoneNumber}
+                onChangeText={setPhoneNumber}
                 keyboardType='phone-pad'
                 placeholder='Entrez votre numéro de téléphone'
               />
@@ -224,8 +224,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
               <Text style={styles.label}>Numéro de carte vitale</Text>
               <TextInput
                 style={styles.input}
-                value={vitalCardNumber}
-                onChangeText={setVitalCardNumber}
+                value={vitalCardNum}
+                onChangeText={setVitalCardNum}
                 placeholder='Entrez votre numéro de carte vitale'
               />
               {vitalCardNumberError && <Text style={styles.errorText}>{vitalCardNumberError}</Text>}
