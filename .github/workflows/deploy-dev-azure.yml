@@ -19,18 +19,10 @@ jobs:
         run: echo "IMAGE_NAME=${REGISTRY_DOMAIN}/${APP_NAME}:${GITHUB_SHA_SHORT}" >> $GITHUB_ENV
 
       - uses: actions/checkout@v4
-
-      - name: ls avant
-        run: ls
-
-      - name: move to ReSourcesRelationnelles
-        run: cd ReSourcesRelationnelles
-
-      - name: ls après
-        run: ls
         
       - name: docker build
         run: docker build -t ${IMAGE_NAME} -f front.Dockerfile .
+        working-directory: ./front
 
       - name: docker push
         run: docker push ${IMAGE_NAME}
