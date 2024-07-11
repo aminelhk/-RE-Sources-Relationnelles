@@ -24,7 +24,7 @@ jobs:
         run: ls
 
       - name: move to ReSourcesRelationnelles
-        run: cd ./ReSourcesRelationnelles/
+        run: cd ReSourcesRelationnelles
 
       - name: ls après
         run: ls
