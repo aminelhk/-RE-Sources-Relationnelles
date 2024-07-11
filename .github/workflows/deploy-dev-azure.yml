@@ -22,7 +22,7 @@ jobs:
         
       - name: docker build
         run: docker build -t ${IMAGE_NAME} -f front.Dockerfile .
-        working-directory: ./front
+        working-directory: ./ReSourcesRelationnelles
 
       - name: docker push
         run: docker push ${IMAGE_NAME}
