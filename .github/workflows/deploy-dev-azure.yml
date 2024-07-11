@@ -20,8 +20,14 @@ jobs:
 
       - uses: actions/checkout@v4
 
+      - name: ls avant
+        run: ls
+
       - name: move to ReSourcesRelationnelles
         run: cd ./ReSourcesRelationnelles/
+
+      - name: ls après
+        run: ls
         
       - name: docker build
         run: docker build -t ${IMAGE_NAME} -f front.Dockerfile .
