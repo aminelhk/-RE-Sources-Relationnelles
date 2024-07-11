@@ -6,7 +6,7 @@ on:
 
 env:
   APP_NAME: front
-  REGISTRY_DOMAIN: resourcesRelationnelles.azurecr.io
+  REGISTRY_DOMAIN: resourcesRelationnelles.azurecr.io 
 
 jobs:
   docker-build-push:
