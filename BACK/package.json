@@ -6,7 +6,8 @@
   "scripts": {
     "start": "babel-node server.js",
     "babel-node": "babel-node",
-    "dev": "nodemon --exec npm run babel-node -- server.js"
+    "dev": "nodemon --exec npm run babel-node -- server.js",
+    "build": "tsc" 
   },
   "keywords": [],
   "author": "",
