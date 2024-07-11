@@ -2,7 +2,7 @@
 FROM node:20-alpine AS build
 
 # Copier le reste des fichiers de l'application
-COPY ./ReSourcesRelationnelles .
+COPY . .
 
 # Installer les dépendances
 RUN yarn install
