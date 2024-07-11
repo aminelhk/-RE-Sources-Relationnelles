@@ -1,4 +1,4 @@
-name: DEPLOY DEV AZURE
+name: DEPLOY FRONT INTO DEV AZURE
 on:
   push:
     branches:
@@ -24,7 +24,7 @@ jobs:
         run: cd ReSourcesRelationnelles
         
       - name: docker build
-        run: docker build --tag=${IMAGE_NAME} .
+        run: docker build -t ${IMAGE_NAME} -f front.Dockerfile .
 
       - name: docker push
         run: docker push ${IMAGE_NAME}
