@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: move to ReSourcesRelationnelles
-        run: cd ReSourcesRelationnelles
+        run: cd ./ReSourcesRelationnelles/
         
       - name: docker build
         run: docker build -t ${IMAGE_NAME} -f front.Dockerfile .
