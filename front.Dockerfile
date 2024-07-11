@@ -1,23 +1,14 @@
 # Étape 1 : construire l'application
-FROM node:18-alpine AS build
+FROM node:20-alpine AS build
 
-# Définir le répertoire de travail
-WORKDIR /ReSourcesRelationnelles
-
-# Copier le fichier package.json et le fichier package-lock.json
-COPY package*.json ./
-
-# Installer yarn globalement
-RUN npm install global yarn
+# Copier le reste des fichiers de l'application
+COPY ./ReSourcesRelationnelles .
 
 # Installer les dépendances
 RUN yarn install
 
 # Installer Expo CLI globalement
 RUN yarn global add expo-cli
-
-# Copier le reste des fichiers de l'application
-COPY . .
 
 # Construire l'application
 RUN yarn expo export -p web
@@ -29,9 +20,7 @@ FROM nginx:alpine
 ENV VERSION 'dev'
 
 # Copier les fichiers de l'application construits dans le répertoire par défaut de Nginx
-COPY --from=build /app/dist /usr/share/nginx/html
-
-RUN rm /etc/nginx/conf.d/default.conf
+COPY --from=build /dist /usr/share/nginx/html
 
 # Créer une nouvelle configuration Nginx qui écoute sur le port 8080
 RUN echo 'server { \
