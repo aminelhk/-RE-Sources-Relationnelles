@@ -1,5 +1,6 @@
 import request from "supertest";
-import app from "../src/app"; // Votre application Express configurée
+
+import app from "../app";
 
 describe("Tests des routes API", () => {
   it("devrait retourner une réponse 200 pour /api/users", async () => {
