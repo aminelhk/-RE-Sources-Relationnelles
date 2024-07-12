@@ -75,5 +75,6 @@
     "react": {
       "version": "detect"
     }
-  }
+  },
+  "files": ["**/*.ts", "**/*.tsx", "!jest.config.js"] // Exclude jest.config.js
 }
