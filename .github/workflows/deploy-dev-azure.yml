@@ -25,7 +25,7 @@ jobs:
         uses: azure/docker-login@v1
         with:
           login-server: resourcesRelationnelles.azurecr.io
-          username: ${{ AZURE_USERNAME }}
+          username: ${AZURE_USERNAME}
           password: ${{ secrets.AZURE_SERVICE_ACCOUNT_KEY }}
           
       - name: docker build
