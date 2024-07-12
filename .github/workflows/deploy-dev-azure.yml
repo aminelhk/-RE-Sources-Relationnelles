@@ -17,14 +17,14 @@ jobs:
         run: echo "GITHUB_SHA_SHORT=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
       - name: export image name env
-        run: echo "IMAGE_NAME=${REGISTRY_DOMAIN}/${AZURE_USERNAME}:${GITHUB_SHA_SHORT}" >> $GITHUB_ENV
+        run: echo "IMAGE_NAME=${REGISTRY_DOMAIN}/front:${GITHUB_SHA_SHORT}" >> $GITHUB_ENV
 
       - uses: actions/checkout@v4
       
       - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
         with:
-          login-server: resourcesRelationnelles.azurecr.io
+          login-server: ${REGISTRY_DOMAIN}
           username: ${AZURE_USERNAME}
           password: ${{ secrets.AZURE_SERVICE_ACCOUNT_KEY }}
           
