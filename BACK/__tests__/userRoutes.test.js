@@ -1,130 +1,170 @@
-// __tests__/userRoutes.test.js
-import request from 'supertest';
-import app from '../app';
-import { PrismaClient } from '@prisma/client';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import { PrismaClient } from "@prisma/client";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import { createUser, deleteUser, updateUser, getUsers, getUserById, loginUser, logoutUser } from "../controllers/userController";
 
-// Mock Prisma Client
-jest.mock('@prisma/client', () => {
-  const mPrismaClient = {
+jest.mock("@prisma/client", () => {
+  const mockPrismaClient = {
     user: {
-      findMany: jest.fn(),
       create: jest.fn(),
       delete: jest.fn(),
       update: jest.fn(),
+      findMany: jest.fn(),
       findUnique: jest.fn(),
       findFirst: jest.fn(),
     },
   };
-  return { PrismaClient: jest.fn(() => mPrismaClient) };
+  return { PrismaClient: jest.fn(() => mockPrismaClient) };
 });
 
 const prisma = new PrismaClient();
+const secretKey = "test_secret"; // Use a test secret key
 
-describe('User Routes', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+describe('createUser', () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+  
+    test('creates a user and hashes the password', async () => {
+      const req = { body: { email: 'test@example.com', password: 'password', firstName: 'John', lastName: 'Doe' } };
+      const res = { json: jest.fn(), status: jest.fn().mockReturnThis() };
+  
+      bcrypt.hash = jest.fn().mockResolvedValue('hashed_password');
+      prisma.user.create.mockResolvedValue({ id: 1, ...req.body, password: 'hashed_password' });
+  
+      await createUser(req, res);
+  
+      expect(bcrypt.hash).toHaveBeenCalledWith('password', 10);
+      expect(res.json).toHaveBeenCalledWith({ id: 1, ...req.body, password: 'hashed_password' });
+    });
   });
 
-  it('should return a list of users', async () => {
-    const mockUsers = [
-      { idUser: 1, email: 'test1@example.com' },
-      { idUser: 2, email: 'test2@example.com' },
-    ];
-    prisma.user.findMany.mockResolvedValue(mockUsers);
-
-    const response = await request(app).get('/users');
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(mockUsers);
+  describe('deleteUser', () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+  
+    it('deletes a user by id', async () => {
+      const req = { body: { idUser: '123' } };
+      const res = { json: jest.fn(), status: jest.fn().mockReturnThis() };
+  
+      prisma.user.delete.mockResolvedValue({ idUser: '123' });
+  
+      await deleteUser(req, res);
+  
+      expect(res.json).toHaveBeenCalledWith({ idUser: '123' });
+      expect(prisma.user.delete).toHaveBeenCalledWith({ where: { idUser: '123' } });
+    });
   });
 
-  it('should create a new user', async () => {
-    const mockUser = { idUser: 3, email: 'test3@example.com' };
-    prisma.user.create.mockResolvedValue(mockUser);
-    bcrypt.hash = jest.fn().mockResolvedValue('hashedPassword');
+  describe('updateUser', () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+  
+    it('updates a user and hashes the new password', async () => {
+      const req = { body: { idUser: '123', email: 'test@example.com', password: 'new_password' } };
+      const res = { json: jest.fn(), status: jest.fn().mockReturnThis() };
+  
+      bcrypt.hash = jest.fn().mockResolvedValue('hashed_new_password');
+      prisma.user.update.mockResolvedValue({ idUser: '123', email: 'test@example.com', password: 'hashed_new_password' });
+  
+      await updateUser(req, res);
+  
+      expect(bcrypt.hash).toHaveBeenCalledWith('new_password', 10);
+      expect(res.json).toHaveBeenCalledWith({ idUser: '123', email: 'test@example.com', password: 'hashed_new_password' });
+    });
+  
+    it('does not hash the password if it is not provided', async () => {
+      const req = { body: { idUser: '123', email: 'test@example.com' } };
+      const res = { json: jest.fn(), status: jest.fn().mockReturnThis() };
+  
+      prisma.user.update.mockResolvedValue({ idUser: '123', email: 'test@example.com' });
+  
+      await updateUser(req, res);
+  
+      expect(bcrypt.hash).not.toHaveBeenCalled();
+      expect(res.json).toHaveBeenCalledWith({ idUser: '123', email: 'test@example.com' });
+    });
+  });
 
-    const response = await request(app)
-      .post('/users/createUser')
-      .send({
-        email: 'test3@example.com',
-        firstName: 'John',
-        lastName: 'Doe',
-        phone: '1234567890',
-        password: 'password',
-        pseudo: 'johndoe',
-        isActive: true,
-        isPrivate: false,
-        vitalCardNumber: '123456',
-        roleId: 1,
+  describe('getUsers', () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+  
+    it('returns a list of users', async () => {
+      const req = {};
+      const res = { json: jest.fn(), status: jest.fn().mockReturnThis() };
+      const users = [{ idUser: '1', email: 'test1@example.com' }, { idUser: '2', email: 'test2@example.com' }];
+  
+      prisma.user.findMany.mockResolvedValue(users);
+  
+      await getUsers(req, res);
+  
+      expect(res.json).toHaveBeenCalledWith(users);
+      expect(prisma.user.findMany).toHaveBeenCalled();
+    });
+  });
+
+  describe('getUserById', () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+  
+    it('returns a user by id', async () => {
+      const req = { body: { idUser: '123' } };
+      const res = { json: jest.fn(), status: jest.fn().mockReturnThis() };
+      const user = { idUser: '123', email: 'test@example.com' };
+  
+      prisma.user.findUnique.mockResolvedValue(user);
+  
+      await getUserById(req, res);
+  
+      expect(res.json).toHaveBeenCalledWith(user);
+      expect(prisma.user.findUnique).toHaveBeenCalledWith({ where: { idUser: '123' }, include: { role: true } });
+    });
+  
+    it('returns 500 if an error occurs', async () => {
+      const req = { body: { idUser: '123' } };
+      const res = { json: jest.fn(), status: jest.fn().mockReturnThis() };
+  
+      prisma.user.findUnique.mockRejectedValue(new Error('Internal server error'));
+  
+      await getUserById(req, res);
+  
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({
+        error: "Une erreur s'est produite lors de la récupération de l'utilisateur.",
       });
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(mockUser);
+    });
   });
 
-  it('should delete a user', async () => {
-    const mockUser = { idUser: 1, email: 'test1@example.com' };
-    prisma.user.delete.mockResolvedValue(mockUser);
-
-    const response = await request(app)
-      .delete('/users/deleteUser')
-      .send({ idUser: 1 });
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(mockUser);
+  describe('logoutUser', () => {
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+  
+    it('logs out a user by clearing the token cookie', async () => {
+      const req = {};
+      const res = { json: jest.fn(), status: jest.fn().mockReturnThis(), clearCookie: jest.fn() };
+  
+      await logoutUser(req, res);
+  
+      expect(res.clearCookie).toHaveBeenCalledWith('token');
+      expect(res.json).toHaveBeenCalledWith({ message: "Déconnexion réussie" });
+    });
+  
+    it('returns 500 if an error occurs during logout', async () => {
+      const req = {};
+      const res = { json: jest.fn(), status: jest.fn().mockReturnThis() };
+  
+      res.clearCookie = jest.fn().mockImplementation(() => { throw new Error('Clear cookie error'); });
+  
+      await logoutUser(req, res);
+  
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: "Impossible de déconnecter l'utilisateur" });
+    });
   });
-
-  it('should update a user', async () => {
-    const mockUser = { idUser: 2, email: 'updated@example.com' };
-    prisma.user.update.mockResolvedValue(mockUser);
-    bcrypt.hash = jest.fn().mockResolvedValue('hashedPassword');
-
-    const response = await request(app)
-      .put('/users/updateUser')
-      .send({
-        idUser: 2,
-        email: 'updated@example.com',
-        firstName: 'Updated',
-        lastName: 'User',
-        phone: '0987654321',
-        password: 'password',
-        pseudo: 'updateduser',
-        isActive: true,
-        isPrivet: false,
-        vitalCardNumber: '654321',
-        roleId: 2,
-      });
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(mockUser);
-  });
-
-  it('should return a user by ID', async () => {
-    const mockUser = { idUser: 1, email: 'test1@example.com' };
-    prisma.user.findUnique.mockResolvedValue(mockUser);
-
-    const response = await request(app)
-      .get('/users/getUserById')
-      .send({ idUser: 1 });
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual(mockUser);
-  });
-
-  it('should log in a user', async () => {
-    const mockUser = { idUser: 1, email: 'test1@example.com', password: 'hashedPassword', isActive: true };
-    prisma.user.findFirst.mockResolvedValue(mockUser);
-    bcrypt.compare = jest.fn().mockResolvedValue(true);
-    jwt.sign = jest.fn().mockReturnValue('mockToken');
-
-    const response = await request(app)
-      .post('/users/login')
-      .send({ email: 'test1@example.com', password: 'password' });
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({ token: 'mockToken' });
-  });
-
-  it('should log out a user', async () => {
-    const response = await request(app)
-      .post('/users/logout');
-    expect(response.status).toBe(200);
-    expect(response.body).toEqual({ message: 'Déconnexion réussie' });
-  });
-});
+  
