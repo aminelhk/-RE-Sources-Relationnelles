@@ -4,20 +4,15 @@ import { useWindowDimensions } from 'react-native'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import { AuthContext } from '../context/AuthContext'
+import { useNavigation } from '@react-navigation/native'
 
 type HeaderType = {
-  route: {
-    params: {
-      isAuth: boolean
-      setIsAuth: boolean
-    }
-  }
   navigation: {
     navigate: (screen: string) => void
   }
 }
 
-const Header: React.FC<HeaderType> = ({ route, navigation }) => {
+const Header: React.FC<HeaderType> = ({ navigation }) => {
   const [menuVisible, setMenuVisible] = useState(false)
   const { width } = useWindowDimensions()
   const isMobile = width < 768
@@ -25,6 +20,10 @@ const Header: React.FC<HeaderType> = ({ route, navigation }) => {
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible)
+  }
+
+  if (!isAuth) {
+    window.location.href = '/Login'
   }
 
   const handleLogout = async () => {

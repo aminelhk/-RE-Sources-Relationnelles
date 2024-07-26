@@ -9,8 +9,13 @@ import SearchBar from '../components/SearchBar'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AuthContext } from '../context/AuthContext' // Importez votre contexte d'authentification
 import useAxios from '../axiosConfig' // Utilisez votre configuration axios
+import { NavigationProp, ParamListBase } from '@react-navigation/native'
 
-const HomePage: React.FC = () => {
+interface HomePageScreenProps {
+  navigation: NavigationProp<ParamListBase>
+}
+
+const HomePage: React.FC<HomePageScreenProps> = ({ navigation }) => {
   const { isAuth } = useContext(AuthContext)
   const axios = useAxios()
   // Nouvel état pour stocker la recherche de l'utilisateur
@@ -64,19 +69,7 @@ const HomePage: React.FC = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <View style={{ flex: 1 }}>
-          <Header
-            route={{
-              params: {
-                isAuth: false,
-                setIsAuth: false,
-              },
-            }}
-            navigation={{
-              navigate: function (screen: string): void {
-                throw new Error('Function not implemented.')
-              },
-            }}
-          />
+          <Header navigation={navigation} />
         </View>
         {/* Autres composants ou contenu de la page */}
         <SearchBar recherche={search} setRecherche={setSearch} onPress={handleSearch} />
