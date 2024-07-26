@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import { useWindowDimensions } from 'react-native'
 import Cookies from 'js-cookie'
 import axios from 'axios'
-// import { useNavigation } from '@react-navigation/native'
+import { AuthContext } from '../context/AuthContext'
 
 type HeaderType = {
   route: {
@@ -21,8 +21,7 @@ const Header: React.FC<HeaderType> = ({ route, navigation }) => {
   const [menuVisible, setMenuVisible] = useState(false)
   const { width } = useWindowDimensions()
   const isMobile = width < 768
-  const [isAuth, setIsAuth] = useState<boolean>(false)
-  // const isAuth = route.params.isAuth
+  const { isAuth, setIsAuth } = useContext(AuthContext)
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible)
@@ -30,9 +29,9 @@ const Header: React.FC<HeaderType> = ({ route, navigation }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('/logout') // Assurez-vous que l'URL est correcte pour votre backend
+      await axios.post('/logout')
       Cookies.remove('token')
-      setIsAuth(false)
+      setIsAuth(false) // Mise à jour de l'état
       navigation.navigate('Login') // Redirige vers l'écran de login
     } catch (error) {
       console.error('Failed to logout:', error)

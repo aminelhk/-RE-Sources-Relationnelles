@@ -31,7 +31,7 @@ const Card: React.FC<CardProps> = ({
   // Function to handle update
   const onUpdate = async () => {
     try {
-      const response = await fetch('http://10.114.128.158:3000/api/resources/updateResource', {
+      const response = await fetch('http://localhost:3000/api/resources/updateResource', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ const Card: React.FC<CardProps> = ({
   // Function to handle delete
   const onDelete = async () => {
     try {
-      const response = await fetch('http://10.114.128.158:3000/api/resources/deleteResource', {
+      const response = await fetch('http://localhost:3000/api/resources/deleteResource', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ const Card: React.FC<CardProps> = ({
               style={styles.cardImg}
               source={{
                 uri: item.content.includes('.pdf')
-                  ? 'http://10.114.128.158:3000/images/tutoriel-pdf-ok.png'
+                  ? 'http://localhost:3000/images/tutoriel-pdf-ok.png'
                   : item.content,
               }}
             />
