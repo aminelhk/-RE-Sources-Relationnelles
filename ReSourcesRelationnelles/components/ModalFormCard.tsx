@@ -19,15 +19,23 @@ import { Resource } from '../types'
 interface CustomModalProps {
   isVisible: boolean
   setIsVisible: (isVisible: boolean) => void
-  item: Resource
+  selectedItem: Resource
+  setSelectedItem?: (item: Resource | null) => void
 }
 
-const ModalFormCard: React.FC<CustomModalProps> = ({ isVisible, setIsVisible, item }) => {
-  const [resource, setResource] = useState(item)
+const ModalFormCard: React.FC<CustomModalProps> = ({
+  isVisible,
+  setIsVisible,
+  selectedItem,
+  setSelectedItem,
+}) => {
+  const [resource, setResource] = useState(selectedItem)
   const [importedImage, setImportedImage] = useState('' as string | undefined)
   const [selectedImage, setSelectedImage] = useState(resource.content)
+
   const onClose = () => {
     setIsVisible(false)
+    setSelectedItem(null)
   }
 
   const pickImageAsync = async () => {
@@ -45,13 +53,13 @@ const ModalFormCard: React.FC<CustomModalProps> = ({ isVisible, setIsVisible, it
   }
 
   const handleModif = async () => {
+    const formData = new FormData()
+    formData.append('image', selectedImage)
+    formData.append('resource', JSON.stringify(resource))
     try {
       const response = await fetch('http://localhost:3000/api/resources/updateResource', {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(resource),
+        body: formData,
       })
       if (response.status === 200) {
         console.log('Resource updated successfully')

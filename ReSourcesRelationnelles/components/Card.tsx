@@ -1,26 +1,24 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TouchableOpacity, View, Image, Text, StyleSheet, Platform, Linking } from 'react-native'
 import FeatherIcon from 'react-native-vector-icons/Feather'
 
 import Resource from '../types/Resource'
-import ModalFormCard from './ModalFormCard'
 
 interface CardProps {
   resources: Resource[]
   item: Resource
   setResources: (resources: Resource[]) => void
-  isModalVisible: boolean
   setIsModalVisible: (modalVisible: boolean) => void
+  setSelectedItem: (item: Resource | null) => void
 }
 
 const Card: React.FC<CardProps> = ({
   resources,
   item,
   setResources,
-  isModalVisible,
   setIsModalVisible,
+  setSelectedItem,
 }) => {
-  // Function to handle press
   const onPress = () => {
     if (Platform.OS !== 'web') {
       Linking.openURL(item.content).catch(err => console.error("Impossible d'ouvrir l'URL", err))
@@ -30,10 +28,10 @@ const Card: React.FC<CardProps> = ({
   }
 
   const onPressUpdate = () => {
+    setSelectedItem(item)
     setIsModalVisible(true)
   }
 
-  // Function to handle update
   const onUpdate = async () => {
     try {
       const response = await fetch('http://localhost:3000/api/resources/updateResource', {
@@ -48,7 +46,6 @@ const Card: React.FC<CardProps> = ({
         throw new Error('Failed to update resource')
       }
 
-      // Handle success (e.g., update state)
       const updatedItem = await response.json()
       console.log('Resource updated:', updatedItem)
     } catch (error) {
@@ -56,7 +53,6 @@ const Card: React.FC<CardProps> = ({
     }
   }
 
-  // Function to handle delete
   const onDelete = async () => {
     try {
       const response = await fetch('http://localhost:3000/api/resources/deleteResource', {
@@ -70,9 +66,9 @@ const Card: React.FC<CardProps> = ({
       if (!response.ok) {
         throw new Error('Failed to delete resource')
       }
-      const res = resources.filter(resource => resource.idResource != item.idResource)
+
+      const res = resources.filter(resource => resource.idResource !== item.idResource)
       setResources(res)
-      // Handle success (e.g., remove item from state)
       console.log('Resource deleted')
     } catch (error) {
       console.error('Error deleting resource:', error)
@@ -81,7 +77,6 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <View style={{ flex: 1 }}>
-      <ModalFormCard isVisible={isModalVisible} setIsVisible={setIsModalVisible} item={item} />
       <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
         <View style={styles.card}>
           <TouchableOpacity style={{ ...styles.button, ...styles.buttonOpen }} onPress={onPress}>

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, SafeAreaView, FlatList, Platform } from 'react-native'
 
 import Card from './Card'
 import Resource from '../types/Resource'
+import ModalFormCard from './ModalFormCard'
 
 type CardListType = {
   resources: Resource[]
@@ -17,6 +18,8 @@ const CardList: React.FC<CardListType> = ({
   isModalVisible,
   setIsModalVisible,
 }) => {
+  const [selectedItem, setSelectedItem] = useState<Resource | null>(null)
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <FlatList
@@ -26,14 +29,22 @@ const CardList: React.FC<CardListType> = ({
             resources={resources}
             setResources={setResources}
             item={item}
-            isModalVisible={isModalVisible}
             setIsModalVisible={setIsModalVisible}
+            setSelectedItem={setSelectedItem}
           />
         )}
         keyExtractor={(item, index) => index.toString()}
-        numColumns={Platform.OS === 'web' ? 4 : 1} // Number of columns
+        numColumns={Platform.OS === 'web' ? 4 : 1}
         contentContainerStyle={styles.flatListContent}
       />
+      {selectedItem && (
+        <ModalFormCard
+          isVisible={isModalVisible}
+          setIsVisible={setIsModalVisible}
+          selectedItem={selectedItem}
+          setSelectedItem={setSelectedItem}
+        />
+      )}
     </SafeAreaView>
   )
 }
