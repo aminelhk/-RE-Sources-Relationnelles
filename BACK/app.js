@@ -11,7 +11,11 @@ import categoriesResourceRoutes from "./routes/categoryResourceRoutes";
 import commentsRoutes from "./routes/commentRoutes";
 
 const corsOptions = {
-  origin: ["http://localhost:3000", "http://localhost:8081"],
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:8081",
+    "https://apiresourcesrelationnelles.azurewebsites.net",
+  ],
   optionsSuccessStatus: 200,
 };
 
