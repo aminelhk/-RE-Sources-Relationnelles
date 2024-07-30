@@ -24,7 +24,7 @@ jobs:
       - name: Login to Azure Container Registry
         uses: docker/login-action@v1
         with:
-          registry: resourcesRelationnelles.azurecr.io
+          registry: vikit.azurecr.io
           username: githubactions
           password: ${{ secrets.AZURE_SERVICE_ACCOUNT_KEY }}
       
