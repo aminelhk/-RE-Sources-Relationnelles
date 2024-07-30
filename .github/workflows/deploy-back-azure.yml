@@ -28,7 +28,7 @@ jobs:
           password: ${{ secrets.AZURE_SERVICE_ACCOUNT_KEY }}
 
       - name: docker build
-        run: docker build -t ${IMAGE_NAME} -f ${APP_NAME}.dockerfile .
+        run: docker build -t ${IMAGE_NAME} -f back.dockerfile .
         working-directory: ./ReSourcesRelationnelles
 
       - name: docker push
