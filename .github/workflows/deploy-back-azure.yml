@@ -1,13 +1,12 @@
-name: DEPLOY FRONT INTO DEV AZURE
+name: DEPLOY BACK INTO DEV AZURE
 on:
   push:
     branches:
       - main
 
 env:
-  APP_NAME: front
-  REGISTRY_DOMAIN: resourcesRelationnelles.azurecr.io 
-  AZURE_USERNAME: githubactions
+  APP_NAME: back
+  REGISTRY_DOMAIN: resourcesRelationnelles.azurecr.io
 
 jobs:
   docker-build-push:
@@ -17,7 +16,7 @@ jobs:
         run: echo "GITHUB_SHA_SHORT=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
       - name: export image name env
-        run: echo "IMAGE_NAME=${REGISTRY_DOMAIN}/front:${GITHUB_SHA_SHORT}" >> $GITHUB_ENV
+        run: echo "IMAGE_NAME=${REGISTRY_DOMAIN}/${APP_NAME}:${GITHUB_SHA_SHORT}" >> $GITHUB_ENV
 
       - uses: actions/checkout@v4
 
@@ -27,9 +26,9 @@ jobs:
           registry: resourcesRelationnelles.azurecr.io
           username: githubactions
           password: ${{ secrets.AZURE_SERVICE_ACCOUNT_KEY }}
-      
+
       - name: docker build
-        run: docker build -t ${IMAGE_NAME} -f front.Dockerfile .
+        run: docker build -t ${IMAGE_NAME} -f ${APP_NAME}.dockerfile .
         working-directory: ./ReSourcesRelationnelles
 
       - name: docker push

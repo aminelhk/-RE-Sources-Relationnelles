@@ -1,0 +1,35 @@
+name: DEPLOY FRONT INTO DEV AZURE
+on:
+  push:
+    branches:
+      - main
+
+env:
+  APP_NAME: front
+  REGISTRY_DOMAIN: resourcesRelationnelles.azurecr.io
+
+jobs:
+  docker-build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: export short sha env
+        run: echo "GITHUB_SHA_SHORT=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: export image name env
+        run: echo "IMAGE_NAME=${REGISTRY_DOMAIN}/${APP_NAME}:${GITHUB_SHA_SHORT}" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v4
+
+      - name: Login to Azure Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: resourcesRelationnelles.azurecr.io
+          username: githubactions
+          password: ${{ secrets.AZURE_SERVICE_ACCOUNT_KEY }}
+
+      - name: docker build
+        run: docker build -t ${IMAGE_NAME} -f ${APP_NAME}.dockerfile .
+        working-directory: ./ReSourcesRelationnelles
+
+      - name: docker push
+        run: docker push ${IMAGE_NAME}
