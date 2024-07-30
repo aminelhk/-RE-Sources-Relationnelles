@@ -28,17 +28,19 @@ const helmetOptions = {
 const app = express();
 
 app.use(express.json()); // Pour parser les corps de requêtes en JSON
-
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // Placement du middleware CORS avant les routes
 app.use(helmet(helmetOptions));
 
 app.use("/api/users", userRoutes); // Route pour les utilisateurs
 app.use("/api/roles", roleRoutes); // Route pour les roles
 app.use("/api/resources", resourceRoutes); // Route pour les resources
 app.use("/api/typesResource", typesResourceRoutes); // Route pour les typesResource
-app.use("/api/categoriesResource", categoriesResourceRoutes); // Route pour les utilisateurs
+app.use("/api/categoriesResource", categoriesResourceRoutes); // Route pour les catégories de resources
 app.use("/api/resources/:id", resourceRoutes); // Route pour les resources by id
 app.use("/api/comments", commentsRoutes); // Route pour les commentaires
 app.use("/images", express.static(path.join(__dirname, "images"))); // Route pour les images
+
+// Pour répondre aux requêtes préliminaires OPTIONS
+app.options("*", cors(corsOptions));
 
 module.exports = app;
