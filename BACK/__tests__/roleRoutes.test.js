@@ -27,15 +27,15 @@ const {
       jest.clearAllMocks();
     });
   
-   /* test('returns 400 when idRole or labelRole is missing', async () => {
+   test('returns 400 when idRole or labelRole is missing', async () => {
       const req = { body: {} };
       const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
   
       await createRole(req, res);
   
       expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Missing idRole or labelRole' });
-    });*/
+      expect(res.json).toHaveBeenCalledWith({ error: 'Invalid idRole or labelRole type' });
+    });
   
     test('returns 400 when idRole or labelRole is of invalid type', async () => {
       const req = { body: { idRole: 123, labelRole: true } };
@@ -98,7 +98,7 @@ const {
       await deleteRole(req, res);
   
       expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Missing idRole' });
+      expect(res.json).toHaveBeenCalledWith({ error: 'Invalid idRole type' });
     });
   
     it('should return 500 if an error occurs during deletion', async () => {
@@ -183,7 +183,7 @@ const {
       await updateRole(req, res);
   
       expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({ error: 'Missing idRole or labelRole' });
+      expect(res.json).toHaveBeenCalledWith({ error: 'Invalid idRole or labelRole type' });
     });
   
     it('should return 500 if an error occurs during update', async () => {
