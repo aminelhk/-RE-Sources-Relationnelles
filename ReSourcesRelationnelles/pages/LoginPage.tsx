@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, Text, TextInput, Alert, TouchableOpacity, ScrollView } from 'react-native'
 import axios from 'axios'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
+import { AuthContext } from '../context/AuthContext' // Importez votre contexte d'authentification
 
 import styles from '../assets/style/loginForm'
 
 interface LoginScreenProps {
   navigation: NavigationProp<ParamListBase>
-  isAuth: boolean
-  setIsAuth: (value: boolean) => void
 }
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
+  const { setIsAuth, setToken } = useContext(AuthContext)
   const [createAccount, setCreateAccount] = useState(false)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -28,26 +28,20 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
   const [registerError, setRegisterError] = useState<string | null>(null)
 
   const handleLogin = async () => {
-    console.log('Login button pressed')
-    console.log('Email:', email)
-    console.log('Password:', password)
-
     if (!validateEmail(email) || !validatePassword(password)) {
       return
     }
 
     try {
-      const response = await axios.post('http://10.114.128.208:3000/api/users/login', {
+      const response = await axios.post('http://localhost:3000/api/users/login', {
         email,
         password,
       })
 
-      console.log('Response:', response)
-
       if (response.status === 200) {
-        Alert.alert('Success', 'Vous êtes maintenant connecté')
-        setIsAuth(true)
-        navigation.navigate('Home', { isAuth: isAuth })
+        setToken(response.data.token) // Stockez le token
+        setIsAuth(true) // Mettez à jour l'état d'authentification
+        navigation.navigate('Home') // Redirigez vers la page d'accueil
       }
     } catch (error) {
       console.log('Error:', error)
@@ -79,7 +73,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, isAuth, setIsAuth
       validateVitalCardNumber(vitalCardNum)
     ) {
       try {
-        const response = await axios.post('http://10.114.128.158:3000/api/users/createUser', {
+        const response = await axios.post('http://localhost:3000/api/users/createUser', {
           email,
           firstName,
           lastName,
