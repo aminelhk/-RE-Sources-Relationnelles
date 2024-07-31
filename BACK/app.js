@@ -14,7 +14,7 @@ const corsOptions = {
   origin: [
     "http://localhost:3000",
     "http://localhost:8081",
-    "https://apiresourcesrelationnelles.azurewebsites.net",
+    "https://resourcesrelationnelles.azurewebsites.net",
   ],
   optionsSuccessStatus: 200,
 };
