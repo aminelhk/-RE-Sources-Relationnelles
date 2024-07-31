@@ -92,14 +92,14 @@ const {
       expect(prisma.role.delete).toHaveBeenCalledWith({ where: { idRole: '123' } });
     });
   
-    /*it('should return 400 if idRole is missing', async () => {
+    it('should return 400 if idRole is missing', async () => {
       req.body = {}; // No idRole
   
       await deleteRole(req, res);
   
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({ error: 'Missing idRole' });
-    });*/
+    });
   
     it('should return 500 if an error occurs during deletion', async () => {
       prisma.role.delete.mockRejectedValue(new Error('Internal server error'));
@@ -177,14 +177,14 @@ const {
       });
     });
   
-    /*it('should return 400 if idRole or labelRole is missing', async () => {
+    it('should return 400 if idRole or labelRole is missing', async () => {
       req.body = { labelRole: 'Updated Label' };
   
       await updateRole(req, res);
   
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({ error: 'Missing idRole or labelRole' });
-    });*/
+    });
   
     it('should return 500 if an error occurs during update', async () => {
       prisma.role.update.mockRejectedValue(new Error('Internal server error'));
