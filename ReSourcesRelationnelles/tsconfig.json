@@ -16,7 +16,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-native",
-    "types": ["react", "react-native", "expo", "jest"]
+    "types": ["react", "react-native", "node", "jest"],
+    "typeRoots": ["./node_modules/@types", "./globals.d.ts"]
   },
   "jest": {
     "preset": "react-native",
@@ -33,7 +34,10 @@
     "src",
     "__tests__/**/*.ts",
     "__tests__/**/*.tsx",
-    "__tests__/**/*.js"
+    "__tests__/**/*.js",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "globals.d.ts"
   ],
   "exclude": ["node_modules", "babel.config.js", "metro.config.js"],
   "extends": "expo/tsconfig.base"
