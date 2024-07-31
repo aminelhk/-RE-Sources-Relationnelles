@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { View, StyleSheet, Platform, ScrollView } from 'react-native'
 
 import Header from '../components/Header'
@@ -7,8 +7,17 @@ import CardList from '../components/CardList'
 import Resource from '../types/Resource'
 import SearchBar from '../components/SearchBar'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { AuthContext } from '../context/AuthContext' // Importez votre contexte d'authentification
+import useAxios from '../axiosConfig' // Utilisez votre configuration axios
+import { NavigationProp, ParamListBase } from '@react-navigation/native'
 
-const HomePage: React.FC = () => {
+interface HomePageScreenProps {
+  navigation: NavigationProp<ParamListBase>
+}
+
+const HomePage: React.FC<HomePageScreenProps> = ({ navigation }) => {
+  const { isAuth } = useContext(AuthContext)
+  const axios = useAxios()
   // Nouvel état pour stocker la recherche de l'utilisateur
   const [search, setSearch] = useState('')
   // Nouvel état pour stocker les ressources recherchées
@@ -21,7 +30,7 @@ const HomePage: React.FC = () => {
   // Utiliser un effet pour charger les ressources
   useEffect(() => {
     // Effectuer des appels API ou des actions asynchrones
-    fetch('http://10.114.128.158:3000/api/resources')
+    fetch('http://localhost:3000/api/resources')
       // Récupérer les données
       .then(response => response.json())
       .then((data: Resource[]) => {
@@ -36,6 +45,20 @@ const HomePage: React.FC = () => {
       })
   }, [])
 
+  useEffect(() => {
+    if (isAuth) {
+      axios
+        .get('/resources')
+        .then(response => {
+          setOriginalResources(response.data)
+          setSearchedResources(response.data)
+        })
+        .catch(error => {
+          console.error(error.message)
+        })
+    }
+  }, [isAuth])
+
   // Fonction pour gérer la recherche
   const handleSearch = () => {
     const res = originalResources.filter(r => r.title.includes(search))
@@ -45,8 +68,8 @@ const HomePage: React.FC = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
-        <View style={{ flex: Platform.OS !== 'web' && 1 }}>
-          <Header />
+        <View style={{ flex: 1 }}>
+          <Header navigation={navigation} />
         </View>
         {/* Autres composants ou contenu de la page */}
         <SearchBar recherche={search} setRecherche={setSearch} onPress={handleSearch} />

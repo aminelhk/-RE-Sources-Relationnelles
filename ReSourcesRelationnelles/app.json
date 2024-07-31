@@ -12,13 +12,15 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.arnaudlcz.ReSourcesRelationnelles"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.arnaudlcz.ReSourcesRelationnelles"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,6 +36,11 @@
     "plugins": [
       "expo-font",
       "expo-asset"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "aafb69a8-dd58-4dd1-b5e2-15ed52074de7"
+      }
+    }
   }
 }
