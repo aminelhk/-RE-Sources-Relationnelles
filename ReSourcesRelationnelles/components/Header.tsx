@@ -80,24 +80,14 @@ const Header: React.FC<HeaderType> = ({ navigation }) => {
           )}
         </View>
       </View>
-      {isMobile && menuVisible && (
-        <View style={styles.mobileMenu}>
-          <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
-            <Text style={styles.navLink}>Statistiques</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
-            <Text style={styles.navLink}>Accès direct 2</Text>
-          </TouchableOpacity>
-          {isAuth ? (
-            <TouchableOpacity style={styles.navItem} onPress={handleLogout}>
-              <Text style={styles.navLink}>Déconnexion</Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.navLink}>Connexion</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+      {isMobile && menuVisible && isAuth ? (
+        <TouchableOpacity style={styles.navItem} onPress={handleLogout}>
+          <Text style={styles.navLink}>Déconnexion</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.navLink}>Connexion</Text>
+        </TouchableOpacity>
       )}
     </View>
   )
