@@ -62,9 +62,6 @@ const Header: React.FC<HeaderType> = ({ navigation }) => {
               <View style={styles.menuContainer}>
                 <View style={styles.navigation}>
                   <View style={styles.navList}>
-                    <TouchableOpacity style={styles.navItem}>
-                      <Text style={styles.navLink}>Statistiques</Text>
-                    </TouchableOpacity>
                     {isAuth ? (
                       <TouchableOpacity style={styles.navItem} onPress={handleLogout}>
                         <Text style={styles.navLink}>Déconnexion</Text>
