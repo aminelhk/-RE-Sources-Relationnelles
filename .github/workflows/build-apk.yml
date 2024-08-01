@@ -3,7 +3,6 @@ on:
   push:
     tags:
       - "v*"
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,14 +22,8 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: 📂 Verify working directory
-        run: pwd
-
-      - name: 📂 List files in working directory
-        run: ls -la
-
       - name: 📦 Install dependencies
         run: yarn install
 
       - name: 🚀 Build app (pas d'interaction, pas d'attente de la fin du build EAS)
-        run: eas build --platform android --non-interactive --no-wait
+        run: eas build --platform android --non-interactive --no-wait"
