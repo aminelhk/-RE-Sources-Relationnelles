@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: change directory to BACK
-        run: cd BACK
+        run: cd .\BACK\
         
       - name: execute tests
         run: yarn test
