@@ -14,8 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: change directory to front 
-        run: cd ReSourcesRelationnelles
+      - name: see directory 
+        run: ls
         
       - name: execute tests
         run: yarn test
