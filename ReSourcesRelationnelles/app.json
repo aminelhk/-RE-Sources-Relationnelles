@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ReSourcesRelationnelles",
+    "name": "ReSourcesRe",
     "slug": "ReSourcesRelationnelles",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -27,16 +27,9 @@
     },
     "packagerOpts": {
       "config": "metro.config.js",
-      "sourceExts": [
-        "js",
-        "jsx",
-        "css"
-      ]
+      "sourceExts": ["js", "jsx", "css"]
     },
-    "plugins": [
-      "expo-font",
-      "expo-asset"
-    ],
+    "plugins": ["expo-font", "expo-asset"],
     "extra": {
       "eas": {
         "projectId": "aafb69a8-dd58-4dd1-b5e2-15ed52074de7"
