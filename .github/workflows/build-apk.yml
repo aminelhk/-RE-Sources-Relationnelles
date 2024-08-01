@@ -37,5 +37,5 @@ jobs:
         working-directory: -RE-Sources-Relationnelles/ReSourcesRelationnelles
 
       - name: 🚀 Build app (pas d'interaction, pas d'attente de la fin du build EAS)
-        run: eas build --platform android --non-interactive --no-wait
+        run: eas build --platform android --profile preview --non-interactive --no-wait
         working-directory: -RE-Sources-Relationnelles/ReSourcesRelationnelles
