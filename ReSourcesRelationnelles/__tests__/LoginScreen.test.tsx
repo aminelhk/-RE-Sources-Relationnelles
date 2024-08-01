@@ -5,8 +5,13 @@ import MockAdapter from 'axios-mock-adapter'
 import { NavigationContainer } from '@react-navigation/native'
 import LoginScreen from '../pages/LoginPage'
 import { AuthContext } from '../context/AuthContext'
+import { cleanup } from '@testing-library/react-native'
 
 const mockAxios = new MockAdapter(axios)
+
+afterEach(() => {
+  cleanup()
+})
 
 describe('LoginScreen', () => {
   const setIsAuth = jest.fn()

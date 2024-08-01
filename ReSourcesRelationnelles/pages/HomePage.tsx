@@ -12,7 +12,7 @@ import useAxios from '../axiosConfig' // Utilisez votre configuration axios
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 
 interface HomePageScreenProps {
-  navigation: NavigationProp<ParamListBase>
+  navigation: NavigationProp<any>
 }
 
 const HomePage: React.FC<HomePageScreenProps> = ({ navigation }) => {

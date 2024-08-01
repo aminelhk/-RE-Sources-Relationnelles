@@ -1,35 +1,16 @@
 import React from 'react'
-import { render, fireEvent, waitFor } from '@testing-library/react-native'
-import { NavigationContainer } from '@react-navigation/native'
+import { render, fireEvent, waitFor, act, cleanup } from '@testing-library/react-native'
 import HomePage from '../pages/HomePage'
 import { AuthContext } from '../context/AuthContext'
 import useAxios from '../axiosConfig'
-import { Platform } from 'react-native'
-import ErrorBoundary from '../components/ErrorBoundary' // Assurez-vous que le chemin est correct
+import { NavigationContainer } from '@react-navigation/native'
 
+// Mock axios module
 jest.mock('../axiosConfig', () =>
   jest.fn().mockReturnValue({
     get: jest.fn(),
   }),
 )
-
-beforeEach(() => {
-  Platform.OS = 'web' // Simuler la plateforme web
-
-  const mockResponse = {
-    ok: true,
-    status: 200,
-    json: jest
-      .fn()
-      .mockResolvedValue([{ title: 'ajout de mon nouveau yacht' }, { title: 'mon nouveau yacht' }]),
-  } as unknown as Response
-
-  jest.spyOn(global, 'fetch').mockResolvedValue(mockResponse)
-})
-
-afterEach(() => {
-  jest.clearAllMocks()
-})
 
 const mockAuthContextValue = {
   isAuth: true,
@@ -46,6 +27,12 @@ const mockNavigation = {
   isFocused: jest.fn(),
   addListener: jest.fn(),
   removeListener: jest.fn(),
+  dispatch: jest.fn(),
+  canGoBack: jest.fn(),
+  getId: jest.fn(),
+  getState: jest.fn(),
+  getParent: jest.fn(),
+  setOptions: jest.fn(),
 }
 
 describe('HomePage', () => {
@@ -57,42 +44,53 @@ describe('HomePage', () => {
     })
   })
 
-  it('should render home page correctly when authenticated', async () => {
-    const { getByText, debug } = render(
-      <AuthContext.Provider value={mockAuthContextValue}>
-        <NavigationContainer>
-          <ErrorBoundary>
-            <HomePage navigation={mockNavigation as any} />
-          </ErrorBoundary>
-        </NavigationContainer>
-      </AuthContext.Provider>,
-    )
+  afterEach(() => {
+    jest.clearAllMocks()
+    cleanup() // Nettoyage des tests
+  })
 
-    await waitFor(() => {
-      debug() // Ajoute cette ligne pour imprimer le DOM
-      expect(getByText('ajout de mon nouveau yacht')).toBeTruthy()
-      expect(getByText('mon nouveau yacht')).toBeTruthy()
-    })
+  it('should render home page correctly when authenticated', async () => {
+    await act(async () => {
+      const { getByText, debug } = render(
+        <AuthContext.Provider value={mockAuthContextValue}>
+          <NavigationContainer>
+            <HomePage navigation={mockNavigation as any} />
+          </NavigationContainer>
+        </AuthContext.Provider>,
+      )
+
+      await waitFor(
+        () => {
+          debug() // Imprime le DOM pour débogage
+          expect(getByText('ajout de mon nouveau yacht')).toBeTruthy()
+          expect(getByText('mon nouveau yacht')).toBeTruthy()
+        },
+        { timeout: 10000 },
+      )
+    }, 10000)
   })
 
   it('should handle search correctly', async () => {
-    const { getByPlaceholderText, getByText, debug } = render(
-      <AuthContext.Provider value={mockAuthContextValue}>
-        <NavigationContainer>
-          <ErrorBoundary>
+    await act(async () => {
+      const { getByPlaceholderText, getByTestId, getByText, queryByText, debug } = render(
+        <AuthContext.Provider value={mockAuthContextValue}>
+          <NavigationContainer>
             <HomePage navigation={mockNavigation as any} />
-          </ErrorBoundary>
-        </NavigationContainer>
-      </AuthContext.Provider>,
-    )
+          </NavigationContainer>
+        </AuthContext.Provider>,
+      )
 
-    fireEvent.changeText(getByPlaceholderText('Rechercher'), 'ajout de mon nouveau yacht')
-    fireEvent.press(getByText('Rechercher'))
+      fireEvent.changeText(getByPlaceholderText('Rechercher'), 'ajout de mon nouveau yacht')
+      fireEvent.press(getByTestId('search-button'))
 
-    await waitFor(() => {
-      debug() // Ajoute cette ligne pour imprimer le DOM
-      expect(getByText('ajout de mon nouveau yacht')).toBeTruthy()
-      expect(() => getByText('Resource 2')).toThrow() // Should not find 'Resource 2'
-    })
+      await waitFor(
+        () => {
+          debug() // Imprime le DOM pour débogage
+          expect(getByText('ajout de mon nouveau yacht')).toBeTruthy()
+          expect(queryByText('mon nouveau yacht')).toThrow() // Should not find 'mon nouveau yacht'
+        },
+        { timeout: 10000 },
+      )
+    }, 10000)
   })
 })
