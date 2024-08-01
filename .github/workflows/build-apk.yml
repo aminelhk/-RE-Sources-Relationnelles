@@ -30,12 +30,12 @@ jobs:
         run: ls -la
 
       - name: 📦 Navigate to project directory
-        run: cd ReSourcesRelationnelles
+        run: cd -RE-Sources-Relationnelles/ReSourcesRelationnelles
 
       - name: 📦 Install dependencies
         run: yarn install
-        working-directory: ReSourcesRelationnelles
+        working-directory: -RE-Sources-Relationnelles/ReSourcesRelationnelles
 
       - name: 🚀 Build app (pas d'interaction, pas d'attente de la fin du build EAS)
         run: eas build --platform android --non-interactive --no-wait
-        working-directory: ReSourcesRelationnelles
+        working-directory: -RE-Sources-Relationnelles/ReSourcesRelationnelles
