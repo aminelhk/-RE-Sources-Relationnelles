@@ -15,7 +15,7 @@ jobs:
     steps:
 
       - name: change directory to front 
-        run: cd .\ReSourcesRelationnelles\
+        run: cd ReSourcesRelationnelles
         
       - name: execute tests
         run: yarn test
