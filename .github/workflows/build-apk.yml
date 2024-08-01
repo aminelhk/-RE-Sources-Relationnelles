@@ -29,11 +29,13 @@ jobs:
       - name: 📂 List files in working directory
         run: ls -la
 
-      - name: 📂 Check for app.json
-        run: cat app.json
+      - name: 📦 Navigate to project directory
+        run: cd ReSourcesRelationnelles
 
       - name: 📦 Install dependencies
         run: yarn install
+        working-directory: ReSourcesRelationnelles
 
       - name: 🚀 Build app (pas d'interaction, pas d'attente de la fin du build EAS)
         run: eas build --platform android --non-interactive --no-wait
+        working-directory: ReSourcesRelationnelles
