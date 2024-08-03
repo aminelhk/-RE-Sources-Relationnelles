@@ -24,7 +24,7 @@ COPY --from=build /dist /usr/share/nginx/html
 
 # Créer une nouvelle configuration Nginx qui écoute sur le port 8080
 RUN echo 'server { \
-    listen 8080; \
+    listen 80; \
     server_name localhost; \
     location / { \
         root /usr/share/nginx/html; \
@@ -33,8 +33,8 @@ RUN echo 'server { \
     } \
 }' > /etc/nginx/conf.d/default.conf
 
-# Exposer le port 8080
-EXPOSE 8080
+# Exposer le port 80
+EXPOSE 80
 
 # Copier le script d'entrée
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh

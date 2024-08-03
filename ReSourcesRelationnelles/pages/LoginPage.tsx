@@ -33,10 +33,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/api/users/login', {
-        email,
-        password,
-      })
+      const response = await axios.post(
+        'https://apiresourcesrelationnelles.azurewebsites.net/api/users/login',
+        {
+          email,
+          password,
+        },
+      )
 
       if (response.status === 200) {
         setToken(response.data.token) // Stockez le token
@@ -73,18 +76,21 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
       validateVitalCardNumber(vitalCardNum)
     ) {
       try {
-        const response = await axios.post('http://localhost:3000/api/users/createUser', {
-          email,
-          firstName,
-          lastName,
-          phone: phoneNumber,
-          password,
-          pseudo,
-          isActive: false,
-          isPrivate: false,
-          vitalCardNumber: vitalCardNum,
-          roleId: 5, // Default roleId to 5
-        })
+        const response = await axios.post(
+          'https://apiresourcesrelationnelles.azurewebsites.net/api/users/createUser',
+          {
+            email,
+            firstName,
+            lastName,
+            phone: phoneNumber,
+            password,
+            pseudo,
+            isActive: false,
+            isPrivate: false,
+            vitalCardNumber: vitalCardNum,
+            roleId: 5, // Default roleId to 5
+          },
+        )
 
         console.log('Response:', typeof response.status)
 

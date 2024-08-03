@@ -1,0 +1,41 @@
+name: BUILD APK
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v3
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: yarn
+
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📂 Verify working directory
+        run: pwd
+
+      - name: 📂 List files in working directory
+        run: ls -la
+
+      - name: 📦 Navigate to project directory
+        run: cd ReSourcesRelationnelles
+
+      - name: 📦 Install dependencies
+        run: yarn install
+        working-directory: ReSourcesRelationnelles
+
+      - name: 🚀 Build app (pas d'interaction, pas d'attente de la fin du build EAS)
+        run: eas build --platform android --profile preview --non-interactive --no-wait
+        working-directory: ReSourcesRelationnelles

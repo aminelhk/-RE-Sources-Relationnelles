@@ -30,7 +30,7 @@ const HomePage: React.FC<HomePageScreenProps> = ({ navigation }) => {
   // Utiliser un effet pour charger les ressources
   useEffect(() => {
     // Effectuer des appels API ou des actions asynchrones
-    fetch('http://localhost:3000/api/resources')
+    fetch('https://apiresourcesrelationnelles.azurewebsites.net/api/resources')
       // Récupérer les données
       .then(response => response.json())
       .then((data: Resource[]) => {

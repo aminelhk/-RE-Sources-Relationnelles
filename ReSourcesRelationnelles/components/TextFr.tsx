@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
+import * as SplashScreen from 'expo-splash-screen';
+
+// Prevent the splash screen from auto-hiding before fonts are loaded
+SplashScreen.preventAutoHideAsync();
 
 export default function TextFr(props: { text?: string; number?: number }) {
   const { text = "undefined", number } = props;
@@ -13,6 +16,7 @@ export default function TextFr(props: { text?: string; number?: number }) {
       'Marianne': require('../assets/fonts/Marianne/Marianne-Regular.otf'), // assuming you have a bold variant
     });
     setFontsLoaded(true);
+    SplashScreen.hideAsync();
   };
 
   useEffect(() => {
@@ -20,7 +24,7 @@ export default function TextFr(props: { text?: string; number?: number }) {
   }, []);
 
   if (!fontsLoaded) {
-    return <AppLoading />;
+    return null; // Return null while the splash screen is visible
   }
 
   let textStyle;

@@ -1,13 +1,17 @@
 # Stage 1: Build the application
 FROM node:20-alpine AS build
 
-# Copy the rest of the code
+# Définir le répertoire de travail dans le conteneur
+WORKDIR /usr/src/app
+
+# Copy code
 COPY . .
 
 # Install dependencies
 RUN yarn install
 
-# Expose the application port
-EXPOSE 3000
+# Exposer le port que votre application utilise
+EXPOSE 80
 
-CMD [ "yarn","start"]
+# Démarrer l'application
+CMD ["yarn", "start"]

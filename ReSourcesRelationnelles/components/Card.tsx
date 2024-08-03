@@ -31,13 +31,16 @@ const Card: React.FC<CardProps> = ({
   // Function to handle update
   const onUpdate = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/resources/updateResource', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        'https://apiresourcesrelationnelles.azurewebsites.net/api/resources/updateResource',
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(item),
         },
-        body: JSON.stringify(item),
-      })
+      )
 
       if (!response.ok) {
         throw new Error('Failed to update resource')
@@ -54,13 +57,16 @@ const Card: React.FC<CardProps> = ({
   // Function to handle delete
   const onDelete = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/resources/deleteResource', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        'https://apiresourcesrelationnelles.azurewebsites.net/api/resources/deleteResource',
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ idResource: item.idResource }),
         },
-        body: JSON.stringify({ idResource: item.idResource }),
-      })
+      )
 
       if (!response.ok) {
         throw new Error('Failed to delete resource')
