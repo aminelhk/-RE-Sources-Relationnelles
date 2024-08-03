@@ -9,38 +9,39 @@ type SearchBarType = {
 }
 
 const SearchBar = ({ recherche, setRecherche, onPress }: SearchBarType) => {
-  // Nouvel état pour stocker si le champ de recherche est en focus
   const [isFocused, setIsFocused] = useState(false)
 
-  // Fonction pour gérer la pression sur la touche Entrée
-  const handleKeyPress = (event: { key: string }) => {
-    if (event.key === 'Enter') {
-      onPress() // Appelle la fonction de recherche
+  const handleKeyPress = (event: any) => {
+    if (event.nativeEvent.key === 'Enter') {
+      onPress()
     }
   }
 
   return (
-    <View style={styles.searchBar}>
+    <View style={styles.searchBar} testID='search-bar'>
       <TextInput
         style={[
           styles.frLabel,
           isFocused &&
             Platform.OS === 'web' && {
-              outlineStyle: 'solid',
-              outlineColor: '#000091',
-              outlineWidth: 2,
+              borderColor: '#000091',
+              borderWidth: 2,
             },
         ]}
         value={recherche}
-        onChangeText={(value: string) => {
-          setRecherche(value)
-        }}
+        onChangeText={setRecherche}
         onKeyPress={handleKeyPress}
         placeholder='Rechercher'
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        accessibilityLabel='Champ de recherche'
+        testID='search-input'
       />
-      <TouchableOpacity style={styles.frBtn} onPress={onPress}>
+      <TouchableOpacity
+        style={styles.frBtn}
+        onPress={onPress}
+        accessibilityLabel='Bouton de recherche'
+        testID='search-button'>
         <FontAwesome style={styles.icon} name={'search'} />
         {Platform.OS === 'web' && <Text style={styles.title}>Rechercher</Text>}
       </TouchableOpacity>

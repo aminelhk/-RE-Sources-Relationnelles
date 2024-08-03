@@ -103,7 +103,7 @@ const Card: React.FC<CardProps> = ({
               style={styles.cardImg}
               source={{
                 uri: item.content.includes('.pdf')
-                  ? 'http://10.114.128.158:3000/images/tutoriel-pdf-ok.png'
+                  ? 'http://localhost:3000/images/tutoriel-pdf-ok.png'
                   : item.content,
               }}
             />

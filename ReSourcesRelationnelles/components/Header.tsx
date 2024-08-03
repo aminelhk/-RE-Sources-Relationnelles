@@ -1,38 +1,36 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import { useWindowDimensions } from 'react-native'
 import Cookies from 'js-cookie'
 import axios from 'axios'
-// import { useNavigation } from '@react-navigation/native'
+import { AuthContext } from '../context/AuthContext'
+import { useNavigation } from '@react-navigation/native'
 
 type HeaderType = {
-  route: {
-    params: {
-      isAuth: boolean
-      setIsAuth: boolean
-    }
-  }
   navigation: {
     navigate: (screen: string) => void
   }
 }
 
-const Header: React.FC<HeaderType> = ({ route, navigation }) => {
+const Header: React.FC<HeaderType> = ({ navigation }) => {
   const [menuVisible, setMenuVisible] = useState(false)
   const { width } = useWindowDimensions()
   const isMobile = width < 768
-  const [isAuth, setIsAuth] = useState<boolean>(false)
-  // const isAuth = route.params.isAuth
+  const { isAuth, setIsAuth } = useContext(AuthContext)
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible)
   }
 
+  if (!isAuth) {
+    window.location.href = '/Login'
+  }
+
   const handleLogout = async () => {
     try {
-      await axios.post('/logout') // Assurez-vous que l'URL est correcte pour votre backend
+      await axios.post('/logout')
       Cookies.remove('token')
-      setIsAuth(false)
+      setIsAuth(false) // Mise à jour de l'état
       navigation.navigate('Login') // Redirige vers l'écran de login
     } catch (error) {
       console.error('Failed to logout:', error)
@@ -64,9 +62,6 @@ const Header: React.FC<HeaderType> = ({ route, navigation }) => {
               <View style={styles.menuContainer}>
                 <View style={styles.navigation}>
                   <View style={styles.navList}>
-                    <TouchableOpacity style={styles.navItem}>
-                      <Text style={styles.navLink}>Statistiques</Text>
-                    </TouchableOpacity>
                     {isAuth ? (
                       <TouchableOpacity style={styles.navItem} onPress={handleLogout}>
                         <Text style={styles.navLink}>Déconnexion</Text>
@@ -85,24 +80,14 @@ const Header: React.FC<HeaderType> = ({ route, navigation }) => {
           )}
         </View>
       </View>
-      {isMobile && menuVisible && (
-        <View style={styles.mobileMenu}>
-          <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
-            <Text style={styles.navLink}>Statistiques</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.navItem} onPress={toggleMenu}>
-            <Text style={styles.navLink}>Accès direct 2</Text>
-          </TouchableOpacity>
-          {isAuth ? (
-            <TouchableOpacity style={styles.navItem} onPress={handleLogout}>
-              <Text style={styles.navLink}>Déconnexion</Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.navLink}>Connexion</Text>
-            </TouchableOpacity>
-          )}
-        </View>
+      {isMobile && menuVisible && isAuth ? (
+        <TouchableOpacity style={styles.navItem} onPress={handleLogout}>
+          <Text style={styles.navLink}>Déconnexion</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.navLink}>Connexion</Text>
+        </TouchableOpacity>
       )}
     </View>
   )
